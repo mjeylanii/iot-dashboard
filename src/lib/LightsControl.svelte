@@ -1,12 +1,14 @@
-<script>
+<script lang="ts">
 	import { onMount } from 'svelte';
-	//import { getLights } from '../lib/LightsAPI';
+	import type { MQTTAPI } from './api/MQTTAPI';
+	import { MQTT_CONFIG, LIGHT_TOPICS } from './config';
 
+	export let client: MQTTAPI;
 	let lights = [
 		{
 			id: 1,
 			name: 'Light 1',
-			state: 'on'
+			state: 'off'
 		},
 		{
 			id: 2,
@@ -16,7 +18,7 @@
 		{
 			id: 3,
 			name: 'Light 3',
-			state: 'on'
+			state: 'off'
 		},
 		{
 			id: 4,
@@ -26,63 +28,55 @@
 		{
 			id: 5,
 			name: 'Light 5',
-			state: 'on'
+			state: 'off'
 		},
 		{
 			id: 6,
 			name: 'Light 6',
-			state: 'on'
+			state: 'off'
 		}
 	];
 </script>
 
-<div class="card bg-base-100 shadow-xl h-fit">
-	<div class="card-body items-center text-center h-fit">
-		<h2 class="card-title text-center text-2xl font-bold">Lights</h2>
-		<!-- Auto cols and flows for when theres only a single item in a row  -->
-		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 p-8 h-fit">
-			{#each lights as light}
-				<div class="checkbox h-fit w-fit">
-					<label class="checkbox-wrapper">
-						<input type="checkbox" class="checkbox-input" />
-						<span
-							class="checkbox-tile rounded-lg bg-base-100 relative shadow-xl hover:border-green-500"
+<div class="grid items-center justify-center grid-flow-row grid-cols-2 gap-4 lg:grid-cols-4">
+	{#each lights as light}
+		<div class="w-full h-full checkbox">
+			<label class="checkbox-wrapper">
+				<input
+					id={`checkbox-${light.id}`}
+					on:input={() => {
+						const newState = light.state === 'on' ? 'off' : 'on';
+					}}
+					type="checkbox"
+					class="checkbox-input"
+					checked={light.state === 'on'}
+				/>
+				<span
+					class="relative flex flex-col items-center justify-around shadow-xl lg:flex-row rounded-xl checkbox-tile bg-base-100 hover:border-green-500"
+					><span
+						class="p-4 {light.state == 'on'
+							? 'bg-yellow-400'
+							: 'bg-gray-300'} rounded-full checkbox-icon w-fit"
+					>
+						<svg
+							class="rounded-full"
+							fill="#343455"
+							viewBox="0 0 24 24"
+							xmlns="http://www.w3.org/2000/svg"
+							><path
+								d="M12,2A7,7,0,0,0,8,14.74V17a1,1,0,0,0,1,1h6a1,1,0,0,0,1-1V14.74A7,7,0,0,0,12,2ZM9,21a1,1,0,0,0,1,1h4a1,1,0,0,0,1-1V20H9Z"
+							/></svg
 						>
-							<span class="checkbox-icon">
-								<svg
-									fill="#000000"
-									height="200px"
-									width="200px"
-									version="1.1"
-									id="Layer_1"
-									xmlns="http://www.w3.org/2000/svg"
-									xmlns:xlink="http://www.w3.org/1999/xlink"
-									viewBox="0 0 512 512"
-									xml:space="preserve"
-								>
-									<g id="SVGRepo_bgCarrier" stroke-width="0" />
-									<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
-									<g id="SVGRepo_iconCarrier">
-										<g>
-											<g>
-												<path
-													d="M256,0C157.885,0,78.063,79.822,78.063,177.936c0,46.98,18.144,91.296,51.088,124.784l2.627,2.664 c12.84,13.511,22.519,29.458,28.548,46.871l-0.592,0.372c-11.394,7.163-18.198,19.455-18.198,32.875 c0,13.279,6.624,25.167,17.105,32.202c-0.923,3.334-1.422,6.809-1.422,10.357c0,21.417,17.424,38.841,38.841,38.841h3.793 C205.545,492.665,228.551,512,256,512s50.455-19.336,56.147-45.099h3.793c21.417,0,38.841-17.424,38.841-38.841 c0-3.548-0.499-7.023-1.422-10.357c10.482-7.034,17.105-18.923,17.105-32.202c0-13.42-6.802-25.711-18.198-32.875l-0.592-0.372 c6.005-17.348,15.634-33.24,28.405-46.719l2.77-2.816c32.945-33.487,51.088-77.803,51.088-124.784C433.937,79.822,354.115,0,256,0 z M256,481.583c-10.465,0-19.562-5.964-24.074-14.671h48.147C275.563,475.619,266.466,481.583,256,481.583z M315.94,436.483 h-2.429v-0.105l-15.313,0.105h-84.371l-15.337-0.205v0.205h-2.429c-4.645,0-8.424-3.779-8.424-8.424 c0-1.561,0.433-3.064,1.22-4.363h134.287c0.787,1.298,1.22,2.801,1.22,4.363C324.364,432.705,320.585,436.483,315.94,436.483z M334.822,393.281h-0.966H178.145h-0.966c-3.133-1.27-5.226-4.306-5.226-7.779c0-1.745,0.538-3.405,1.51-4.792h165.075 c0.971,1.386,1.51,3.047,1.51,4.792C340.048,388.974,337.955,392.01,334.822,393.281z M239.773,350.293v-90.148h32.453v90.148 H239.773z M362.011,280.522l-0.749,0.747c-19.394,19.326-33.376,42.992-40.879,69.024h-17.738v-90.148h9.559 c22.043,0,39.976-17.934,39.976-39.977c0-22.042-17.934-39.976-39.976-39.976c-22.042,0-39.976,17.934-39.976,39.976v9.56h-32.453 v-9.56c0-22.042-17.934-39.976-39.976-39.976s-39.976,17.934-39.976,39.976c0,22.043,17.934,39.977,39.976,39.977h9.559v90.148 h-17.738c-7.503-26.033-21.486-49.699-40.88-69.024l-0.71-0.706c-26.802-27.663-41.549-64.064-41.549-102.628 c0-81.342,66.177-147.518,147.519-147.518S403.52,96.594,403.52,177.936C403.52,216.481,388.787,252.864,362.011,280.522z M302.644,229.728v-9.56c0-5.27,4.288-9.559,9.559-9.559s9.559,4.288,9.559,9.559s-4.288,9.56-9.559,9.56H302.644z M209.356,220.168v9.56h-9.559c-5.271,0-9.559-4.288-9.559-9.56c0-5.27,4.288-9.559,9.559-9.559S209.356,214.897,209.356,220.168z "
-												/>
-											</g>
-										</g>
-									</g>
-								</svg>
-							</span>
-							<span class="checkbox-label">
-								<span class="checkbox-title">Light {light.id}</span>
-								<span class="checkbox-description" />
-							</span>
-						</span>
-					</label>
-				</div>
-			{/each}
+					</span>
+
+					<span class="flex flex-col checkbox-label">
+						<span class="font-bold checkbox-title">Light {light.id}</span>
+						<span class="text-sm checkbox-description"> {light.state == 'on' ? 'On' : 'Off'}</span>
+					</span>
+				</span>
+			</label>
 		</div>
-	</div>
+	{/each}
 </div>
 
 <style>
@@ -116,29 +110,24 @@
 	}
 
 	/* Tile focus border */
-	/* .checkbox-input:focus+.checkbox-tile {
-    border-color: rgb(47, 212, 74);
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1), 0 0 0 4px rgb(47, 212, 74);
-} */
-
-	.checkbox-input:focus + .checkbox-tile:before {
+	/* .checkbox-input:focus + .checkbox-tile {
+		border-color: rgb(47, 212, 74);
+		box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1), 0 0 0 4px rgb(47, 212, 74);
+	} */
+	* .checkbox-input:focus + .checkbox-tile:before {
 		transform: scale(1);
 		opacity: 1;
 	}
 
 	.checkbox-tile {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		width: 7rem;
+		min-width: 7rem;
 		min-height: 7rem;
 		transition: 0.15s ease;
 		cursor: pointer;
 		position: relative;
 	}
 
-	.checkbox-tile:before {
+	/* .checkbox-tile:before {
 		content: '';
 		position: absolute;
 		display: block;
@@ -156,17 +145,17 @@
 		background-size: 12px;
 		background-repeat: no-repeat;
 		background-position: 50% 50%;
-	}
+	} */
 
 	.checkbox-tile:hover:before {
 		transform: scale(1);
 		opacity: 1;
 	}
 
-	.checkbox-icon {
+	/* .checkbox-icon {
 		transition: 0.375s ease;
 		color: #494949;
-	}
+	} */
 
 	.checkbox-icon svg {
 		width: 2.5rem;
@@ -176,6 +165,5 @@
 	.checkbox-label {
 		color: #707070;
 		transition: 0.375s ease;
-		text-align: center;
 	}
 </style>

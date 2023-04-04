@@ -1,3 +1,7 @@
+<script>
+	import { invoke } from '@tauri-apps/api/tauri';
+</script>
+
 <div class="navbar bg-base-100 p-x-10 shadow-md rounded w-2/3 mx-auto">
 	<div class="navbar-start">
 		<p class="btn btn-ghost normal-case text-xl">Dashboard</p>
@@ -22,7 +26,13 @@
 				</button>
 			</li>
 			<li>
-				<button>
+				<button
+					on:click={//Invoke tauri
+					() => {
+						//Invoke tauri
+						invoke('ping');
+					}}
+				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						class="h-5 w-5"

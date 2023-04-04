@@ -1,23 +1,105 @@
-<script>
-	const ssr = false;
+<script lang="ts">
 	import DeviceStats from '$lib/DeviceStats.svelte';
+	import GraphCard from '$lib/GraphCard.svelte';
 	import LightsControl from '$lib/LightsControl.svelte';
-	import Devices from '../lib/Devices.svelte';
-	import Weather from '../lib/Weather.svelte';
+	// import WelcomeCard from '$lib/WelcomeCard.svelte';
+	import { weatherData, networkTraffic, PSI, humidity } from '$lib/PlaceholderData';
+	import Devices from '$lib/Devices.svelte';
+	import Weather from '$lib/Weather.svelte';
+	import Person from '$lib/Person.svelte';
+	import Device from '$lib/Device.svelte';
+	import AddDevice from '$lib/AddDevice.svelte';
+	import { onMount } from 'svelte';
+	import { MQTTAPI } from '$lib/api/MQTTAPI';
+	import { MQTT_CONFIG, LIGHT_TOPICS } from '$lib/config';
+
+	let client: MQTTAPI;
+	function onConnectionSuccess() {
+		console.log('Connected to MQTT broker');
+		LIGHT_TOPICS.forEach((topic) => {
+			client.subscribe(topic);
+		});
+	}
+	function onConnectionFailure() {
+		console.log('Failed to connect to MQTT broker');
+	}
+	onMount(async () => {
+		console.log('Starting MQTT client');
+		client = new MQTTAPI(
+			MQTT_CONFIG.BROKER_IP,
+			MQTT_CONFIG.BROKER_PORT,
+			MQTT_CONFIG.CLIENT_ID,
+			undefined,
+			undefined,
+			60,
+			onConnectionFailure,
+			onConnectionSuccess
+		);
+		console.log('Connecting to MQTT broker');
+		client.connect();
+	});
+	let persons = [
+		{
+			name: 'John Doe',
+			status: 'online'
+		},
+		{
+			name: 'Jane Doe',
+			status: 'offline'
+		},
+		{
+			name: 'Frank Doe',
+			status: 'online'
+		}
+	];
 </script>
 
-<!-- A responsive grid with auto rows and cols -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 place-items-baseline">
-	<div class="col-span-1 lg:col-span-1 row-span-1">
-		<LightsControl />
+<!-- flex items columns and rows -->
+<div class="flex flex-col max-w-screen-lg gap-12 mx-auto">
+	<!-- Wearther -->
+	<div class="flex flex-col justify-center gap-4">
+		<!-- <WelcomeCard /> -->
+		<Weather />
 	</div>
-	<div class="col-span-1 lg:col-span-2 row-span-1 grid grid-cols-2 gap-3">
-		<div class="flex gap-2">
-			<Devices />
-			<Weather />
+	<h2 class="px-4 text-3xl font-bold">Controls</h2>
+	<div class="text-xl font-medium divider">IoT Devices</div>
+	<div class="flex flex-col justify-center gap-4">
+		<div class="grid grid-cols-3 gap-4">
+			<Device />
+			<Device />
+			<Device />
+			<AddDevice />
 		</div>
-		<div class="col-span-2">
-			<DeviceStats />
-		</div>
+	</div>
+
+	<div class="text-xl font-medium divider">Lights</div>
+	<div class="flex flex-col justify-center gap-4">
+		<LightsControl {client} />
+	</div>
+
+	<div class="divider">
+		<h1 class="text-2xl font-medium">Sensors</h1>
+	</div>
+	<div class="flex flex-col justify-start w-full gap-4 lg:flex-row md:flex-row">
+		<GraphCard chartId={'Humidity'} data={humidity} />
+
+		<GraphCard chartId={'PSI'} data={PSI} />
+
+		<GraphCard chartId={'Temperature'} data={weatherData} />
+	</div>
+	<!-- People -->
+	<div class="divider">
+		<h2 class="text-2xl font-medium">People</h2>
+	</div>
+	<div class="flex flex-row justify-center gap-8 mx-auto lg:w-full">
+		{#each persons as person}
+			<Person {person} />
+		{/each}
+	</div>
+	<!-- Network and devices -->
+	<h2 class="px-4 text-3xl font-bold">Network</h2>
+	<div class="flex flex-col w-full gap-4">
+		<Devices />
+		<GraphCard chartId={'Network Traffic'} data={networkTraffic} />
 	</div>
 </div>
