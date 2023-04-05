@@ -10,34 +10,22 @@
 	import Device from '$lib/Device.svelte';
 	import AddDevice from '$lib/AddDevice.svelte';
 	import { onMount } from 'svelte';
-	import { MQTTAPI } from '$lib/api/MQTTAPI';
-	import { MQTT_CONFIG, LIGHT_TOPICS } from '$lib/config';
+	import { MQTT_CONFIG } from '$lib/config/config';
+	import mqttClient from '$lib/mqtt';
 
-	let client: MQTTAPI;
-	function onConnectionSuccess() {
-		console.log('Connected to MQTT broker');
-		LIGHT_TOPICS.forEach((topic) => {
-			client.subscribe(topic);
-		});
-	}
-	function onConnectionFailure() {
-		console.log('Failed to connect to MQTT broker');
-	}
+	import { GetLightStates, getTemperature } from '$lib/api/mqtt-api';
+
+	// import { store } from '$lib/store.js';
+	const handleLightMessage = (message: string) => {
+		console.log('Light message received');
+		console.log(message);
+	};
+	let client;
 	onMount(async () => {
-		console.log('Starting MQTT client');
-		client = new MQTTAPI(
-			MQTT_CONFIG.BROKER_IP,
-			MQTT_CONFIG.BROKER_PORT,
-			MQTT_CONFIG.CLIENT_ID,
-			undefined,
-			undefined,
-			60,
-			onConnectionFailure,
-			onConnectionSuccess
-		);
-		console.log('Connecting to MQTT broker');
-		client.connect();
+		client = mqttClient;
+		client.connect('office/temp');
 	});
+
 	let persons = [
 		{
 			name: 'John Doe',
@@ -74,18 +62,18 @@
 
 	<div class="text-xl font-medium divider">Lights</div>
 	<div class="flex flex-col justify-center gap-4">
-		<LightsControl {client} />
+		<LightsControl />
 	</div>
 
 	<div class="divider">
 		<h1 class="text-2xl font-medium">Sensors</h1>
 	</div>
 	<div class="flex flex-col justify-start w-full gap-4 lg:flex-row md:flex-row">
-		<GraphCard chartId={'Humidity'} data={humidity} />
+		<GraphCard chartId={'Humidity'} />
 
-		<GraphCard chartId={'PSI'} data={PSI} />
+		<GraphCard chartId={'PSI'} />
 
-		<GraphCard chartId={'Temperature'} data={weatherData} />
+		<GraphCard chartId={'Temperature'} />
 	</div>
 	<!-- People -->
 	<div class="divider">
@@ -100,6 +88,6 @@
 	<h2 class="px-4 text-3xl font-bold">Network</h2>
 	<div class="flex flex-col w-full gap-4">
 		<Devices />
-		<GraphCard chartId={'Network Traffic'} data={networkTraffic} />
+		<GraphCard chartId={'Network Traffic'} />
 	</div>
 </div>

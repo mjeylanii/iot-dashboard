@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import type { MQTTAPI } from './api/MQTTAPI';
-	import { MQTT_CONFIG, LIGHT_TOPICS } from './config';
+	import { MQTT_CONFIG } from '$lib/config/config';
+	import { mqtt } from '$lib/store.js';
 
-	export let client: MQTTAPI;
+	onMount(() => {});
+
 	let lights = [
 		{
 			id: 1,
@@ -45,7 +46,7 @@
 				<input
 					id={`checkbox-${light.id}`}
 					on:input={() => {
-						const newState = light.state === 'on' ? 'off' : 'on';
+						light.state = light.state === 'on' ? 'off' : 'on';
 					}}
 					type="checkbox"
 					class="checkbox-input"

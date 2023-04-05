@@ -17,8 +17,6 @@
 				console.error(err);
 				return [];
 			});
-
-		console.log(devices);
 	});
 </script>
 

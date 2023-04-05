@@ -3,7 +3,12 @@
 
 	import Chart from 'chart.js/auto';
 	import { onMount } from 'svelte';
+	import { temperature } from '$lib/store.js';
 	export let chartId = '';
+	let data = [];
+	temperature.subscribe((value) => {
+		data = value;
+	});
 	//Place holder network traffic data
 	onMount(async () => {
 		const chartOptions = {
@@ -89,7 +94,6 @@
 			options: chartOptions
 		});
 	});
-	export let data = [];
 </script>
 
 <div class="w-full h-full">
