@@ -1,73 +1,58 @@
-import * as Paho from 'paho-mqtt';
-import { MQTT_CONFIG } from '$lib/config/config';
-import { mqtt, temperature } from '$lib/store.js';
-import { subscribe } from 'svelte/internal';
-
-class MqttClient {
-  public client: any;
-  public isConnected: boolean = false;
-  constructor() {
-    this.client = new Paho.Client(MQTT_CONFIG.BROKER_IP, MQTT_CONFIG.BROKER_PORT, 'client-id');
+import { MQTT_CONFIG, MQTT_TOPICS } from '$lib/config/mqtt.conf';
+import { Client, Message } from 'paho-mqtt';
+ class MQTTClient {
+  private client: Client = new Client(
+    MQTT_CONFIG.BROKER_IP,
+    MQTT_CONFIG.BROKER_PORT,
+    MQTT_CONFIG.CLIENT_ID
+  );
+   constructor(handleMessage: (message: Message) => void) {
     this.client.onConnectionLost = this.onConnectionLost.bind(this);
-    this.client.onMessageArrived = this.onMessageArrived.bind(this);
-    this.client.onConnect = this.onConnect.bind(this);
- 
+    this.client.onMessageArrived = handleMessage;
   }
-
-  async connect(topics) {
-
-      try
-     { this.client.connect({
-        onSuccess: this.onConnect.bind(this, topics),
-        onFailure: this.onFailure.bind(this),
-      }); } 
-      catch (e) {
-        console.log(e);
+   connect(options: object = {}) {
+    try {
+      console.log('Connecting to MQTT broker');
+      this.client.connect(options);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+   onConnectionLost(response) {
+    try {
+      if (response.errorCode !== 0) {
+        console.error(`Disconnected from MQTT broker: ${response.errorMessage}`);
+        setTimeout(() => {
+         this.connect();
+        }, 5000);
       }
-    }
-  
-
-  onConnect(topics) {
-    console.log('MQTT client connected');
-    subscribe(topics)
-    this.isConnected = true;
-  }
-
-  onFailure() {
-    console.log('MQTT client connection failed');
-    this.isConnected = false;
-  }
-
-  onConnectionLost(responseObject: OnConnectionLost): void {
-    if (responseObject.errorCode !== 0) {
-      console.log(`MQTT client connection lost: ${responseObject.errorMessage}`);
-      this.isConnected = false;
+    } catch (err) {
+      console.error(err);
     }
   }
-
-  onMessageArrived(message: this.client.OnMessageArrived) {
-    console.log(`MQTT message received on topic ${message.destinationName}: ${message.payloadString}`);
-    //temperature.update(message.payloadString);
+   onMessageArrived(message: Message) {
+    console.log(`Received message on topic ${message.destinationName}: ${message.payloadString}`);
+    // handle the message here
   }
-
-  subscribe(topic: string) {
-  
-    console.log(`Subscribing to MQTT topic ${topic}`);
-    this.client.subscribe(topic);
-
-  }
-
-  unsubscribe(topic) {
-    console.log(`Unsubscribing from MQTT topic ${topic}`);
-    this.client.unsubscribe(topic);
-  }
-
-  publish(topic, payload) {
-    console.log(`Publishing MQTT message to topic ${topic}: ${payload}`);
-    const message = new Paho.Message(payload);
-    message.destinationName = topic;
+   publish(payload: string) {
+    const message = new Message(payload);
+    message.destinationName = MQTT_CONFIG.topic;
     this.client.send(message);
   }
-}
+   subscribe(topic: Array<any>): void {
 
-export default new MqttClient();
+    if (topic.length === 0) {
+      console.error('No topics to subscribe to');
+    }
+    if(typeof topic == 'object'){
+      console.log('object')
+
+    }else{
+      this.client.subscribe(topic);
+    }
+      
+    
+    return;
+  }
+}
+ export default MQTTClient;

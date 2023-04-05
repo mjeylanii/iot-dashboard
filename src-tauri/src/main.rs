@@ -11,9 +11,9 @@
     windows_subsystem = "linux"
 )]
 
-use serde::{Deserialize, Serialize};
-use serde_json::json;
+use serde::Serialize;
 use std::process::Command;
+use std::str;
 use tauri::{Error, Result};
 
 fn main() {
@@ -26,41 +26,105 @@ fn main() {
 #[derive(Serialize)]
 struct Device {
     hostname: String,
+    ip: String,
     mac: String,
+    manufacturer: String,
 }
 #[tauri::command]
 async fn get_devices() -> Result<String> {
-    //Print hello from rust
-    println!("Hello from rust");
-
-    //run nmap and parse the output
-    let output = Command::new("C:\\Program Files (x86)\\Nmap\\nmap.exe")
-        .args("-sn 192.168.1.1/24".split_whitespace())
+    let gateway = get_default_gateway().await.unwrap();
+    print!("Gateway: {}", gateway);
+    let command = "./nmap";
+    let output = Command::new(command)
+        .args(&["-sn".to_owned() + &gateway + "/24"])
         .output()?;
-
     let stdout = String::from_utf8_lossy(&output.stdout);
-    let stderr: String = String::from_utf8_lossy(&output.stderr).to_string();
     let mut devices = Vec::new();
-
     for line in stdout.lines() {
         if line.contains("Nmap scan report for") {
             let mut device = Device {
                 hostname: String::new(),
+                ip: String::new(),
                 mac: String::new(),
+                manufacturer: String::new(),
             };
-            let mut hostname = line.split("Nmap scan report for");
+            let mut hostname = line.split("Nmap scan report for ");
             hostname.next();
-            device.hostname = hostname.next().unwrap().to_string();
+            let hostname_str = hostname.next().unwrap_or("").trim().to_owned();
+            if hostname_str.contains(" (") {
+                let hostname_parts = hostname_str.split(" (").collect::<Vec<_>>();
+                device.hostname = hostname_parts[0].to_owned();
+                device.ip = hostname_parts[1].replace(")", "");
+            } else {
+                device.ip = hostname_str.to_owned();
+            }
             devices.push(device);
         }
         if line.contains("MAC Address:") {
-            let mut mac = line.split("MAC Address:");
-            mac.next();
-            devices.last_mut().unwrap().mac = mac.next().unwrap().to_string();
+            let mac_info = line
+                .split("MAC Address:")
+                .nth(1)
+                .unwrap_or("")
+                .trim()
+                .to_owned();
+            let mac_parts = mac_info.split(" ").collect::<Vec<_>>();
+            if let Some(mac) = mac_parts.get(0) {
+                devices.last_mut().unwrap().mac = mac.to_string();
+            }
+            if let Some(manufacturer) = mac_parts.get(1..) {
+                let manufacturer_str = manufacturer.join(" ");
+                let manufacturer_clean = manufacturer_str
+                    .replace("(", "")
+                    .replace(")", "")
+                    .trim()
+                    .to_owned();
+                devices.last_mut().unwrap().manufacturer = manufacturer_clean;
+            }
         }
     }
+    let json_string = serde_json::to_string(&devices)?;
+    Ok(json_string)
+}
 
-    println!("{}", json!(devices).to_string());
+#[cfg(target_os = "windows")]
+async fn get_default_gateway() -> Option<String> {
+    let output = Command::new("ipconfig")
+        .arg("/all")
+        .output()
+        .expect("Failed to execute ipconfig command");
 
-    Ok(json!(devices).to_string())
+    let output_str = str::from_utf8(&output.stdout).unwrap();
+
+    // Search for the "Default Gateway" line in the ipconfig output
+    let default_gateway_line = output_str
+        .lines()
+        .find(|line| line.contains("Default Gateway"))?;
+
+    // Extract the IP address from the "Default Gateway" line
+    let default_gateway = default_gateway_line
+        .split_whitespace()
+        .last()
+        .map(|s| s.to_string())?;
+
+    Some(default_gateway)
+}
+
+#[cfg(target_os = "unix")]
+async fn get_default_gateway() -> Option<String> {
+    let output = Command::new("ifconfig")
+        .output()
+        .expect("Failed to execute ifconfig command");
+
+    let output_str = str::from_utf8(&output.stdout).unwrap();
+
+    // Search for the "default" line in the ifconfig output
+    let default_line = output_str.lines().find(|line| line.contains("default"))?;
+
+    // Extract the IP address from the "default" line
+    let default_gateway = default_line
+        .split_whitespace()
+        .nth(1)
+        .map(|s| s.to_string())?;
+
+    Some(default_gateway)
 }

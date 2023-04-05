@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { MQTT_CONFIG } from '$lib/config/config';
+	import { MQTT_CONFIG } from '$lib/config/mqtt.conf';
 	import { mqtt } from '$lib/store.js';
 
 	onMount(() => {});

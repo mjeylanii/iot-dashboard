@@ -4,19 +4,16 @@
 	let loading = true;
 	let devices: any;
 	onMount(async () => {
-		devices = await fetchDevicesData()
-			.then((res) =>
-				res.map((device: { hostname: string; mac: string }) => {
-					if (!device.hostname.includes(' (') || !device.hostname.includes(')')) return device;
-					const hostname = device.hostname.split(' (')[0];
-					const ip = device.hostname.split(' (')[1].replace(')', '');
-					return { ...device, hostname, ip };
-				})
-			)
-			.catch((err) => {
-				console.error(err);
-				return [];
+		try {
+			devices = await fetchDevicesData().then((res) => {
+				const devices = JSON.parse(res);
+				console.log(devices);
+				return devices;
 			});
+		} catch (err) {
+			console.error(err);
+			return [];
+		}
 	});
 </script>
 
@@ -29,16 +26,17 @@
 		<thead>
 			<tr>
 				<th />
-				<th class="text-left">Devices</th>
+				<th class="text-left">hostname</th>
 				<th class="text-left">IP</th>
 				<th class="text-left">MAC</th>
+				<th class="text-left"> Manufacturer </th>
 				<th />
 			</tr>
 		</thead>
 		<tbody>
 			{#if devices == null && loading == true}
 				<tr>
-					<td colspan="5" class="text-center"> Loading... </td>
+					<td colspan="5" class="text-center">Loading... </td>
 				</tr>
 			{:else}
 				{#each devices as device}
@@ -53,8 +51,12 @@
 						</td>
 						<td>{device.hostname}</td>
 						<td>{device.ip}</td>
+
 						<td>
 							{device.mac}
+						</td>
+						<td>
+							{device.manufacturer}
 						</td>
 						<th>
 							<button class="btn btn-ghost btn-xs">details</button>
@@ -90,6 +92,7 @@
 						class="btn btn-ghost btn-xs">Refresh</button
 					>
 				</td>
+				<td />
 			</tr>
 		</tfoot>
 	</table>

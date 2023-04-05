@@ -43,6 +43,7 @@
 		"daisyui": "^2.51.5",
 		"dotenv": "^16.0.3",
 		"paho-mqtt": "^1.1.0",
+		"pocketbase": "^0.13.1",
 		"tauri-plugin-websocket-api": "github:tauri-apps/tauri-plugin-websocket",
 		"ws": "^8.13.0"
 	}
