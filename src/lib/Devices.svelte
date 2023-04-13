@@ -13,13 +13,13 @@
 		} catch (err) {
 			console.error(err);
 			return [];
+		} finally {
+			loading = false;
 		}
 	});
 </script>
 
-<div
-	class="container flex flex-col items-center justify-center p-4 mx-auto bg-white rounded-lg shadow-lg"
->
+<div class="container flex flex-col items-center justify-center p-4 mx-auto rounded-lg shadow-lg">
 	<h1 class="text-xl font-bold">Devices</h1>
 	<br />
 	<table class="table w-full">
@@ -34,7 +34,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			{#if devices == null && loading == true}
+			{#if devices == null || loading == true}
 				<tr>
 					<td colspan="5" class="text-center">Loading... </td>
 				</tr>
@@ -72,22 +72,18 @@
 					<button
 						on:click={async () => {
 							loading = true;
-							devices = await fetchDevicesData()
-								.then((res) =>
-									//Ts ignore
-									//@ts-ignore
-									res.map((device) => {
-										if (!device.hostname.includes(' (') || !device.hostname.includes(')'))
-											return device;
-										const hostname = device.hostname.split(' (')[0];
-										const ip = device.hostname.split(' (')[1].replace(')', '');
-										return { ...device, hostname, ip };
-									})
-								)
-								.catch((err) => {
-									console.error(err);
-									return [];
+							try {
+								devices = await fetchDevicesData().then((res) => {
+									const devices = JSON.parse(res);
+									console.log(devices);
+									return devices;
 								});
+							} catch (err) {
+								console.error(err);
+								return [];
+							} finally {
+								loading = false;
+							}
 						}}
 						class="btn btn-ghost btn-xs">Refresh</button
 					>

@@ -3,38 +3,23 @@
 
 	import Chart from 'chart.js/auto';
 	import { onMount } from 'svelte';
-	import { temperature } from '$lib/store.js';
+	import { temperature, humidity, pressure } from '$lib/utils/store.js';
 	export let chartId = '';
-	export let data;
+
 	export let options;
 	let min;
 	let max;
-
-	switch (chartId) {
-		case 'Humidity':
-			break;
-		case 'PSI':
-			break;
-		case 'Temperature':
-			min = 0;
-			break;
-	}
+	let chart;
+	//Get last object from the store array and return the value
+	let store = chartId == 'Humidity' ? humidity : chartId == 'PSI' ? pressure : temperature;
 
 	//Place holder network traffic data
 	onMount(async () => {
-		console.log(chartId);
-		console.log(data);
-
 		var ctx = document.getElementById(chartId).getContext('2d');
 		var chart = new Chart(ctx, {
 			type: 'line',
 			data: {
 				//1 to 60
-				labels:
-					chartId == 'Temperature'
-						? [...Array(10).keys()]
-						: [...Array(60).keys()].map((i) => i * 10),
-
 				datasets: [
 					{
 						//Color according to chartId
@@ -57,12 +42,8 @@
 								: 'rgba(56, 161, 105, 0.1)',
 
 						borderWidth: 1,
-						// data: $temperature,
-						//Scale data from 0 to 100 using $temperature
-						data:
-							chartId == 'Temperature'
-								? data
-								: [...Array(60).keys()].map((i) => Math.random() * 10),
+						data: [],
+
 						fill: 'start',
 						pointRadius: chartId == 'Network Traffic' ? 3 : 0,
 						pointHitRadius: 3
@@ -71,6 +52,32 @@
 			},
 			options: options
 		});
+		function addData(label, data) {
+			if (typeof data == undefined && chart) return;
+			if (chart.data.labels.length > 60) {
+				//Remove last 10
+				chart.data.labels.splice(0, 10);
+
+				chart.data.datasets.forEach((dataset) => {
+					dataset.data.splice(0, 10);
+				});
+			}
+			chart.data.labels.push(new Date(label).getSeconds());
+			chart.data.datasets.forEach((dataset) => {
+				dataset.data.push(data);
+			});
+			chart.update();
+		}
+
+		store.subscribe((value) => {
+			//Skip the first value
+			if (value.length > 1) {
+				//Get the last value
+				let lastValue = value[value.length - 1];
+				//Add the value to the chart
+				addData(lastValue.time, lastValue.value);
+			}
+		});
 	});
 </script>
 
@@ -78,7 +85,7 @@
 	<div class="mx-2 md:flex">
 		<div class="w-full px-2">
 			<div class="mb-4 border rounded-lg shadow-xl">
-				<div class="relative overflow-hidden bg-white rounded-lg shadow-lg md:shadow-xl">
+				<div class="relative overflow-hidden rounded-lg shadow-lg md:shadow-xl">
 					<div
 						class="relative z-10 px-3 pt-8 pb-10 text-center {chartId == 'Network Traffic'
 							? 'h-96'
@@ -102,17 +109,19 @@
 									? 'icons/sensors/thermostat.svg'
 									: 'icons/sensors/network.svg'}
 							/>
-							<p class="text-lg font-bold leading-tight text-gray-500 uppercase">{chartId}</p>
+							<p class="text-lg font-bold leading-tight uppercase">{chartId}</p>
 						</div>
 						<!-- <h3 class="my-3 text-3xl font-semibold leading-tight text-gray-700">3,682</h3> -->
-						<h3 class="mb-12 mt-4 text-3xl font-semibold leading-tight text-gray-700">
-							{chartId == 'Temperature'
-								? $temperature
-								: chartId == 'Humidity'
-								? '50'
-								: chartId == 'PSI'
-								? '50'
-								: '50'}
+						<h3 class="mb-12 mt-4 text-3xl font-semibold leading-tight">
+							{#if chartId == 'Humidity'}
+								{$humidity[$humidity.length - 1].value}%
+							{:else if chartId == 'PSI'}
+								{$pressure[$pressure.length - 1].value} PSI
+							{:else if chartId == 'Temperature'}
+								{$temperature[$temperature.length - 1].value}°C
+							{:else}
+								{Math.floor(Math.random() * 100)}%
+							{/if}
 						</h3>
 					</div>
 					<div class="absolute inset-x-0 bottom-0">

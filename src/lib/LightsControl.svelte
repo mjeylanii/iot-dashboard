@@ -1,10 +1,12 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { MQTT_CONFIG } from '$lib/config/mqtt.conf';
-	import { mqtt } from '$lib/store.js';
+	import { mqtt } from '$lib/utils/store.js';
+	import { getLights, getLightStates } from '$lib/api/LightsAPI';
 
-	onMount(() => {});
-
+	// onMount(() => {
+	// 	getLights();
+	// });
+	let error = '';
 	let lights = [
 		{
 			id: 1,
@@ -39,24 +41,40 @@
 	];
 </script>
 
+{#if error}
+	<div class="alert alert-error shadow-lg">
+		<div>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				class="stroke-current flex-shrink-0 h-6 w-6"
+				fill="none"
+				viewBox="0 0 24 24"
+				><path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2"
+					d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+				/></svg
+			>
+			<span>Error! {error} .</span>
+		</div>
+	</div>
+{/if}
 <div class="grid items-center justify-center grid-flow-row grid-cols-2 gap-4 lg:grid-cols-4">
 	{#each lights as light}
 		<div class="w-full h-full checkbox">
 			<label class="checkbox-wrapper">
 				<input
 					id={`checkbox-${light.id}`}
-					on:input={() => {
-						light.state = light.state === 'on' ? 'off' : 'on';
-					}}
 					type="checkbox"
 					class="checkbox-input"
 					checked={light.state === 'on'}
 				/>
 				<span
-					class="relative flex flex-col items-center justify-around shadow-xl lg:flex-row rounded-xl checkbox-tile bg-base-100 hover:border-green-500"
+					class="relative flex flex-col items-center justify-around shadow-xl lg:flex-row rounded-xl checkbox-tile hover:border-success"
 					><span
 						class="p-4 {light.state == 'on'
-							? 'bg-yellow-400'
+							? 'bg-yellow-500'
 							: 'bg-gray-300'} rounded-full checkbox-icon w-fit"
 					>
 						<svg
@@ -164,7 +182,6 @@
 	}
 
 	.checkbox-label {
-		color: #707070;
 		transition: 0.375s ease;
 	}
 </style>

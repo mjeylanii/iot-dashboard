@@ -19,6 +19,7 @@
 		"@sveltejs/kit": "^1.5.0",
 		"@tauri-apps/cli": "^1.2.3",
 		"@types/paho-mqtt": "^1.0.6",
+		"@types/ws": "^8.5.4",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
 		"autoprefixer": "^10.4.14",
@@ -45,6 +46,6 @@
 		"paho-mqtt": "^1.1.0",
 		"pocketbase": "^0.13.1",
 		"tauri-plugin-websocket-api": "github:tauri-apps/tauri-plugin-websocket",
-		"ws": "^8.13.0"
+		"theme-change": "^2.5.0"
 	}
 }

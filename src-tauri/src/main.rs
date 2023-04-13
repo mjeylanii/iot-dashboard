@@ -11,10 +11,13 @@
     windows_subsystem = "linux"
 )]
 
+use default_net::get_default_gateway;
+
 use serde::Serialize;
+use std::env;
 use std::process::Command;
-use std::str;
-use tauri::{Error, Result};
+use tauri::Result;
+use which::which;
 
 fn main() {
     tauri::Builder::default()
@@ -30,14 +33,29 @@ struct Device {
     mac: String,
     manufacturer: String,
 }
+
 #[tauri::command]
 async fn get_devices() -> Result<String> {
-    let gateway = get_default_gateway().await.unwrap();
-    print!("Gateway: {}", gateway);
-    let command = "./nmap";
-    let output = Command::new(command)
-        .args(&["-sn".to_owned() + &gateway + "/24"])
-        .output()?;
+    let gateway = match get_default_gateway() {
+        Ok(gateway) => gateway.ip_addr.to_string(),
+        Err(_) => {
+            println!("No default gateway found");
+            return Ok("".to_string());
+        }
+    };
+    let args = vec!["-sn", &gateway, "/24"];
+    let result = which("nmap").unwrap();
+    println!("Found rustc at {:?}", result);
+    let command = if which("nmap").is_ok() {
+        "nmap"
+    } else {
+        println!(
+            "Nmap is not installed on your system. Please install Nmap to get better results."
+        );
+        "./nmap"
+    };
+
+    let output = Command::new(command).args(args).output()?;
     let stdout = String::from_utf8_lossy(&output.stdout);
     let mut devices = Vec::new();
     for line in stdout.lines() {
@@ -61,6 +79,7 @@ async fn get_devices() -> Result<String> {
             devices.push(device);
         }
         if line.contains("MAC Address:") {
+            println!("MAC: {}", line);
             let mac_info = line
                 .split("MAC Address:")
                 .nth(1)
@@ -84,47 +103,4 @@ async fn get_devices() -> Result<String> {
     }
     let json_string = serde_json::to_string(&devices)?;
     Ok(json_string)
-}
-
-#[cfg(target_os = "windows")]
-async fn get_default_gateway() -> Option<String> {
-    let output = Command::new("ipconfig")
-        .arg("/all")
-        .output()
-        .expect("Failed to execute ipconfig command");
-
-    let output_str = str::from_utf8(&output.stdout).unwrap();
-
-    // Search for the "Default Gateway" line in the ipconfig output
-    let default_gateway_line = output_str
-        .lines()
-        .find(|line| line.contains("Default Gateway"))?;
-
-    // Extract the IP address from the "Default Gateway" line
-    let default_gateway = default_gateway_line
-        .split_whitespace()
-        .last()
-        .map(|s| s.to_string())?;
-
-    Some(default_gateway)
-}
-
-#[cfg(target_os = "unix")]
-async fn get_default_gateway() -> Option<String> {
-    let output = Command::new("ifconfig")
-        .output()
-        .expect("Failed to execute ifconfig command");
-
-    let output_str = str::from_utf8(&output.stdout).unwrap();
-
-    // Search for the "default" line in the ifconfig output
-    let default_line = output_str.lines().find(|line| line.contains("default"))?;
-
-    // Extract the IP address from the "default" line
-    let default_gateway = default_line
-        .split_whitespace()
-        .nth(1)
-        .map(|s| s.to_string())?;
-
-    Some(default_gateway)
 }

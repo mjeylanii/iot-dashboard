@@ -1,13 +1,16 @@
 <script>
 	import { invoke } from '@tauri-apps/api/tauri';
+	import { onMount } from 'svelte';
+	import { themeChange } from 'theme-change';
+	onMount(() => {});
 </script>
 
-<div class="navbar bg-base-100 p-x-10 shadow-md rounded w-2/3 mx-auto">
+<div class="navbar p-x-10 shadow-md rounded w-2/3 mx-auto">
 	<div class="navbar-start">
 		<p class="btn btn-ghost normal-case text-xl">Dashboard</p>
 	</div>
 	<div class="navbar-center flex">
-		<ul class="menu menu-horizontal bg-base-100 rounded-box">
+		<ul class="menu menu-horizontal rounded-box">
 			<li>
 				<button>
 					<svg
@@ -26,13 +29,7 @@
 				</button>
 			</li>
 			<li>
-				<button
-					on:click={//Invoke tauri
-					() => {
-						//Invoke tauri
-						invoke('ping');
-					}}
-				>
+				<button>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						class="h-5 w-5"
@@ -70,7 +67,7 @@
 	<div class="navbar-end">
 		<label class="swap swap-rotate">
 			<!-- this hidden checkbox controls the state -->
-			<input type="checkbox" />
+			<input data-toggle-theme="dark,light" type="checkbox" on:input={() => {}} />
 
 			<!-- sun icon -->
 			<svg

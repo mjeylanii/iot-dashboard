@@ -6,7 +6,7 @@
 	};
 </script>
 
-<div class="flex max-w-md gap-8 py-6 overflow-hidden bg-white rounded-lg shadow-lg">
+<div class="flex max-w-md gap-8 py-6 overflow-hidden rounded-lg shadow-lg">
 	<div class="w-1/3">
 		<!-- Image of a dlink router -->
 		<img
@@ -17,10 +17,10 @@
 	</div>
 
 	<div class="w-2/3 gap-2 space-y-4">
-		<h1 class="text-2xl font-bold text-gray-900">
+		<h1 class="text-2xl font-bold">
 			{device.name}
 		</h1>
-		<p class="text-lg text-gray-700">
+		<p class="text-lg">
 			{device.ip}
 		</p>
 	</div>

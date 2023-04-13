@@ -1,4 +1,4 @@
-import { mqtt } from '$lib/store.js';
+import { mqtt } from '$lib/utils/store.js';
 export function GetLightStates() {
   mqtt.subscribe(client => {
     client.subscribe('light/+/state');

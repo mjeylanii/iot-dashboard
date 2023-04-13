@@ -3,7 +3,23 @@
 	import { fetchWeatherData } from './api/WeatherAPI';
 	import { onMount } from 'svelte';
 
-	let weatherData = {};
+	let weatherData = {
+		main: {
+			temp: 0,
+			feels_like: 0,
+			temp_min: 0,
+			temp_max: 0
+		},
+		weather: [
+			{
+				main: '',
+				description: '',
+				icon: ''
+			}
+		],
+		dt: 0,
+		name: ''
+	};
 	let isLoading = true;
 
 	onMount(async () => {
@@ -19,11 +35,11 @@
 </script>
 
 {#if isLoading}
-	<div class="mx-auto shadow-xl p-1/312 w- bg-base-100">
+	<div class="mx-auto shadow-xl p-1/3">
 		<div role="status">
 			<svg
 				aria-hidden="true"
-				class="inline w-10 h-10 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+				class="inline w-10 h-10 mr-2 animate-spin"
 				viewBox="0 0 100 101"
 				fill="none"
 				xmlns="http://www.w3.org/2000/svg"
@@ -41,7 +57,7 @@
 		</div>
 	</div>
 {:else}
-	<div class="flex justify-between p-12 shadow-xl rounded-xl bg-base-100">
+	<div class="flex justify-between p-12 shadow-xl rounded-xl">
 		<div class="flex flex-row items-center justify-center gap-8">
 			<img
 				class="w-24 h-24"
@@ -56,7 +72,10 @@
 
 		<div class="flex flex-col items-center gap-4 text-center">
 			<div class="date">
-				<p class="text-2xl font-semibold">
+				<p
+					class="text-2xl font-semibold
+				"
+				>
 					{new Date(weatherData.dt * 1000).toLocaleDateString('en-US', {
 						weekday: 'long',
 						month: 'long',
@@ -70,8 +89,8 @@
 				<span>Feels like: {Math.round(weatherData.main.feels_like)}°C</span>
 
 				<div class="">
-					<span>Min: {Math.round(weatherData.main.temp_min)}°C</span>
-					<span>Max: {Math.round(weatherData.main.temp_max)}°C</span>
+					<span class="">Min: {Math.round(weatherData.main.temp_min)}°C</span>
+					<span class="">Max: {Math.round(weatherData.main.temp_max)}°C</span>
 				</div>
 			</div>
 		</div>

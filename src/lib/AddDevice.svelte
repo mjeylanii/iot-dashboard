@@ -2,9 +2,9 @@
 </script>
 
 <div
-	class="flex flex-col items-center justify-center max-w-md gap-4 py-6 overflow-hidden bg-white rounded-lg shadow-lg"
+	class="flex flex-col items-center justify-center max-w-md gap-4 py-6 overflow-hidden rounded-lg shadow-lg"
 >
-	<h1 class="font-medium text-gray-400">Add Device</h1>
+	<h1 class="font-medium">Add Device</h1>
 	<button
 		class="pb-3 text-4xl text-center rounded-full btn btn-default"
 		on:click={() => {

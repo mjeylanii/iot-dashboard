@@ -1,4 +1,5 @@
 export const OPENWEATHERMAP_API_KEY: string = '694b30cfa3ab199ef5cf64bafccf16e1';
+
 export const MQTT_CONFIG = {
     BROKER_IP: '192.168.1.111',
     BROKER_PORT: 8080,
