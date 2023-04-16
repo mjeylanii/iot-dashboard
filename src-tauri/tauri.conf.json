@@ -31,7 +31,8 @@
 				"startDragging": true,
 				"setTitle": true,
 				"setMaxSize": false,
-				"setMinSize": false
+				"setMinSize": false,
+				"center": true
 			},
 			"path": {
 				"all": false
@@ -86,7 +87,16 @@
 				"minWidth": 1360,
 				"minHeight": 720,
 				"decorations": false,
+				"visible": false,
 				"label": "main"
+			},
+			{
+				"width": 400,
+				"height": 200,
+				"decorations": false,
+				"url": "https://github.com/mjeylanii/iot-dashboard/blob/main/src-tauri/splashscreen.html",
+				"label": "splashscreen",
+				"center": true
 			}
 		]
 	}

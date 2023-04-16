@@ -15,6 +15,7 @@
 	import WelcomeCard from '$lib/WelcomeCard.svelte';
 	import SettingsModal from '$lib/modals/SettingsModal.svelte';
 	import InfoModal from '$lib/modals/InfoModal.svelte';
+	import { invoke } from '@tauri-apps/api/tauri';
 
 	let persons = [
 		{
@@ -39,6 +40,11 @@
 		let colorScheme = localStorage.getItem('colorScheme');
 		//If not set, set to dark
 		console.log(colorScheme);
+		//Delay 10 seconds
+		setTimeout(() => {
+			welcomeVisible = false;
+		}, 10000);
+		invoke('close_splashscreen');
 	});
 </script>
 
