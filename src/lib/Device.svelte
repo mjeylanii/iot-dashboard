@@ -6,7 +6,7 @@
 	};
 </script>
 
-<div class="flex max-w-md gap-8 py-6 overflow-hidden rounded-lg shadow-lg">
+<div class="flex max-w-md gap-8 py-6 overflow-hidden rounded-lg shadow-lg bg-base-200">
 	<div class="w-1/3">
 		<!-- Image of a dlink router -->
 		<img

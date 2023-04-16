@@ -12,7 +12,30 @@
 	},
 	"tauri": {
 		"allowlist": {
-			"all": false
+			"fs": {
+				"createDir": true,
+				"readDir": true,
+				"readFile": true,
+				"writeFile": true,
+				"scope": ["$APPCONFIG", "$APPCONFIG/*"]
+			},
+			"window": {
+				"all": false,
+				"close": true,
+				"hide": true,
+				"show": true,
+				"maximize": true,
+				"minimize": true,
+				"unmaximize": true,
+				"unminimize": true,
+				"startDragging": true,
+				"setTitle": true,
+				"setMaxSize": false,
+				"setMinSize": false
+			},
+			"path": {
+				"all": false
+			}
 		},
 		"bundle": {
 			"active": true,
@@ -61,7 +84,9 @@
 				"title": "Control Center",
 				"width": 1360,
 				"minWidth": 1360,
-				"minHeight": 720
+				"minHeight": 720,
+				"decorations": false,
+				"label": "main"
 			}
 		]
 	}

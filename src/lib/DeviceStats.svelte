@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 </script>
 
-<div class="stats stats-vertical lg:stats-horizontal shadow-lg">
+<div class="shadow-lg stats stats-vertical lg:stats-horizontal">
 	<div class="stat">
 		<div class="stat-title">Downloads</div>
 		<div class="stat-value">31K</div>

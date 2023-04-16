@@ -2,11 +2,12 @@
 	import { onMount } from 'svelte';
 	import { mqtt } from '$lib/utils/store.js';
 	import { getLights, getLightStates } from '$lib/api/LightsAPI';
-
+	import Alert from '$lib/Alert.svelte';
+	let error = '';
 	// onMount(() => {
 	// 	getLights();
 	// });
-	let error = '';
+
 	let lights = [
 		{
 			id: 1,
@@ -42,43 +43,34 @@
 </script>
 
 {#if error}
-	<div class="alert alert-error shadow-lg">
-		<div>
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				class="stroke-current flex-shrink-0 h-6 w-6"
-				fill="none"
-				viewBox="0 0 24 24"
-				><path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="2"
-					d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-				/></svg
-			>
-			<span>Error! {error} .</span>
-		</div>
-	</div>
+	<Alert type="error">
+		{error}
+	</Alert>
 {/if}
-<div class="grid items-center justify-center grid-flow-row grid-cols-2 gap-4 lg:grid-cols-4">
+<div
+	class="grid items-center justify-center grid-flow-row grid-cols-2 gap-4 lg:grid-cols-4 select-none"
+>
 	{#each lights as light}
-		<div class="w-full h-full checkbox">
+		<div class="w-full h-full checkbox bg-base-200 group">
 			<label class="checkbox-wrapper">
 				<input
 					id={`checkbox-${light.id}`}
 					type="checkbox"
-					class="checkbox-input"
+					class="checkbox-input peer/checkbox-input"
 					checked={light.state === 'on'}
+					on:input={() => {
+						light.state = light.state === 'on' ? 'off' : 'on';
+					}}
 				/>
 				<span
-					class="relative flex flex-col items-center justify-around shadow-xl lg:flex-row rounded-xl checkbox-tile hover:border-success"
+					class="relative flex flex-col items-center justify-around shadow-xl lg:flex-row rounded-xl checkbox-tile peer-checked/checkbox-input:border-success"
 					><span
 						class="p-4 {light.state == 'on'
 							? 'bg-yellow-500'
-							: 'bg-gray-300'} rounded-full checkbox-icon w-fit"
+							: 'bg-gray-300'} rounded-full checkbox-icon w-fit group-hover:scale-125 transition"
 					>
 						<svg
-							class="rounded-full"
+							class="rounded-ful w-[2.5rem] h-[2.5rem]"
 							fill="#343455"
 							viewBox="0 0 24 24"
 							xmlns="http://www.w3.org/2000/svg"
@@ -90,7 +82,9 @@
 
 					<span class="flex flex-col checkbox-label">
 						<span class="font-bold checkbox-title">Light {light.id}</span>
-						<span class="text-sm checkbox-description"> {light.state == 'on' ? 'On' : 'Off'}</span>
+						<span class="text-sm checkbox-description hidden">
+							{light.state == 'on' ? 'On' : 'Off'}</span
+						>
 					</span>
 				</span>
 			</label>
@@ -113,7 +107,6 @@
 	.checkbox-input:checked + .checkbox-tile {
 		border-color: rgb(47, 212, 74);
 		box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-		color: rgb(47, 212, 74);
 	}
 
 	.checkbox-input:checked + .checkbox-tile:before {
@@ -124,9 +117,9 @@
 	}
 
 	.checkbox-input:checked + .checkbox-tile .checkbox-icon,
-	.checkbox-input:checked + .checkbox-tile .checkbox-label {
+	/* .checkbox-input:checked + .checkbox-tile .checkbox-label {
 		color: rgb(41, 39, 29);
-	}
+	} */
 
 	/* Tile focus border */
 	/* .checkbox-input:focus + .checkbox-tile {
@@ -165,21 +158,21 @@
 		background-repeat: no-repeat;
 		background-position: 50% 50%;
 	} */
-
+	/* 
 	.checkbox-tile:hover:before {
 		transform: scale(1);
 		opacity: 1;
-	}
+	} */
 
 	/* .checkbox-icon {
 		transition: 0.375s ease;
 		color: #494949;
 	} */
 
-	.checkbox-icon svg {
+	/* .checkbox-icon svg {
 		width: 2.5rem;
 		height: 2.5rem;
-	}
+	} */
 
 	.checkbox-label {
 		transition: 0.375s ease;

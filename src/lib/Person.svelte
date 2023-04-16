@@ -4,9 +4,8 @@
 		status: 'online'
 	};
 	import { onMount } from 'svelte';
+	import AddPerson from './AddPerson.svelte';
 </script>
-
-<!-- Person card -->
 
 {#if person.status == 'online'}
 	<div class="flex flex-col text-center">
@@ -28,3 +27,5 @@
 		<h1 class="text-lg font-bold">{person.name}</h1>
 	</div>
 {/if}
+
+

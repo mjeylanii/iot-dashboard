@@ -84,7 +84,7 @@
 <div class="w-full h-full">
 	<div class="mx-2 md:flex">
 		<div class="w-full px-2">
-			<div class="mb-4 border rounded-lg shadow-xl">
+			<div class="mb-4 border rounded-lg shadow-xl dark:border-none bg-base-100">
 				<div class="relative overflow-hidden rounded-lg shadow-lg md:shadow-xl">
 					<div
 						class="relative z-10 px-3 pt-8 pb-10 text-center {chartId == 'Network Traffic'
@@ -111,8 +111,7 @@
 							/>
 							<p class="text-lg font-bold leading-tight uppercase">{chartId}</p>
 						</div>
-						<!-- <h3 class="my-3 text-3xl font-semibold leading-tight text-gray-700">3,682</h3> -->
-						<h3 class="mb-12 mt-4 text-3xl font-semibold leading-tight">
+						<h3 class="mt-4 mb-12 text-3xl font-semibold leading-tight">
 							{#if chartId == 'Humidity'}
 								{$humidity[$humidity.length - 1].value}%
 							{:else if chartId == 'PSI'}

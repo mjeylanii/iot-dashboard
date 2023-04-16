@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { OPENWEATHERMAP_API_KEY } from '$lib/config/mqtt.conf.js';
+	import Alert from './Alert.svelte';
 	import { fetchWeatherData } from './api/WeatherAPI';
 	import { onMount } from 'svelte';
-
+	let error = '';
 	let weatherData = {
 		main: {
 			temp: 0,
@@ -34,6 +35,11 @@
 	});
 </script>
 
+{#if error}
+	<Alert type="error">
+		{error}
+	</Alert>
+{/if}
 {#if isLoading}
 	<div class="mx-auto shadow-xl p-1/3">
 		<div role="status">
@@ -57,7 +63,7 @@
 		</div>
 	</div>
 {:else}
-	<div class="flex justify-between p-12 shadow-xl rounded-xl">
+	<div class="flex justify-between p-12 shadow-xl rounded-xl bg-base-200">
 		<div class="flex flex-row items-center justify-center gap-8">
 			<img
 				class="w-24 h-24"

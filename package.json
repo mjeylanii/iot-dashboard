@@ -45,6 +45,8 @@
 		"dotenv": "^16.0.3",
 		"paho-mqtt": "^1.1.0",
 		"pocketbase": "^0.13.1",
+		"svelte-icons-pack": "^2.1.0",
+		"svrollbar": "^0.12.0",
 		"tauri-plugin-websocket-api": "github:tauri-apps/tauri-plugin-websocket",
 		"theme-change": "^2.5.0"
 	}
