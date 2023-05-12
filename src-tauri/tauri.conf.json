@@ -7,7 +7,7 @@
 		"distDir": "../build"
 	},
 	"package": {
-		"productName": "iot-dashboard",
+		"productName": "OfficeHub",
 		"version": "0.1.0"
 	},
 	"tauri": {
@@ -88,15 +88,17 @@
 				"minHeight": 720,
 				"decorations": false,
 				"visible": false,
-				"label": "main"
+				"transparent": true
 			},
 			{
-				"width": 400,
-				"height": 200,
+				"width": 720,
+				"height": 360,
 				"decorations": false,
-				"url": "https://github.com/mjeylanii/iot-dashboard/blob/main/src-tauri/splashscreen.html",
+				"url": "splashscreen",
 				"label": "splashscreen",
-				"center": true
+				"center": true,
+				"resizable": false,
+				"transparent": true
 			}
 		]
 	}

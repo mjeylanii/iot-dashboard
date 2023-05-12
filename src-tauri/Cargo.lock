@@ -79,6 +79,7 @@ dependencies = [
  "subprocess",
  "tauri",
  "tauri-build",
+ "tauri-plugin-store",
  "tauri-plugin-websocket",
  "toml 0.5.11",
  "trust-dns-resolver",
@@ -3413,6 +3414,18 @@ dependencies = [
  "syn 1.0.109",
  "tauri-codegen",
  "tauri-utils",
+]
+
+[[package]]
+name = "tauri-plugin-store"
+version = "0.0.0"
+source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v1#146004129e339dc20692c7b99dc59d7d653ce9d7"
+dependencies = [
+ "log",
+ "serde",
+ "serde_json",
+ "tauri",
+ "thiserror",
 ]
 
 [[package]]

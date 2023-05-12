@@ -3,34 +3,29 @@
 	import VscChromeClose from 'svelte-icons-pack/vsc/VscChromeClose';
 	import VscChromeMaximize from 'svelte-icons-pack/vsc/VscChromeMaximize';
 	import VscChromeMinimize from 'svelte-icons-pack/vsc/VscChromeMinimize';
+	import VscChromeRestore from 'svelte-icons-pack/vsc/VscChromeRestore';
+	//@ts-ignore
 	import Icon from 'svelte-icons-pack/Icon.svelte';
 
-	let maximized : Promise<boolean>;
 	import { appWindow } from '@tauri-apps/api/window';
-
-	// Set the title of the window
-	//Add event listeners to the buttons
+	let isMaximized: boolean;
 	onMount(() => {
+		appWindow.isMaximized().then((max) => {});
 		document.getElementById('titlebar-minimize')?.addEventListener('click', () => {
 			appWindow.minimize();
 		});
 		document.getElementById('titlebar-maximize')?.addEventListener('click', () => {
 			appWindow.toggleMaximize();
+			isMaximized = !isMaximized;
 		});
 		document.getElementById('titlebar-close')?.addEventListener('click', () => {
 			appWindow.close();
-		});
-		maximized = appWindow.isMaximized().then((max) => {
-			if (max) {
-				document.getElementById('titlebar-maximize')?.classList.add('bg-slate-300');
-			}
-			return max;
 		});
 	});
 </script>
 
 <div
-	class="fixed top-0 left-0 right-0 z-50 flex justify-between px-2 bg-neutral"
+	class="fixed top-0 left-0 right-0 z-50 flex justify-between px-2 bg-neutral select-none"
 	data-tauri-drag-region
 >
 	<div class="container flex items-center gap-2 py-2 w-fit h-fit">
@@ -49,9 +44,12 @@
 			class="transition border-black titlebar-button hover:bg-slate-300 hover:border hover:text-black text-white"
 			id="titlebar-maximize"
 		>
-			<Icon src={VscChromeMaximize} />
+			{#if isMaximized}
+				<Icon src={VscChromeRestore} />
+			{:else}
+				<Icon src={VscChromeMaximize} />
+			{/if}
 		</div>
-
 		<div
 			class="transition border-black titlebar-button hover:bg-error hover:border hover:text-black text-white"
 			id="titlebar-close"

@@ -1,4 +1,4 @@
-import { ws_config_home } from "$lib/config/websocket.conf";
+import { ws_config } from "$lib/config/default/websocket.conf";
 let response = ''
 
 export async function getLights(){

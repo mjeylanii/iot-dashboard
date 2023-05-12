@@ -18,25 +18,31 @@ use std::env;
 use std::process::Command;
 use tauri::Manager;
 use tauri::Result;
+use tauri_plugin_store::StoreBuilder;
 use which::which;
 
 #[tauri::command]
 async fn close_splashscreen(window: tauri::Window) {
-    // Close splashscreen
+    println!(
+        "The current directory is {}",
+        env::current_dir().unwrap().display()
+    );
+    println!("You have invoked the close_splashscreen command");
     if let Some(splashscreen) = window.get_window("splashscreen") {
         splashscreen.close().unwrap();
     }
     // Show main window
     window.get_window("main").unwrap().show().unwrap();
 }
+
 fn main() {
     tauri::Builder::default()
-        .plugin(tauri_plugin_websocket::init())
-        .invoke_handler(tauri::generate_handler![get_devices])
-        .invoke_handler(tauri::generate_handler![close_splashscreen])
+        .plugin(tauri_plugin_store::Builder::default().build())
+        .invoke_handler(tauri::generate_handler![get_devices, close_splashscreen])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
+
 #[derive(Serialize)]
 struct Device {
     hostname: String,
