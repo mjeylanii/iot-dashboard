@@ -18,7 +18,6 @@ use std::env;
 use std::process::Command;
 use tauri::Manager;
 use tauri::Result;
-use tauri_plugin_store::StoreBuilder;
 use which::which;
 
 #[tauri::command]

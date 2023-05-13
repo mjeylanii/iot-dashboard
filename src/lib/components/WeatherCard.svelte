@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { OPENWEATHERMAP_API_KEY } from '$lib/config/default/mqtt.conf.js';
+	import { OPENWEATHERMAP_API_KEY } from '$lib/config/default/keys';
 	import { fetchWeatherData } from '../api/WeatherAPI';
 	import { onMount } from 'svelte';
 	import { alerts } from '$lib/stores/store';

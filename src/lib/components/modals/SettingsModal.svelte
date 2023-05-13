@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { settings } from '$lib/stores/store';
-	import Store from 'tauri-plugin-store-api';
+	// import { settings } from '$lib/stores/store';
+	// import Store from 'tauri-plugin-store-api';
 
-	let store = new Store();
+	// let store = new Store();
 	let settingsData: any = {};
 	let settingsDataKeys: any = [];
 	let settingsDataValues: any = [];
