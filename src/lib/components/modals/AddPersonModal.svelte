@@ -11,7 +11,6 @@
 					<img src={'https://picsum.photos/200'} alt="profile" />
 				</div>
 			</div>
-			<!-- Change profile image input-->
 			<div class="form-control">
 				<label class="label" for="person-image">
 					<span class="label-text">Profile image</span>

@@ -4,7 +4,7 @@ module.exports = {
 	theme: {
 		extend: {}
 	},
-	plugins: [require('daisyui')],
+	plugins: [require('daisyui'), require('tailwindcss-hero-patterns')],
 	daisyui: {
 		themes: true,
 		utils: true,

@@ -1,9 +1,7 @@
 <script lang="ts">
 	export let person: any;
-
 	console.log(person);
 </script>
-
 {#if person.status == true}
 	<div class="flex flex-col text-center gap-2">
 		<div class="avatar online">

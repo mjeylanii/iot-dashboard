@@ -59,7 +59,7 @@
 {#if isLoading}
 	<WeatherCardLoading />
 {:else}
-	<div class="flex justify-between p-12 shadow-xl rounded-xl bg-base-200">
+	<div class="flex justify-between p-12 shadow-md rounded-xl bg-base-200">
 		<div class="flex flex-row items-center justify-center gap-8">
 			<img
 				class="w-24 h-24"

@@ -18,6 +18,7 @@
 			alerts.update((alerts) => [
 				...alerts,
 				{
+					id: alerts.length++,
 					type: 'error',
 					message: 'Error while fetching devices data',
 					time: new Date()
@@ -30,7 +31,9 @@
 	});
 </script>
 
-<div class="container flex flex-col items-center justify-center p-4 mx-auto rounded-lg shadow-lg">
+<div
+	class="container flex flex-col items-center justify-center p-4 mx-auto rounded-lg shadow-md border"
+>
 	<h1 class="text-xl font-bold">Devices</h1>
 	<br />
 	<table class="table w-full">

@@ -2,20 +2,11 @@
 	import Titlebar from '$lib/Titlebar.svelte';
 	import { Svrollbar } from 'svrollbar';
 	import '../../app.css';
-	import { onMount } from 'svelte';
 	import { Alert, Navbar } from '$components';
 	import { alerts } from '$lib/stores/store.js';
-	let viewport: Element | undefined;
-	onMount(() => {
-		//get content wrapper by class
-		viewport = document.querySelector('.content-wrapper') as Element;
-	});
-
-	//Content
 </script>
 
 <Titlebar />
-
 <Navbar />
 <Svrollbar />
 <div class="z-50 toast toast-end">

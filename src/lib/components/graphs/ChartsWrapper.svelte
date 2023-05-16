@@ -90,9 +90,6 @@
 	});
 </script>
 
-<!-- {#if error}
-	<Alert type="error">There was an error connecting to the websocket</Alert>
-{/if} -->
 <div class="flex flex-col">
 	<div class="divider">
 		<h1 class="text-2xl font-medium">Sensors</h1>

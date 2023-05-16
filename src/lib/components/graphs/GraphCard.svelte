@@ -1,13 +1,10 @@
 <script lang="js">
 	// @ts-nocheck
-
 	import Chart from 'chart.js/auto';
 	import { onMount } from 'svelte';
 	import { temperature, humidity, pressure } from '$lib/stores/sensors.js';
 	export let chartId = '';
-
 	export let options;
-
 	let chart;
 	//Get last object from the store array and return the value
 	let store = chartId == 'Humidity' ? humidity : chartId == 'PSI' ? pressure : temperature;
@@ -83,8 +80,8 @@
 <div class="w-full h-full">
 	<div class="mx-2 md:flex">
 		<div class="w-full px-2">
-			<div class="mb-4 border rounded-lg shadow-xl dark:border-none bg-base-100">
-				<div class="relative overflow-hidden rounded-lg shadow-lg md:shadow-xl">
+			<div class="mb-4 border rounded-lg shadow-md dark:border-none bg-base-100 ">
+				<div class="relative overflow-hidden rounded-lg shadow-md">
 					<div
 						class="relative z-10 px-3 pt-8 pb-10 text-center {chartId == 'Network Traffic'
 							? 'h-96'
