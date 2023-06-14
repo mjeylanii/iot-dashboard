@@ -7,7 +7,7 @@
 	});
 </script>
 
-<div class="fixed z-50 px-8 mb-8 rounded navbar top-10 bg-base-200">
+<div class="fixed z-50 px-8 mb-8 rounded navbar top-10 bg-base-300 shadow-md">
 	<!-- Header -->
 
 	<div class="flex items-center gap-2 navbar-start">

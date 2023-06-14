@@ -4,6 +4,7 @@
 	import { invoke } from '@tauri-apps/api/tauri';
 	import { pocketbase } from '$lib/utils/pocketbase';
 	import { alerts } from '$lib/stores/store';
+	import { Store } from 'tauri-plugin-store-api';
 	import {
 		WeatherCard,
 		InfoModal,
@@ -16,16 +17,17 @@
 		AddPerson,
 		NetworkDevices
 	} from '$components';
-
-	
 	import GraphCard from '$lib/components/graphs/GraphCard.svelte';
+	import Controls from '$lib/components/Controls.svelte';
 
 	let persons: any = [];
+	let store = new Store('.settings.dat');
+	
 
 	onMount(async () => {
 		let db = pocketbase;
 		db.admins
-			.authWithPassword('mohamed@localhost.com', 'Wfax2kz333')
+			.authWithPassword('mohamed@office.com', 'Wfax2kz333')
 			.then((res) => {
 				console.log(res);
 			})
@@ -45,7 +47,6 @@
 			.getFullList()
 			.then((res) => {
 				console.log(res);
-				//Return online and name
 				return res.map((person: any) => {
 					return {
 						name: person.name,
@@ -95,7 +96,6 @@
 <SettingsModal />
 <InfoModal />
 <div class="flex flex-col gap-12">
-	<!-- Wearther -->
 	<div class="flex flex-col justify-center gap-4">
 		<!-- <WelcomeCard /> -->
 		<WeatherCard />
@@ -111,16 +111,10 @@
 		</div>
 	</div>
 
-	<div class="text-xl font-medium divider">Lights</div>
+	<div class="text-xl font-medium divider">Controls</div>
 	<div class="relative flex flex-col justify-center gap-4">
-		<Lights
-			light={{
-				name: 'Living Room',
-				status: 'on',
-				brightness: 50,
-				color: '#ff0000'
-			}}
-		/>
+	
+		<Controls />
 	</div>
 
 	<ChartsWrapper />
@@ -131,11 +125,29 @@
 		</div>
 		<div class="flex flex-row justify-center gap-8 mx-auto lg:w-full">
 			{#await persons then persons}
-				{#each persons as person}
-					<Person {person} />
-				{/each}
+				{#if persons == undefined}
+					<div class="flex flex-col justify-center gap-4">
+						<div class="text-xl font-medium divider">People</div>
+						<div class="flex flex-col justify-center gap-4">
+							<div class="grid grid-cols-3 gap-4">
+								<AddPerson />
+							</div>
+						</div>
+					</div>
+				{:else}
+					<div class="flex flex-col justify-center gap-4">
+						<div class="text-xl font-medium divider">People</div>
+						<div class="flex flex-col justify-center gap-4">
+							<div class="grid grid-cols-3 gap-4">
+								{#each persons as person}
+									<Person {person} />
+								{/each}
+								<AddPerson />
+							</div>
+						</div>
+					</div>
+				{/if}
 			{/await}
-			<AddPerson />
 		</div>
 	</div>
 	<h2 class="px-4 text-3xl font-bold">Network</h2>

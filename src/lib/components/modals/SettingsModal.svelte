@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	// import { settings } from '$lib/stores/store';
-	// import Store from 'tauri-plugin-store-api';
+	import { Store } from 'tauri-plugin-store-api';
 
-	// let store = new Store();
 	let settingsData: any = {};
 	let settingsDataKeys: any = [];
 	let settingsDataValues: any = [];
@@ -12,6 +11,43 @@
 
 	function switchTab(index: number) {
 		activeTab = index;
+	}
+	function saveSettings() {
+		switch (activeTab) {
+			case 0:
+				settingsDataKeys = ['server_address', 'server_port'];
+				settingsDataValues = [
+					(<HTMLInputElement>document.getElementById('server-address')).value,
+					(<HTMLInputElement>document.getElementById('server-port')).value
+				];
+				break;
+			case 1:
+				settingsDataKeys = [
+					'mqtt_server_address',
+					'mqtt_server_port',
+					'mqtt_username',
+					'mqtt_password'
+				];
+				settingsDataValues = [
+					(<HTMLInputElement>document.getElementById('mqtt-server-address')).value,
+					(<HTMLInputElement>document.getElementById('mqtt-server-port')).value,
+					(<HTMLInputElement>document.getElementById('mqtt-username')).value,
+					(<HTMLInputElement>document.getElementById('mqtt-password')).value
+				];
+				break;
+			case 2:
+				settingsDataKeys = ['dark_mode'];
+				settingsDataValues = [(<HTMLInputElement>document.getElementById('dark-mode')).checked];
+				break;
+			case 3:
+				settingsDataKeys = ['name', 'email', 'password'];
+				settingsDataValues = [
+					(<HTMLInputElement>document.getElementById('name')).value,
+					(<HTMLInputElement>document.getElementById('email')).value,
+					(<HTMLInputElement>document.getElementById('password')).value
+				];
+				break;
+		}
 	}
 </script>
 
@@ -205,8 +241,8 @@
 		<br />
 
 		<div class="form-control max-w-sm flex flex-row ml-auto gap-4">
-			<button class="btn btn-primary">Save</button>
-			<button class="btn btn-ghost">Cancel</button>
+			<button on:click={saveSettings} class="btn btn-primary">Save</button>
+			<label for="settings-modal" class="btn btn-ghost">Cancel</label>
 		</div>
 	</div>
 </div>

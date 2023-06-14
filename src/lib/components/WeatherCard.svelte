@@ -71,13 +71,9 @@
 				{weatherData.weather[0].description}
 			</div>
 		</div>
-
 		<div class="flex flex-col items-center gap-4 text-center">
 			<div class="date">
-				<p
-					class="text-2xl font-semibold
-				"
-				>
+				<p class="text-2xl font-semibold">
 					{new Date(weatherData.dt * 1000).toLocaleDateString('en-US', {
 						weekday: 'long',
 						month: 'long',

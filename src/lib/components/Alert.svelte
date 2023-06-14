@@ -5,7 +5,6 @@
 
 	function handleClick() {
 		alerts.update((alerts) => {
-			//Loop through and log all alerts
 			if (alerts.length == 0) return;
 			alerts.forEach((alert) => {
 				console.log(alert);

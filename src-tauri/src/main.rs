@@ -26,7 +26,6 @@ async fn close_splashscreen(window: tauri::Window) {
         "The current directory is {}",
         env::current_dir().unwrap().display()
     );
-    println!("You have invoked the close_splashscreen command");
     if let Some(splashscreen) = window.get_window("splashscreen") {
         splashscreen.close().unwrap();
     }

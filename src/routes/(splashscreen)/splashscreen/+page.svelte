@@ -1,5 +1,7 @@
 <script>
+	
 	import messages from '$lib/messages.js';
+	import { onMount } from 'svelte';
 	let val = 0;
 	let interval = setInterval(() => {
 		val = val + 1;
@@ -8,6 +10,9 @@
 		}
 	}, 100);
 	$: currentMessage = messages[Math.floor(val / 12.5)];
+	onMount(() => {
+		
+	});
 </script>
 
 <div data-tauri-drag-region class="w-[100vw] h-[100vh] bg-base-300 rounded-lg shadow-2xl">
@@ -15,7 +20,7 @@
 		<div class="bg-repeat w-full h-full heropattern-circuitboard-gray-400" />
 	</div>
 
-	<div class="flex absolute w-36 h-36	 bottom-0">
+	<div class="flex absolute w-36 h-36 bottom-0">
 		<div class="bg-repeat w-full h-full heropattern-circuitboard-gray-400" />
 	</div>
 
@@ -25,7 +30,7 @@
 		</div>
 		<!-- <h1 class="text-2xl text-center">Setting up OfficeHub</h1> -->
 
-		<p class="text-center">
+		<p class="text-center select-none">
 			{currentMessage}
 			<span class="dots">...</span>
 		</p>

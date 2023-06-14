@@ -11,10 +11,10 @@
 					<img src={'https://picsum.photos/200'} alt="profile" />
 				</div>
 			</div>
-			<div class="form-control">
-				<label class="label" for="person-image">
+			<div class="form-control my-auto">
+				<!-- <label class="label" for="person-image">
 					<span class="label-text">Profile image</span>
-				</label>
+				</label> -->
 				<input type="file" class="file-input w-full max-w-xs" />
 			</div>
 		</div>

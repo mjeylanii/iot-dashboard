@@ -11,7 +11,6 @@
 			console.log('Add device');
 		}}
 	>
-		<!-- Icons 8 plus sign -->
 		<img
 			src="https://img.icons8.com/material/50/000000/plus.png"
 			alt="Add device"
@@ -20,5 +19,3 @@
 		/>
 	</button>
 </div>
-
-<!-- Path: src\lib\AddDevice.svelte -->
