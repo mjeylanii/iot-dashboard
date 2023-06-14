@@ -1,30 +1,29 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import Alert from '$lib/components/Alert.svelte';
+	import { lights } from '$lib/stores/devices';
+
 	let error = '';
 	export let light: any;
 
 	let isChecked = light.state === 'on';
-
-
 </script>
 
 <div class="w-full h-full checkbox bg-base-200 group">
 	<label class="checkbox-wrapper">
 		<input
-			id={`${light.name}`}
+			id={`${light.id}`}
 			type="checkbox"
 			class="checkbox-input peer/checkbox-input"
 			bind:checked={isChecked}
 			on:input={() => {
-				light.state = light.state === 'on' ? 'off' : 'on';
-				console.log(light.state);
+				light.status === 'on' ? 'off' : 'on';
 			}}
 		/>
 		<span
 			class="relative flex flex-col items-center justify-around shadow-xl lg:flex-row rounded-xl checkbox-tile peer-checked/checkbox-input:border-success"
 			><span
-				class="p-4 {light.state == 'on'
+				class="p-4 {light.status == 'on'
 					? 'bg-yellow-500'
 					: 'bg-gray-300'} rounded-full checkbox-icon w-fit group-hover:scale-125 transition"
 			>

@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { netOptions } from '$lib/chart_options/networkTraffic';
 	import { invoke } from '@tauri-apps/api/tauri';
-	import { pocketbase } from '$lib/utils/pocketbase';
+	import { authenticateWithDatabase, fetchPersonnelData } from '$lib/api/PersonsAPI';
 	import { alerts } from '$lib/stores/store';
 	import { Store } from 'tauri-plugin-store-api';
 	import {
@@ -20,54 +20,48 @@
 	import GraphCard from '$lib/components/graphs/GraphCard.svelte';
 	import Controls from '$lib/components/Controls.svelte';
 
-	let persons: any = [];
+	let personnel: any = [];
 	let store = new Store('.settings.dat');
-	
 
 	onMount(async () => {
-		let db = pocketbase;
-		db.admins
-			.authWithPassword('mohamed@office.com', 'Wfax2kz333')
-			.then((res) => {
-				console.log(res);
-			})
-			.catch((err) => {
-				alerts.update((alerts) => [
-					...alerts,
-					{
-						id: alerts.length + 1,
-						type: 'error',
-						message: 'Something went wrong while authenticating with the database',
-						time: new Date()
-					}
-				]);
+		try {
+			await authenticateWithDatabase('mohamed@office.com', 'Wfax2kz333');
+			await fetchPersonnelData().then((res) => {
+				personnel = res;
 			});
-		persons = await db
-			.collection('personnel')
-			.getFullList()
-			.then((res) => {
-				console.log(res);
-				return res.map((person: any) => {
-					return {
-						name: person.name,
-						status: person.online
-					};
-				});
-			})
-			.catch((err) => {
-				alerts.update((alerts) => [
-					...alerts,
-					{
-						id: alerts.length + 1,
-						type: 'error',
-						message: 'Something went wrong while fetching database data',
-						time: new Date()
-					}
-				]);
-			});
+			console.log(personnel);
+		} catch (err) {
+			alerts.update((alerts) => [
+				...alerts,
+				{
+					id: alerts.length + 1,
+					type: 'error',
+					message: err.message,
+					time: new Date()
+				}
+			]);
+		}
 		invoke('close_splashscreen');
 	});
 
+	//Recheck database every 5 seconds
+	setInterval(async () => {
+		try {
+			await fetchPersonnelData().then((res) => {
+				personnel = res;
+			});
+		} catch (err) {
+			alerts.update((alerts) => [
+				...alerts,
+				{
+					id: alerts.length + 1,
+					type: 'error',
+					message: err.message,
+					time: new Date()
+				}
+			]);
+		}
+	}, 5000);
 	let devices = [
 		{
 			name: 'Raspberry Pi',
@@ -113,7 +107,6 @@
 
 	<div class="text-xl font-medium divider">Controls</div>
 	<div class="relative flex flex-col justify-center gap-4">
-	
 		<Controls />
 	</div>
 
@@ -124,10 +117,9 @@
 			<h2 class="text-2xl font-medium">People</h2>
 		</div>
 		<div class="flex flex-row justify-center gap-8 mx-auto lg:w-full">
-			{#await persons then persons}
-				{#if persons == undefined}
+			{#await personnel then person}
+				{#if personnel == undefined || personnel.length == 0}
 					<div class="flex flex-col justify-center gap-4">
-						<div class="text-xl font-medium divider">People</div>
 						<div class="flex flex-col justify-center gap-4">
 							<div class="grid grid-cols-3 gap-4">
 								<AddPerson />
@@ -136,10 +128,9 @@
 					</div>
 				{:else}
 					<div class="flex flex-col justify-center gap-4">
-						<div class="text-xl font-medium divider">People</div>
 						<div class="flex flex-col justify-center gap-4">
-							<div class="grid grid-cols-3 gap-4">
-								{#each persons as person}
+							<div class="grid grid-cols-5 gap-4">
+								{#each personnel as person}
 									<Person {person} />
 								{/each}
 								<AddPerson />

@@ -1,10 +1,10 @@
 export const ws_config = {
-    HOST: "192.168.0.116",
-    PORT: 1880,
-    TOPICS: 
+    host: "192.168.0.116",
+    port: 1880,
+    topics: 
        {
            climate: "/climate",
-            light: "/light",
+            lights: "/lights",
             fan: "/fan",
             pump: "/pump",
             door: "/door",

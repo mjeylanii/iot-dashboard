@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { humidity, temperature, pressure, hum } from '$lib/stores/sensors.js';
+	import { humidity, temperature, pressure } from '$lib/stores/sensors';
 	import GraphCard from '$lib/components/graphs/GraphCard.svelte';
 	import { psiOptions } from '$lib/chart_options/psi';
 	import { humidityOptions } from '$lib/chart_options/humidity';
@@ -23,7 +23,7 @@
 			ws.close();
 		} else {
 			//Connect to the websocket
-			ws = new WebSocket(`ws://${ws_config.HOST}:${ws_config.PORT}/ws${ws_config.TOPICS.climate}`);
+			ws = new WebSocket(`ws://${ws_config.host}:${ws_config.port}/ws${ws_config.topics.climate}`);
 			ws.onopen = () => {
 				console.log('Websocket is connected');
 				alerts.update((alerts) => [
@@ -48,15 +48,10 @@
 				console.log(data);
 				//Update the store
 				temperature.update((value) => {
-					//If length is 60, remove the first element
 					value.push({ time: timestamp, value: parsedResponse.temperature });
 					return value;
 				});
 				humidity.update((value) => {
-					//If length is 60, remove the first element
-					//Update hum store, it's not an array
-					hum.set(parsedResponse.humidity);
-
 					value.push({ time: timestamp, value: parsedResponse.humidity });
 					return value;
 				});

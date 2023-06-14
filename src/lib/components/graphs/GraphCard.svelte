@@ -2,7 +2,7 @@
 	// @ts-nocheck
 	import Chart from 'chart.js/auto';
 	import { onMount } from 'svelte';
-	import { temperature, humidity, pressure, hum } from '$lib/stores/sensors.js';
+	import { temperature, humidity, pressure } from '$lib/stores/sensors';
 	export let chartId = '';
 	export let options;
 	export let data;

@@ -1,19 +1,18 @@
 import { ws_config } from "$lib/config/default/websocket.conf";
-let response = ''
 
-export async function getLights(){
-    console.log('getLights')
-  
+let ws: WebSocket;
 
+export const connectLightsWebsocket = () => {
+    ws = new WebSocket("ws://" + ws_config.host + ":" + ws_config.port + "/lights");
+    ws.onopen = () => {
+        console.log("Lights websocket connected");
+    };
+    ws.onclose = () => {
+        console.log("Lights websocket disconnected");
+    };
+    }
+
+export const sendLightsWebsocket = (data: any) => {
+    ws.send(JSON.stringify(data));
 }
 
-function _updateResponse(returnValue: any){
-    console.log(returnValue)
-    response += (typeof returnValue === 'string' ? returnValue : JSON.stringify(returnValue)) + '<br>'
-}
-
-
-export async function getLightStates(){
-    
-}
-   
