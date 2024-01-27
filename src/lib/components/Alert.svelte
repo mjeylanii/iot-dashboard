@@ -4,6 +4,7 @@
 	export let id: number;
 
 	function handleClick() {
+		//@ts-ignore
 		alerts.update((alerts) => {
 			if (alerts.length == 0) return;
 			alerts.forEach((alert) => {

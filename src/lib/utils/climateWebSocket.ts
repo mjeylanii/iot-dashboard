@@ -30,7 +30,7 @@ class ClimateWebSocketService {
         {
           id: alerts.length + 1,
           type: 'success',
-          message: 'Successfully connected to the server',
+          message: 'Connected to the server',
           time: new Date(),
         },
       ]);

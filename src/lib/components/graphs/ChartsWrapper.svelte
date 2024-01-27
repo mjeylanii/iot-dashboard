@@ -7,6 +7,7 @@
 	import { temperatureOptions } from '$lib/chart_options/temperature';
 	import { ws_config } from '$lib/config/default/websocket.conf';
 	import { alerts } from '$lib/stores/store';
+	import  WebSocketService from '$lib/services/WebsocketService';
 
 	let ws: WebSocket;
 	let response = '';
@@ -27,7 +28,9 @@
 			ws.onopen = () => {
 				console.log('Websocket is connected');
 				alerts.update((alerts) => [
+					//@ts-ignore
 					...alerts,
+					//@ts-ignore
 					{
 						id: alerts.length + 1,
 						type: 'success',

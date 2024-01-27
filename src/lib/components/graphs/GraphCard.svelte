@@ -8,7 +8,14 @@
 	export let data;
 	let chart;
 	//Get last object from the store array and return the value
-	let store = chartId == 'Humidity' ? humidity : chartId == 'PSI' ? pressure : temperature;
+	let store =
+		chartId == 'Humidity'
+			? humidity
+			: chartId == 'PSI'
+			? pressure
+			: chartId == 'Temperature'
+			? temperature
+			: null;
 
 	//Place holder network traffic data
 	onMount(async () => {
@@ -51,30 +58,33 @@
 		});
 		function addData(label, data) {
 			if (typeof data == undefined && chart) return;
-			if (chart.data.labels.length > 60) {
-				//Remove last 10
-				chart.data.labels.splice(0, 10);
+
+			if (chart.data.labels.length >= 60) {
+				// Remove the oldest data point
+				chart.data.labels.shift();
 
 				chart.data.datasets.forEach((dataset) => {
-					dataset.data.splice(0, 10);
+					dataset.data.shift();
 				});
 			}
+
 			chart.data.labels.push(new Date(label).getSeconds());
 			chart.data.datasets.forEach((dataset) => {
 				dataset.data.push(data);
 			});
 			chart.update();
 		}
-
-		store.subscribe((value) => {
-			//Skip the first value
-			if (value.length > 1) {
-				//Get the last value
-				let lastValue = value[value.length - 1];
-				//Add the value to the chart
-				addData(lastValue.time, lastValue.value);
-			}
-		});
+		if (store != null) {
+			store.subscribe((value) => {
+				//Skip the first value
+				if (value.length > 1) {
+					//Get the last value
+					let lastValue = value[value.length - 1];
+					//Add the value to the chart
+					addData(lastValue.time, lastValue.value);
+				}
+			});
+		}
 	});
 </script>
 
@@ -106,7 +116,7 @@
 									? 'icons/sensors/thermostat.svg'
 									: 'icons/sensors/network.svg'}
 							/>
-							<p class="text-lg font-bold leading-tight uppercase">{chartId}</p>
+							<p class="text-md font-bold leading-tight uppercase">{chartId}</p>
 						</div>
 						<h3 class="mt-4 mb-12 text-3xl font-semibold leading-tight">
 							{data == undefined ? '0' : data}

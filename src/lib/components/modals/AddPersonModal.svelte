@@ -1,13 +1,55 @@
 <script lang="ts">
 	import { addPersonnel } from '$lib/api/PersonsAPI';
+	import { alerts } from '$lib/stores/store';
+	const formData = new FormData();
+	let date = new Date();
 	const data = {
 		name: '',
-		last_present: new Date(),
+		last_present: date.toUTCString(),
 		email: '',
-		online: false
+		online: false,
+		profile_image: null
 	};
+
+	let errors = {
+		name: '',
+		email: '',
+		profile_image: ''
+	};
+	function validate() {
+		if (data.name == '') {
+			errors.name = 'Name is required';
+		} else {
+			errors.name = '';
+		}
+		if (data.email == '') {
+			errors.email = 'Email is required';
+		} else {
+			errors.email = '';
+		}
+		// if (data.profile_image != null && data.profile_image.size > 1000000) {
+		// 	errors.profile_image = 'File size must be less than 1MB';
+		// } else {
+		// 	errors.profile_image = '';
+		// }
+	}
 	function addPerson() {
-		addPersonnel(data);
+		validate();
+
+		if (errors.name == '' && errors.email == '') {
+			addPersonnel(data);
+
+			const modal = document.getElementById('add-person-modal');
+			modal.checked = false;
+
+			data.name = '';
+			data.email = '';
+			data.profile_image = null;
+			// alerts.update((alerts) => [
+			// 	...alerts,
+			// 	{ id: alerts.length++, type: 'success', message: 'Person added successfully' }
+			// ]);
+		}
 	}
 </script>
 
@@ -21,14 +63,36 @@
 		<div class="flex flex-row gap-4 text-center">
 			<div class="avatar">
 				<div class="w-24 rounded-full">
-					<img src={'https://picsum.photos/200'} alt="profile" />
+					{#if data.profile_image == null}
+						<img
+							src="https://img.icons8.com/material/50/000000/plus.png"
+							alt="Add person"
+							class="w-1/4 h-1/3"
+						/>
+					{:else}
+						<img
+							src={data.profile_image ? URL.createObjectURL(new Blob(data.profile_image)) : ''}
+							alt="profile"
+						/>
+					{/if}
 				</div>
 			</div>
 			<div class="form-control my-auto">
-				<!-- <label class="label" for="person-image">
-					<span class="label-text">Profile image</span>
-				</label> -->
-				<input type="file" class="file-input w-full max-w-xs" />
+				<input
+					id="fileInput"
+					bind:files={data.profile_image}
+					type="file"
+					class="file-input w-full max-w-xs"
+					accept="image/*"
+				/>
+				{#if errors.profile_image != ''}
+					<span class="text-error">{errors.profile_image}</span>
+				{/if}
+				{#if data.profile_image != null}
+					{#if data.profile_image.size > 1000000}
+						<span class="text-error">File size must be less than 1MB</span>
+					{/if}
+				{/if}
 			</div>
 		</div>
 		<br />
@@ -36,6 +100,9 @@
 		<div class="form-control">
 			<label class="label" for="person-name">
 				<span class="label-text">Name</span>
+				{#if errors.name != ''}
+					<span class="text-error">{errors.name}</span>
+				{/if}
 			</label>
 			<input
 				id="person-name"
@@ -47,6 +114,9 @@
 			/>
 			<label class="label" for="person-email">
 				<span class="label-text">Email</span>
+				{#if errors.email != ''}
+					<span class="text-error">{errors.email}</span>
+				{/if}
 			</label>
 			<input
 				id="person-email"

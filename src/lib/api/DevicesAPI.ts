@@ -7,7 +7,3 @@ export async function fetchDevicesData() {
     return response;
 
 }
-
-export async function getIoTDevices() {
-
-}

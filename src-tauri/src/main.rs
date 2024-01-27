@@ -12,31 +12,75 @@
 )]
 
 use default_net::get_default_gateway;
-
 use serde::Serialize;
 use std::env;
 use std::process::Command;
 use tauri::Manager;
 use tauri::Result;
 use which::which;
+use window_shadows::set_shadow;
 
+#[cfg(any(windows, target_os = "macos"))]
 #[tauri::command]
 async fn close_splashscreen(window: tauri::Window) {
-    println!(
-        "The current directory is {}",
-        env::current_dir().unwrap().display()
-    );
     if let Some(splashscreen) = window.get_window("splashscreen") {
         splashscreen.close().unwrap();
     }
-    // Show main window
+    window.get_window("login").unwrap().show().unwrap();
+}
+
+#[tauri::command]
+async fn close_login(window: tauri::Window) {
+    if let Some(login) = window.get_window("login") {
+        login.close().unwrap();
+    }
+
     window.get_window("main").unwrap().show().unwrap();
+}
+#[tauri::command]
+async fn open_main(window: tauri::Window) {
+    if let Some(main) = window.get_window("main") {
+        main.show().unwrap();
+    }
+}
+#[tauri::command]
+async fn close_main(window: tauri::Window) {
+    if let Some(main) = window.get_window("main") {
+        main.close().unwrap();
+    }
+}
+
+#[tauri::command]
+async fn open_login(window: tauri::Window) {
+    if let Some(login) = window.get_window("login") {
+        login.show().unwrap();
+    }
 }
 
 fn main() {
+    //Get app data dir
+
     tauri::Builder::default()
+        .setup(|app| {
+            let splashscreen = app.get_window("splashscreen").unwrap();
+            let login = app.get_window("login").unwrap();
+            let main = app.get_window("main").unwrap();
+            let window = app.get_window("main").unwrap();
+            set_shadow(&window, true).expect("Unsupported platform!");
+            set_shadow(&splashscreen, true).expect("Unsupported platform!");
+            set_shadow(&login, true).expect("Unsupported platform!");
+            set_shadow(&main, true).expect("Unsupported platform!");
+            Ok(())
+        })
         .plugin(tauri_plugin_store::Builder::default().build())
-        .invoke_handler(tauri::generate_handler![get_devices, close_splashscreen])
+        .invoke_handler(tauri::generate_handler![
+            get_devices,
+            close_splashscreen,
+            close_login,
+            open_main,
+            close_main,
+            open_login
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

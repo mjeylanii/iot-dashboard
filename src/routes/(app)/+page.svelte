@@ -2,16 +2,13 @@
 	import { onMount } from 'svelte';
 	import { netOptions } from '$lib/chart_options/networkTraffic';
 	import { invoke } from '@tauri-apps/api/tauri';
-	import { authenticateWithDatabase, fetchPersonnelData } from '$lib/api/PersonsAPI';
-	import { alerts } from '$lib/stores/store';
-	import { Store } from 'tauri-plugin-store-api';
+	import { fetchPersonnelData, fetchUsersData, checkOnline } from '$lib/api/PersonsAPI';
+	import { checkIfLoggedIn } from '$lib/api/AuthAPI';
+	import { alerts, user } from '$lib/stores/store';
 	import {
 		WeatherCard,
 		InfoModal,
 		SettingsModal,
-		Lights,
-		AddDevice,
-		Device,
 		ChartsWrapper,
 		Person,
 		AddPerson,
@@ -21,11 +18,31 @@
 	import Controls from '$lib/components/Controls.svelte';
 
 	let personnel: any = [];
-	let store = new Store('.settings.dat');
+	let users: any = [];
 
 	onMount(async () => {
+		//Check if user is logged in
+		// let loggedIn = await checkIfLoggedIn();
+		// if (!loggedIn) {
+		// 	return;
+		// }
 		try {
-			await authenticateWithDatabase('mohamed@office.com', 'Wfax2kz333');
+			await fetchUsersData().then((res) => {
+				users = res;
+			});
+		} catch (err: any) {
+			alerts.update((alerts) => [
+				...alerts,
+				{
+					id: alerts.length + 1,
+					type: 'error',
+					message: err.message,
+					time: new Date()
+				}
+			]);
+			console.log(users);
+		}
+		try {
 			await fetchPersonnelData().then((res) => {
 				personnel = res;
 			});
@@ -41,27 +58,29 @@
 				}
 			]);
 		}
-		invoke('close_splashscreen');
 	});
 
 	//Recheck database every 5 seconds
 	setInterval(async () => {
-		try {
-			await fetchPersonnelData().then((res) => {
-				personnel = res;
-			});
-		} catch (err) {
-			alerts.update((alerts) => [
-				...alerts,
-				{
-					id: alerts.length + 1,
-					type: 'error',
-					message: err.message,
-					time: new Date()
-				}
-			]);
+		if (checkOnline()) {
+			try {
+				await fetchPersonnelData().then((res) => {
+					personnel = res;
+				});
+			} catch (err: any) {
+				alerts.update((alerts) => [
+					...alerts,
+					{
+						id: alerts.length + 1,
+						type: 'error',
+						message: err.message,
+						time: new Date()
+					}
+				]);
+			}
 		}
 	}, 5000);
+
 	let devices = [
 		{
 			name: 'Raspberry Pi',
@@ -94,7 +113,7 @@
 		<!-- <WelcomeCard /> -->
 		<WeatherCard />
 	</div>
-	<h2 class="px-4 text-3xl font-bold">Controls</h2>
+	<!-- <h2 class="px-4 text-3xl font-bold">Controls</h2>
 	<div class="text-xl font-medium divider">IoT Devices</div>
 	<div class="flex flex-col justify-center gap-4">
 		<div class="grid grid-cols-3 gap-4">
@@ -103,7 +122,7 @@
 			{/each}
 			<AddDevice />
 		</div>
-	</div>
+	</div> -->
 
 	<div class="text-xl font-medium divider">Controls</div>
 	<div class="relative flex flex-col justify-center gap-4">
@@ -144,6 +163,6 @@
 	<h2 class="px-4 text-3xl font-bold">Network</h2>
 	<div class="flex flex-col w-full gap-4">
 		<NetworkDevices />
-		<GraphCard chartId={'Network Traffic'} options={netOptions} />
+		<GraphCard data={'0'} chartId={'Network Traffic'} options={netOptions} />
 	</div>
 </div>

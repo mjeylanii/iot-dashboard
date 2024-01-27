@@ -4,9 +4,10 @@
 	import '../../app.css';
 	import { Alert, Navbar } from '$components';
 	import { alerts } from '$lib/stores/store';
+	let loc = 'app';
 </script>
 
-<Titlebar />
+<Titlebar {loc} />
 <Navbar />
 <Svrollbar />
 <div class="z-50 toast toast-end">

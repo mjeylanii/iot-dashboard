@@ -1,7 +1,8 @@
 <script>
-	
-	import messages from '$lib/messages.js';
+	import messages from '$lib/messages/messages.js';
 	import { onMount } from 'svelte';
+
+	import { invoke } from '@tauri-apps/api/tauri';
 	let val = 0;
 	let interval = setInterval(() => {
 		val = val + 1;
@@ -10,9 +11,6 @@
 		}
 	}, 100);
 	$: currentMessage = messages[Math.floor(val / 12.5)];
-	onMount(() => {
-		
-	});
 </script>
 
 <div data-tauri-drag-region class="w-[100vw] h-[100vh] bg-base-300 rounded-lg shadow-2xl">
@@ -28,8 +26,6 @@
 		<div class="block-wrapper">
 			<div class="rotate-block" />
 		</div>
-		<!-- <h1 class="text-2xl text-center">Setting up OfficeHub</h1> -->
-
 		<p class="text-center select-none">
 			{currentMessage}
 			<span class="dots">...</span>

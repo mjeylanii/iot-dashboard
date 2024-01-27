@@ -4,11 +4,12 @@
 	import VscChromeMaximize from 'svelte-icons-pack/vsc/VscChromeMaximize';
 	import VscChromeMinimize from 'svelte-icons-pack/vsc/VscChromeMinimize';
 	import VscChromeRestore from 'svelte-icons-pack/vsc/VscChromeRestore';
+	import { invoke } from '@tauri-apps/api/tauri';
 	//@ts-ignore
 	import Icon from 'svelte-icons-pack/Icon.svelte';
-
 	import { appWindow } from '@tauri-apps/api/window';
 	let isMaximized: boolean;
+	export let loc: string;
 	onMount(() => {
 		appWindow.isMaximized().then((max) => {});
 		document.getElementById('titlebar-minimize')?.addEventListener('click', () => {
@@ -19,6 +20,7 @@
 			isMaximized = !isMaximized;
 		});
 		document.getElementById('titlebar-close')?.addEventListener('click', () => {
+			invoke('close_main');
 			appWindow.close();
 		});
 	});
@@ -40,16 +42,19 @@
 		>
 			<Icon src={VscChromeMinimize} />
 		</div>
-		<div
-			class="transition border-black titlebar-button hover:bg-slate-300 hover:border hover:text-black text-white"
-			id="titlebar-maximize"
-		>
-			{#if isMaximized}
-				<Icon src={VscChromeRestore} />
-			{:else}
-				<Icon src={VscChromeMaximize} />
-			{/if}
-		</div>
+		{#if loc != 'login'}
+			<div
+				class="transition border-black titlebar-button hover:bg-slate-300 hover:border hover:text-black text-white"
+				id="titlebar-maximize"
+			>
+				{#if isMaximized}
+					<Icon src={VscChromeRestore} />
+				{:else}
+					<Icon src={VscChromeMaximize} />
+				{/if}
+			</div>
+		{/if}
+
 		<div
 			class="transition border-black titlebar-button hover:bg-error hover:border hover:text-black text-white"
 			id="titlebar-close"

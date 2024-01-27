@@ -2,14 +2,17 @@
 	import { invoke } from '@tauri-apps/api/tauri';
 	import { onMount } from 'svelte';
 	import { themeChange } from 'theme-change';
+	import { user } from '$lib/stores/store';
 	onMount(() => {
 		themeChange(false);
 	});
+
+	function logOut() {
+		invoke('logout');
+	}
 </script>
 
 <div class="fixed z-50 px-8 mb-8 rounded navbar top-10 bg-base-300 shadow-md">
-	<!-- Header -->
-
 	<div class="flex items-center gap-2 navbar-start">
 		<div class="flex-none">
 			<div class="avatar">
@@ -19,13 +22,13 @@
 			</div>
 		</div>
 		<div class="flex-1">
-			<p class="text-xl font-bold">Franklin</p>
+			<p class="text-xl font-bold">{$user.admin ? $user.admin : ''}</p>
 		</div>
 	</div>
 
 	<div class="flex navbar-end">
 		<ul class="menu menu-horizontal">
-			<li>
+			<!-- <li>
 				<button>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -41,7 +44,7 @@
 						/></svg
 					>
 				</button>
-			</li>
+			</li> -->
 			<li>
 				<label for="info-modal">
 					<svg
@@ -84,12 +87,10 @@
 			</li>
 		</ul>
 
-		<!-- Verticle divivder -->
 		<div class="divider divider-horizontal" />
 
 		<div>
 			<label class="swap swap-rotate btn btn-square btn-ghost">
-				<!-- this hidden checkbox controls the state -->
 				<input
 					data-toggle-theme="dark,light"
 					type="checkbox"

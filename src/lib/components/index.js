@@ -21,6 +21,8 @@ Modals
 import { default as SettingsModal } from './modals/SettingsModal.svelte';
 import { default as InfoModal } from './modals/InfoModal.svelte';
 import { default as AddPersonModal } from './modals/AddPersonModal.svelte';
+import { default as TermsAndConditionsModal } from './modals/TermsConditionsModal.svelte';
+import { default as EditPersonModal } from './modals/EditPersonModal.svelte';
 
 /*
  * Loading skeletons
@@ -33,6 +35,10 @@ import { default as WeatherCardLoading } from './loading/WeatherCardLoading.svel
  */
 import { default as NetworkDevices } from './NetworkDevices.svelte';
 import { default as ChartsWrapper } from './graphs/ChartsWrapper.svelte';
+
+/*
+ * Login and Register
+ */
 
 export {
 	Alert,
@@ -47,8 +53,10 @@ export {
 	SettingsModal,
 	InfoModal,
 	AddPersonModal,
+	EditPersonModal,
 	GraphCardLoading,
 	WeatherCardLoading,
 	NetworkDevices,
-	ChartsWrapper
+	ChartsWrapper,
+	TermsAndConditionsModal
 };
