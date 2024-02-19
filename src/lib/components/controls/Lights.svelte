@@ -2,7 +2,6 @@
 	import { onMount } from 'svelte';
 	import { devices } from '$lib/stores/store';
 
-
 	export let service: any;
 	export let light: any;
 
@@ -14,7 +13,7 @@
 	}
 </script>
 
-<div class="w-full h-full checkbox bg-base-200 group">
+<div class="w-full h-full checkbox bg-base-200 group rounded-lg">
 	<label class="checkbox-wrapper">
 		<input
 			id={`${light.id}`}

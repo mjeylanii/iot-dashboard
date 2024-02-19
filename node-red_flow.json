@@ -1,0 +1,762 @@
+[
+    {
+        "id": "d447ca1a8247f322",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "ebdb2767797b11f0",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "e3784186c447070f",
+        "type": "tab",
+        "label": "Flow 3",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "0b2c31c94a486621",
+        "type": "websocket-listener",
+        "path": "/ws/climate",
+        "wholemsg": "false"
+    },
+    {
+        "id": "a55d976cd5bb7b17",
+        "type": "websocket-listener",
+        "path": "/ws/humidity",
+        "wholemsg": "false"
+    },
+    {
+        "id": "50cb5ebc829d6622",
+        "type": "websocket-listener",
+        "path": "/ws/psi",
+        "wholemsg": "false"
+    },
+    {
+        "id": "9f30ef1e7989c30a",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "cb5cdd94305d0870",
+        "type": "websocket-listener",
+        "path": "/ws/lights",
+        "wholemsg": "false"
+    },
+    {
+        "id": "a214cbee51abad6d",
+        "type": "websocket-listener",
+        "path": "/ws/lights/meetrooma",
+        "wholemsg": "false"
+    },
+    {
+        "id": "975d74daded7f6d4",
+        "type": "websocket-listener",
+        "path": "/ws/lights/confroomb",
+        "wholemsg": "false"
+    },
+    {
+        "id": "d666d0ee8bf81e19",
+        "type": "websocket-listener",
+        "path": "/ws/lights/foyer",
+        "wholemsg": "false"
+    },
+    {
+        "id": "52698031fb4d4953",
+        "type": "websocket-listener",
+        "path": "/ws/lights/breakroom",
+        "wholemsg": "false"
+    },
+    {
+        "id": "86f64f8e1f5d5a70",
+        "type": "websocket-listener",
+        "path": "/ws/lights/execsuite",
+        "wholemsg": "false"
+    },
+    {
+        "id": "159895d02d21ba19",
+        "type": "aedes broker",
+        "z": "d447ca1a8247f322",
+        "name": "",
+        "mqtt_port": 1883,
+        "mqtt_ws_bind": "port",
+        "mqtt_ws_port": "8080",
+        "mqtt_ws_path": "",
+        "cert": "",
+        "key": "",
+        "certname": "",
+        "keyname": "",
+        "persistence_bind": "memory",
+        "dburl": "",
+        "usetls": false,
+        "x": 130,
+        "y": 540,
+        "wires": [
+            [
+                "efae2b567ef459d3"
+            ],
+            [
+                "8e6c1afc998324f4"
+            ]
+        ]
+    },
+    {
+        "id": "efae2b567ef459d3",
+        "type": "debug",
+        "z": "d447ca1a8247f322",
+        "name": "Broker Status event",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 330,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "8e6c1afc998324f4",
+        "type": "debug",
+        "z": "d447ca1a8247f322",
+        "name": "Broker Publish event",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 340,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "2d2ac633e9f7a550",
+        "type": "websocket out",
+        "z": "d447ca1a8247f322",
+        "name": "Climate",
+        "server": "0b2c31c94a486621",
+        "client": "",
+        "x": 740,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "723bbceca2470179",
+        "type": "inject",
+        "z": "d447ca1a8247f322",
+        "name": "random-climate-vals",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "4",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 40,
+        "wires": [
+            [
+                "44408a58c445fa8a"
+            ]
+        ]
+    },
+    {
+        "id": "44408a58c445fa8a",
+        "type": "function",
+        "z": "d447ca1a8247f322",
+        "name": "random-climate-vals",
+        "func": "const minTemp = 10;\nconst maxTemp = 20;\nconst minHumidity = 40;\nconst maxHumidity = 60;\nconst minPressure = 99;\nconst maxPressure = 101;\n\nconst temp = Math.round(Math.random() * (maxTemp - minTemp) + minTemp);\nconst humidity = Math.round(Math.floor(Math.random() * (maxHumidity - minHumidity) + minHumidity));\nconst pressure = Math.round(Math.random() * (maxPressure - minPressure) + minPressure);\n\nlet data = {\n    temperature: temp,\n    humidity: humidity,\n    pressure: pressure\n};\n\nmsg.payload = JSON.stringify(data);\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 40,
+        "wires": [
+            [
+                "48762762ebbca6dd",
+                "2d2ac633e9f7a550"
+            ]
+        ]
+    },
+    {
+        "id": "48762762ebbca6dd",
+        "type": "debug",
+        "z": "d447ca1a8247f322",
+        "d": true,
+        "name": "Climate",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 560,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "e2d3fb54e9164625",
+        "type": "mqtt out",
+        "z": "d447ca1a8247f322",
+        "name": "Hall light",
+        "topic": "/lights/hall",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "9f30ef1e7989c30a",
+        "x": 280,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "03a1cfaa36778220",
+        "type": "mqtt in",
+        "z": "d447ca1a8247f322",
+        "name": "Hall MQTT in",
+        "topic": "/lights/hall",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "9f30ef1e7989c30a",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 110,
+        "y": 260,
+        "wires": [
+            [
+                "0c3373c4999d1d3b"
+            ]
+        ]
+    },
+    {
+        "id": "628da76c60178194",
+        "type": "inject",
+        "z": "d447ca1a8247f322",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "3",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "on",
+        "payload": "on",
+        "payloadType": "str",
+        "x": 100,
+        "y": 200,
+        "wires": [
+            [
+                "e2d3fb54e9164625"
+            ]
+        ]
+    },
+    {
+        "id": "0c3373c4999d1d3b",
+        "type": "debug",
+        "z": "d447ca1a8247f322",
+        "d": true,
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 340,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "2b64672b1e20f208",
+        "type": "websocket out",
+        "z": "ebdb2767797b11f0",
+        "name": "Meeting room A",
+        "server": "a214cbee51abad6d",
+        "client": "",
+        "x": 1140,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "073a3ef22f8fbab3",
+        "type": "inject",
+        "z": "ebdb2767797b11f0",
+        "name": "lights",
+        "props": [
+            {
+                "p": "topic",
+                "v": "",
+                "vt": "date"
+            }
+        ],
+        "repeat": "10",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 770,
+        "y": 200,
+        "wires": [
+            [
+                "d7b6e9eb8e251d3b"
+            ]
+        ]
+    },
+    {
+        "id": "d7b6e9eb8e251d3b",
+        "type": "function",
+        "z": "ebdb2767797b11f0",
+        "name": "lights-function",
+        "func": "console.log(msg.payload);\nlet data = {\n    id: 2,\n    status: \"off\",\n    name: \"Meeting Room A\"\n};;\ntry {\n    if (JSON.parse(msg.payload).id == data.id) {\n        data.status = JSON.parse(msg.payload).command;\n    }\n} catch (err) {\n    data = {\n        id: 2,\n        status: \"off\",\n        name: \"Meeting Room A\"\n    };\n}\n\nmsg.payload = JSON.stringify(data);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 940,
+        "y": 160,
+        "wires": [
+            [
+                "2b64672b1e20f208"
+            ]
+        ]
+    },
+    {
+        "id": "50c78101bd353cea",
+        "type": "websocket in",
+        "z": "ebdb2767797b11f0",
+        "name": "Lights command",
+        "server": "a214cbee51abad6d",
+        "client": "",
+        "x": 740,
+        "y": 120,
+        "wires": [
+            [
+                "d7b6e9eb8e251d3b"
+            ]
+        ]
+    },
+    {
+        "id": "5ce74db9490ac40a",
+        "type": "websocket out",
+        "z": "ebdb2767797b11f0",
+        "name": "Foyer",
+        "server": "d666d0ee8bf81e19",
+        "client": "",
+        "x": 490,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "730b554d33fade64",
+        "type": "inject",
+        "z": "ebdb2767797b11f0",
+        "name": "lights",
+        "props": [
+            {
+                "p": "topic",
+                "v": "",
+                "vt": "date"
+            }
+        ],
+        "repeat": "10",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 130,
+        "y": 620,
+        "wires": [
+            [
+                "5ae5fbe33c7a2b9c"
+            ]
+        ]
+    },
+    {
+        "id": "5ae5fbe33c7a2b9c",
+        "type": "function",
+        "z": "ebdb2767797b11f0",
+        "name": "lights-function",
+        "func": "console.log(msg.payload);\n\nlet data = {\n    id: 5,\n    status: \"off\",\n    name: \"Foyer\"\n}\ntry {  \n    if(JSON.parse(msg.payload).id == data.id){\n        data.status = JSON.parse(msg.payload).command;\n    }\n} catch (err) {\n    data = {\n        id: 5,\n        status: \"off\",\n        name: \"Foyer\"\n}\n}\n\nmsg.payload = JSON.stringify(data);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 580,
+        "wires": [
+            [
+                "5ce74db9490ac40a"
+            ]
+        ]
+    },
+    {
+        "id": "3be2a3204d075327",
+        "type": "websocket in",
+        "z": "ebdb2767797b11f0",
+        "name": "Lights command",
+        "server": "d666d0ee8bf81e19",
+        "client": "",
+        "x": 100,
+        "y": 540,
+        "wires": [
+            [
+                "5ae5fbe33c7a2b9c"
+            ]
+        ]
+    },
+    {
+        "id": "8b9590a64853d2a8",
+        "type": "websocket out",
+        "z": "ebdb2767797b11f0",
+        "name": "Executive Suite",
+        "server": "86f64f8e1f5d5a70",
+        "client": "",
+        "x": 460,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "9cc59ee3abd3783e",
+        "type": "inject",
+        "z": "ebdb2767797b11f0",
+        "name": "lights",
+        "props": [
+            {
+                "p": "topic",
+                "v": "",
+                "vt": "date"
+            }
+        ],
+        "repeat": "10",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 90,
+        "y": 220,
+        "wires": [
+            [
+                "9cd7abf07e7f6aa0"
+            ]
+        ]
+    },
+    {
+        "id": "9cd7abf07e7f6aa0",
+        "type": "function",
+        "z": "ebdb2767797b11f0",
+        "name": "lights-function",
+        "func": "console.log(msg.payload);\nlet data = {\n    id: 3,\n    status: \"off\",\n    name: \"Executive Suite\"\n};\ntry {\n    if (JSON.parse(msg.payload).id == data.id) {\n        data.status = JSON.parse(msg.payload).command;\n    }\n} catch (err) {\n    data = {\n        id: 3,\n        status: \"off\",\n        name: \"Executive Suite\"\n    }\n}\n\n    msg.payload = JSON.stringify(data);\n    return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 260,
+        "y": 180,
+        "wires": [
+            [
+                "8b9590a64853d2a8"
+            ]
+        ]
+    },
+    {
+        "id": "a9f64a3858acf190",
+        "type": "websocket in",
+        "z": "ebdb2767797b11f0",
+        "name": "Lights command",
+        "server": "86f64f8e1f5d5a70",
+        "client": "",
+        "x": 80,
+        "y": 140,
+        "wires": [
+            [
+                "9cd7abf07e7f6aa0"
+            ]
+        ]
+    },
+    {
+        "id": "7ebc44ca56a30d07",
+        "type": "websocket out",
+        "z": "ebdb2767797b11f0",
+        "name": "Conference Room B",
+        "server": "975d74daded7f6d4",
+        "client": "",
+        "x": 1180,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "431517be7d76ccd8",
+        "type": "inject",
+        "z": "ebdb2767797b11f0",
+        "name": "lights",
+        "props": [
+            {
+                "p": "topic",
+                "v": "",
+                "vt": "date"
+            }
+        ],
+        "repeat": "10",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 770,
+        "y": 500,
+        "wires": [
+            [
+                "4283b703500640dc"
+            ]
+        ]
+    },
+    {
+        "id": "4283b703500640dc",
+        "type": "function",
+        "z": "ebdb2767797b11f0",
+        "name": "lights-function",
+        "func": "console.log(msg.payload);\nlet data = {\n    id: 1,\n    status: \"off\",\n    name: \"Conference Room B\"\n};;\ntry {\n    if (JSON.parse(msg.payload).id == data.id) {\n        data.status = JSON.parse(msg.payload).command;\n    }\n} catch (err) {\n    data = {\n        id: 1,\n        status: \"off\",\n        name: \"Conference Room B\"\n    };\n}\n// Check the id and change the status based on that\n\nmsg.payload = JSON.stringify(data);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 960,
+        "y": 480,
+        "wires": [
+            [
+                "7ebc44ca56a30d07",
+                "66ad445a72bc5d6d"
+            ]
+        ]
+    },
+    {
+        "id": "eabf538a08a09c8a",
+        "type": "websocket in",
+        "z": "ebdb2767797b11f0",
+        "name": "Lights command",
+        "server": "975d74daded7f6d4",
+        "client": "",
+        "x": 760,
+        "y": 440,
+        "wires": [
+            [
+                "4283b703500640dc"
+            ]
+        ]
+    },
+    {
+        "id": "62bca54c7a0242f6",
+        "type": "websocket out",
+        "z": "ebdb2767797b11f0",
+        "name": "Break room",
+        "server": "52698031fb4d4953",
+        "client": "",
+        "x": 510,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "da021f13669bb53c",
+        "type": "inject",
+        "z": "ebdb2767797b11f0",
+        "name": "lights",
+        "props": [
+            {
+                "p": "topic",
+                "v": "",
+                "vt": "date"
+            }
+        ],
+        "repeat": "10",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 130,
+        "y": 400,
+        "wires": [
+            [
+                "6a176d2a10a5275c"
+            ]
+        ]
+    },
+    {
+        "id": "6a176d2a10a5275c",
+        "type": "function",
+        "z": "ebdb2767797b11f0",
+        "name": "lights-function",
+        "func": "console.log(msg.payload);\nlet   data = {\n    id: 4,\n    status: \"off\",\n    name: \"Break Room\"\n}\ntry {\n    if (JSON.parse(msg.payload).id == data.id) {\n        data.status = JSON.parse(msg.payload).command;\n    }\n} catch (err) {\n    data = {\n        id: 4,\n        status: \"off\",\n        name: \"Break Room\"\n    }\n}\n\n    msg.payload = JSON.stringify(data);\n    return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 360,
+        "wires": [
+            [
+                "62bca54c7a0242f6"
+            ]
+        ]
+    },
+    {
+        "id": "c7d3f0336d95f0a7",
+        "type": "websocket in",
+        "z": "ebdb2767797b11f0",
+        "name": "Lights command",
+        "server": "52698031fb4d4953",
+        "client": "",
+        "x": 120,
+        "y": 320,
+        "wires": [
+            [
+                "6a176d2a10a5275c"
+            ]
+        ]
+    },
+    {
+        "id": "66ad445a72bc5d6d",
+        "type": "debug",
+        "z": "ebdb2767797b11f0",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1140,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "0790274a80224533",
+        "type": "mqtt in",
+        "z": "e3784186c447070f",
+        "name": "Card reader",
+        "topic": "/cardreader",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "9f30ef1e7989c30a",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 230,
+        "y": 100,
+        "wires": [
+            [
+                "0450bf66b461ea40"
+            ]
+        ]
+    },
+    {
+        "id": "0450bf66b461ea40",
+        "type": "function",
+        "z": "e3784186c447070f",
+        "name": "Update personnel status",
+        "func": "const pb = new PocketBase(\"http://192.168.0.116:8090\");\n\nlet record = await pb.collection('personnel').getOne('2on4sj5ug2z7fdr');\nconsole.log(record)\nlet status = !record.online\nconst res = await pb.collection('personnel').update('2on4sj5ug2z7fdr', {online: status});\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "PocketBase",
+                "module": "pocketbase"
+            }
+        ],
+        "x": 570,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fd9f44afaa260559",
+        "type": "inject",
+        "z": "e3784186c447070f",
+        "name": "",
+        "props": [
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "10",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 210,
+        "y": 280,
+        "wires": [
+            [
+                "0450bf66b461ea40"
+            ]
+        ]
+    }
+]

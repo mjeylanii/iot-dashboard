@@ -4,10 +4,9 @@
 	export let id: number;
 
 	function handleClick() {
-		//@ts-ignore
-		alerts.update((alerts) => {
+		alerts.update((alerts: any) => {
 			if (alerts.length == 0) return;
-			alerts.forEach((alert) => {
+			alerts.forEach((alert: any) => {
 				console.log(alert);
 			});
 
@@ -15,7 +14,7 @@
 			if (alert) {
 				alert?.remove();
 			}
-			return alerts.filter((alert) => alert.id !== id);
+			return alerts.filter((alert: any) => alert.id !== id);
 		});
 	}
 </script>
