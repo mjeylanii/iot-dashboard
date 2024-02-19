@@ -1,8 +1,10 @@
 <script>
 	import loading from '$lib/messages/loading.js';
 	import { onMount } from 'svelte';
-
 	import { invoke } from '@tauri-apps/api/tauri';
+	import { storeInit, getMQTT } from '$lib/helpers/storageHelper';
+
+
 	let val = 0;
 	let interval = setInterval(() => {
 		val = val + 1;

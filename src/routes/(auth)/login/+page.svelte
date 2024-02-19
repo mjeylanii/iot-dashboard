@@ -6,6 +6,7 @@
 	import { alerts } from '$lib/stores/store';
 	import { invoke } from '@tauri-apps/api/tauri';
 	import { onMount } from 'svelte';
+	import { storeInit, getMQTT } from '$lib/helpers/storageHelper';
 	//import { get, init, set, save } from '$lib/helpers/storageHelper';
 
 	let email = '';
@@ -16,14 +17,8 @@
 
 	//Async onmount
 	onMount(async () => {
+		storeInit();
 		invoke('close_splashscreen');
-		//init();
-		//Check if user is already logged in
-		// let user = await get('user');
-
-		// console.log('User: ', user);
-
-		//Close splashscreen
 	});
 
 	//Error handling
@@ -53,8 +48,6 @@
 		errors.email = '';
 		errors.password = '';
 		errors.login = '';
-		console.log('Submitting form');
-		set('user', { email: email, password: password, token: '345345' });
 		invoke('close_login');
 		await authenticateWithDatabase(email, password)
 			.then((result) => {

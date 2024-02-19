@@ -2,26 +2,28 @@
 	import { onMount } from 'svelte';
 	import { alerts } from '$lib/stores/store';
 	import { Lights } from '$lib/components/controls/index';
-	import { ws_config } from '$lib/config/default/websocket.conf.ts';
+	//import { ws_config } from '$lib/config/default/websocket.conf.ts';
 	import WebSocketService from '$lib/services/WebsocketService';
 	import { devices } from '$lib/stores/store';
-	import { dev } from '$app/environment';
+	import { getMQTT, getWebSocket, storeInit } from '$lib/helpers/storageHelper';
 
 	let devicesArr = [];
-	devicesArr = ws_config.topics.devices;
-	console.log(devicesArr);
 
 	onMount(async () => {
-		devicesArr.forEach((device) => {
-			let ws = new WebSocketService(`ws://${ws_config.host}:${ws_config.port}/ws${device.topic}`);
-			ws.connect();
-			device.service = ws;
+		storeInit();
+		const ws_config = await getWebSocket().then((val) => {
+			devicesArr = val.topics.devices;
+			devicesArr.forEach((device) => {
+				let ws = new WebSocketService(`ws://${val.host}:${val.port}/ws${device.topic}`);
+				ws.connect();
+				device.service = ws;
+			});
+			devices.set(devicesArr);
 		});
-		devices.set(devicesArr);
-		//Display store data
-	});
-	devices.subscribe((value) => {
-		console.log('Store', value);
+
+		devices.subscribe((value) => {
+			console.log('Store', value);
+		});
 	});
 </script>
 

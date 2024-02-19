@@ -1,0 +1,9 @@
+Metadata-Version: 2.1
+Name: micropython-umqtt.robust2
+Version: 2.2.0
+Summary: MQTT client for MicroPython ("robust" version).
+Home-page: https://github.com/fizista/micropython-umqtt.robust2
+Author: Wojciech Banaś
+Author-email: fizista+umqtt.robust2@gmail.com
+License: MIT
+

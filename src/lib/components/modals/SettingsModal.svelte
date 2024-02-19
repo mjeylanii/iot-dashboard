@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	// import { settings } from '$lib/stores/store';
-	import { Store } from 'tauri-plugin-store-api';
-
+	import { getMQTT, getWebSocket, setMQTT, setWebSocket } from '$lib/helpers/storageHelper';
+	import s from '../settings/MQTTSettings.svelte';
+	import WebsocketSettings from '$lib/components/settings/WebsocketSettings.svelte';
+	import MQTTSettings from '$lib/components/settings/MQTTSettings.svelte';
 	let settingsData: any = {};
 	let settingsDataKeys: any = [];
 	let settingsDataValues: any = [];
@@ -12,6 +13,11 @@
 	function switchTab(index: number) {
 		activeTab = index;
 	}
+	onMount(async () => {
+		getMQTT().then((val: any) => {
+			console.log(val);
+		});
+	});
 	function saveSettings() {
 		switch (activeTab) {
 			case 0:
@@ -77,161 +83,9 @@
 		</div>
 		<br />
 		{#if activeTab === 0}
-			<div class="form-control w-full max-w-xs mx-auto tab-content">
-				<label class="label" for="server-address">
-					<span class="label-text">Server address</span>
-				</label>
-				<input
-					type="text"
-					placeholder="127.0.0.1"
-					class="input input-bordered w-full max-w-xs"
-					id="server-address"
-				/>
-
-				<label class="label" for="server-port">
-					<span class="label-text">Server port</span>
-				</label>
-				<input
-					type="text"
-					placeholder="8080"
-					class="input input-bordered w-full max-w-xs"
-					id="server-port"
-				/>
-
-				<label class="label" for="server-username">
-					<span class="label-text">Server username</span>
-				</label>
-				<input
-					type="text"
-					placeholder="admin"
-					class="input input-bordered w-full max-w-xs"
-					id="server-username"
-				/>
-
-				<label class="label" for="server-password">
-					<span class="label-text">Server password</span>
-				</label>
-				<input
-					type="password"
-					placeholder="password"
-					class="input input-bordered w-full max-w-xs"
-					id="server-password"
-				/>
-
-				<label class="label" for="server-protocol">
-					<span class="label-text">Server protocol</span>
-				</label>
-				<select class="select select-bordered w-full max-w-xs" id="server-protocol">
-					<option value="ws">ws</option>
-					<option value="wss">wss</option>
-				</select>
-
-				<label class="label" for="server-path">
-					<span class="label-text">Server path</span>
-				</label>
-				<input
-					type="text"
-					placeholder="/socket.io"
-					class="input input-bordered w-full max-w-xs"
-					id="server-path"
-				/>
-
-				<label class="label" for="server-reconnect">
-					<span class="label-text">Server reconnect</span>
-				</label>
-				<select class="select select-bordered w-full max-w-xs" id="server-reconnect">
-					<option value="true">true</option>
-					<option value="false">false</option>
-				</select>
-			</div>
+			<WebsocketSettings />
 		{/if}
-		{#if activeTab === 1}
-			<div class="form-control w-full max-w-xs mx-auto tab-content">
-				<label class="label" for="server-address">
-					<span class="label-text">Server address</span>
-				</label>
-				<input
-					type="text"
-					placeholder="127.0.0.1"
-					class="input input-bordered w-full max-w-xs"
-					id="server-address"
-				/>
-
-				<label class="label" for="server-port">
-					<span class="label-text">Server port</span>
-				</label>
-				<input
-					type="text"
-					placeholder="8080"
-					class="input input-bordered w-full max-w-xs"
-					id="server-port"
-				/>
-
-				<label class="label" for="server-username">
-					<span class="label-text">Server username</span>
-				</label>
-				<input
-					type="text"
-					placeholder="admin"
-					class="input input-bordered w-full max-w-xs"
-					id="server-username"
-				/>
-
-				<label class="label" for="server-password">
-					<span class="label-text">Server password</span>
-				</label>
-				<input
-					type="password"
-					placeholder="password"
-					class="input input-bordered w-full max-w-xs"
-					id="server-password"
-				/>
-
-				<br />
-				<div class=" overflow-x-auto">
-					<table class="table w-full">
-						<!-- head -->
-						<thead>
-							<tr>
-								<th />
-								<th>Name</th>
-								<th>Path</th>
-								<th />
-							</tr>
-						</thead>
-						<tbody>
-							<!-- row 1 -->
-							<tr>
-								<th>1</th>
-								<td>Lights</td>
-								<td> /room/lights </td>
-								<td>
-									<button class="btn btn-sm btn-primary">Edit</button>
-								</td>
-							</tr>
-							<!-- row 2 -->
-							<tr class="hover">
-								<th>2</th>
-								<td>Temperature</td>
-								<td> /room/temperature </td>
-								<td>
-									<button class="btn btn-sm btn-primary">Edit</button>
-								</td>
-							</tr>
-							<!-- row 3 -->
-							<tr>
-								<th>3</th>
-								<td>Camera</td>
-								<td> /room/camera </td>
-								<td>
-									<button class="btn btn-sm btn-primary">Edit</button>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		{/if}
+		{#if activeTab === 1}<MQTTSettings />{/if}
 		{#if activeTab === 2}
 			<!-- General -->
 		{/if}
@@ -241,8 +95,8 @@
 		<br />
 
 		<div class="form-control max-w-sm flex flex-row ml-auto gap-4">
-			<button on:click={saveSettings} class="btn btn-primary">Save</button>
-			<label for="settings-modal" class="btn btn-ghost">Cancel</label>
+			<button on:click={saveSettings} class="btn btn-sm btn-secondary">Save</button>
+			<label for="settings-modal" class="btn btn-sm btn-ghost">Cancel</label>
 		</div>
 	</div>
 </div>
