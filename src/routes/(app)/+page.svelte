@@ -16,6 +16,7 @@
 	} from '$components';
 	import GraphCard from '$lib/components/graphs/GraphCard.svelte';
 	import Controls from '$lib/components/Controls.svelte';
+	import { Store } from 'tauri-plugin-store-api';
 
 	let personnel: any = [];
 	let users: any = [];
@@ -26,6 +27,8 @@
 		// if (!loggedIn) {
 		// 	return;
 		// }
+		
+		
 		try {
 			await fetchUsersData().then((res) => {
 				users = res;
@@ -47,7 +50,7 @@
 				personnel = res;
 			});
 			console.log(personnel);
-		} catch (err) {
+		} catch (err: any) {
 			alerts.update((alerts) => [
 				...alerts,
 				{

@@ -66,14 +66,14 @@ export const addPersonnel = async (data: any): Promise<any> => {
 			.create(formData)
 			.then((res) => {
 				console.log(res);
-				alerts.update((alerts) => [
+				alerts.update((alerts: any) => [
 					...alerts,
 					{ id: alerts.length++, type: 'success', message: 'Personnel added successfully' }
 				]);
 			})
 			.catch((err) => {
 				console.log(err);
-				alerts.update((alerts) => [
+				alerts.update((alerts: any) => [
 					...alerts,
 					{
 						id: alerts.length++,

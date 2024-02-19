@@ -49,7 +49,7 @@
 		"svelte-icons-pack": "^2.1.0",
 		"svrollbar": "^0.12.0",
 		"tailwindcss-hero-patterns": "^0.1.2",
-		"tauri-plugin-store-api": "github:tauri-apps/tauri-plugin-store",
+		"tauri-plugin-store-api": "github:tauri-apps/tauri-plugin-store#v1",
 		"tauri-plugin-websocket-api": "github:tauri-apps/tauri-plugin-websocket",
 		"theme-change": "^2.5.0"
 	}

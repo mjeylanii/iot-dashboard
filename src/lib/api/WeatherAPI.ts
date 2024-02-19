@@ -7,6 +7,5 @@ export async function fetchWeatherData(key: string, latitude: string, longitude:
         return err.json();
     });
     return response;
-
     }
 

@@ -65,7 +65,6 @@
 						</td>
 						<td>{device.hostname}</td>
 						<td>{device.ip}</td>
-
 						<td>
 							{device.mac}
 						</td>

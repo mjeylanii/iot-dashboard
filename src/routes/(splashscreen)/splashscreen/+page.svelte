@@ -1,5 +1,5 @@
 <script>
-	import messages from '$lib/messages/messages.js';
+	import loading from '$lib/messages/loading.js';
 	import { onMount } from 'svelte';
 
 	import { invoke } from '@tauri-apps/api/tauri';
@@ -10,7 +10,7 @@
 			clearInterval(interval);
 		}
 	}, 100);
-	$: currentMessage = messages[Math.floor(val / 12.5)];
+	$: currentMessage = loading[Math.floor(val / 12.5)];
 </script>
 
 <div data-tauri-drag-region class="w-[100vw] h-[100vh] bg-base-300 rounded-lg shadow-2xl">

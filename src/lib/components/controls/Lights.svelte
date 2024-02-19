@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { devices } from '$lib/stores/store';
-	import { ws_config } from '$lib/config/default/websocket.conf';
+
 
 	export let service: any;
 	export let light: any;

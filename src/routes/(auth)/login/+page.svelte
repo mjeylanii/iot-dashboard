@@ -6,7 +6,7 @@
 	import { alerts } from '$lib/stores/store';
 	import { invoke } from '@tauri-apps/api/tauri';
 	import { onMount } from 'svelte';
-	import { get, init, set, save } from '$lib/helpers/storageHelper';
+	//import { get, init, set, save } from '$lib/helpers/storageHelper';
 
 	let email = '';
 	let password = '';
@@ -17,11 +17,11 @@
 	//Async onmount
 	onMount(async () => {
 		invoke('close_splashscreen');
-		init();
+		//init();
 		//Check if user is already logged in
-		let user = await get('user');
+		// let user = await get('user');
 
-		console.log('User: ', user);
+		// console.log('User: ', user);
 
 		//Close splashscreen
 	});
