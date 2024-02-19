@@ -95,6 +95,7 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 
 * [![Svelte][Svelte.dev]][Svelte-url]
+* [![tauri][]][tauri.app]
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -240,3 +241,5 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 [Bootstrap-url]: https://getbootstrap.com
 [JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
 [JQuery-url]: https://jquery.com 
+[tauri-url]: https://tauri.app/
+[tauri.app]: https://tauri.app/img/index/header_dark.svg
