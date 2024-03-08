@@ -1,4 +1,16 @@
 <script lang="ts">
+	let serverAddress = '';
+	let serverPort = '';
+	let serverUsername = '';
+	let serverPassword = '';
+	let serverProtocol = '';
+	let serverPath = '';
+	let serverReconnect = '';
+	let serverRooms: any[] = [];
+
+	const addRoom = () => {
+		serverRooms = [...serverRooms, { name: 'Lights', path: '/room/lights' }];
+	};
 </script>
 
 <div class="form-control w-full max-w-xs mx-auto tab-content">

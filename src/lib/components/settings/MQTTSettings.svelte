@@ -50,6 +50,7 @@
 					<th />
 					<th>Name</th>
 					<th>Path</th>
+					
 					<th />
 				</tr>
 			</thead>
