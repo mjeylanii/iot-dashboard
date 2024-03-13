@@ -1,7 +1,16 @@
 import PocketBase from 'pocketbase';
-import { db_config } from '$lib/config/default/dbconfig.conf';
 
-const pocketbase = new PocketBase(`http://${db_config.host}:${db_config.port}`);
+import { alerts } from '$lib/stores/store';
+import { getPocketbase } from '$lib/helpers/storageHelper';
+
+let db_config: any;
+let pocketbase: any;
+const loadConfig = async () => {
+	db_config = await getPocketbase();
+	console.log(db_config);
+	pocketbase = new PocketBase(`http://${db_config.host}:${db_config.port}`);
+};
+loadConfig();
 
 export const authenticateWithDatabase = async (email: string, password: string): Promise<any> => {
 	try {

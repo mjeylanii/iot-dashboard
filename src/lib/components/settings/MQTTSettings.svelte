@@ -1,4 +1,9 @@
-<script lang="ts"></script>
+<script lang="ts">
+	import { onMount } from 'svelte';
+	import { getMQTT, setMQTT } from '$lib/helpers/storageHelper';
+
+	onMount(async () => {});
+</script>
 
 <div class="form-control w-full max-w-xs mx-auto tab-content">
 	<label class="label" for="server-address">
@@ -50,7 +55,7 @@
 					<th />
 					<th>Name</th>
 					<th>Path</th>
-					
+
 					<th />
 				</tr>
 			</thead>

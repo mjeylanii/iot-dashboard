@@ -2,7 +2,6 @@
 	import { onMount } from 'svelte';
 	import { alerts } from '$lib/stores/store';
 	import { Lights } from '$lib/components/controls/index';
-	//import { ws_config } from '$lib/config/default/websocket.conf.ts';
 	import WebSocketService from '$lib/services/WebsocketService';
 	import { devices } from '$lib/stores/store';
 	import { getMQTT, getWebSocket, storeInit } from '$lib/helpers/storageHelper';
@@ -10,7 +9,6 @@
 	let devicesArr = [];
 
 	onMount(async () => {
-		storeInit();
 		const ws_config = await getWebSocket().then((val) => {
 			devicesArr = val.topics.devices;
 			devicesArr.forEach((device) => {

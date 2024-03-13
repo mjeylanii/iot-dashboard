@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { getMQTT, getWebSocket, setMQTT, setWebSocket } from '$lib/helpers/storageHelper';
-	import s from '../settings/MQTTSettings.svelte';
-	import WebsocketSettings from '$lib/components/settings/WebsocketSettings.svelte';
-	import MQTTSettings from '$lib/components/settings/MQTTSettings.svelte';
+
+	import { WebsocketSettings, MQTTSettings } from '$lib/components/settings/';
+
 	let settingsData: any = {};
 	let settingsDataKeys: any = [];
 	let settingsDataValues: any = [];
@@ -14,17 +14,27 @@
 		activeTab = index;
 	}
 	onMount(async () => {
-		getMQTT().then((val: any) => {
-			console.log(val);
-		});
+		getMQTT();
 	});
 	function saveSettings() {
 		switch (activeTab) {
 			case 0:
-				settingsDataKeys = ['server_address', 'server_port'];
+				settingsDataKeys = [
+					'server_address',
+					'server_port',
+					'server_username',
+					'server_password',
+					'server_protocol',
+					'server_path',
+					'server_topics'
+				];
 				settingsDataValues = [
 					(<HTMLInputElement>document.getElementById('server-address')).value,
-					(<HTMLInputElement>document.getElementById('server-port')).value
+					(<HTMLInputElement>document.getElementById('server-port')).value,
+					(<HTMLInputElement>document.getElementById('server-username')).value,
+					(<HTMLInputElement>document.getElementById('server-protocol')).value,
+					(<HTMLInputElement>document.getElementById('server-path')).value,
+					(<HTMLInputElement>document.getElementById('server-topics')).value
 				];
 				break;
 			case 1:
@@ -94,8 +104,8 @@
 		{/if}
 		<br />
 
-		<div class="form-control max-w-sm flex flex-row ml-auto gap-4">
-			<button on:click={saveSettings} class="btn btn-sm btn-secondary">Save</button>
+		<div class=" flex flex-row gap-4 items-center justify-center">
+			<button on:click={saveSettings} class="btn btn-md btn-primary">Save</button>
 			<label for="settings-modal" class="btn btn-sm btn-ghost">Cancel</label>
 		</div>
 	</div>

@@ -16,19 +16,18 @@
 	} from '$components';
 	import GraphCard from '$lib/components/graphs/GraphCard.svelte';
 	import Controls from '$lib/components/Controls.svelte';
-	import { Store } from 'tauri-plugin-store-api';
+	import { storeInit } from '$lib/helpers/storageHelper';
 
 	let personnel: any = [];
 	let users: any = [];
 
 	onMount(async () => {
-		//Check if user is logged in
-		// let loggedIn = await checkIfLoggedIn();
-		// if (!loggedIn) {
-		// 	return;
-		// }
-		
-		
+		storeInit();
+
+		let loggedIn = await checkIfLoggedIn();
+		if (!loggedIn) {
+			return;
+		}
 		try {
 			await fetchUsersData().then((res) => {
 				users = res;
@@ -63,7 +62,6 @@
 		}
 	});
 
-	//Recheck database every 5 seconds
 	setInterval(async () => {
 		if (checkOnline()) {
 			try {

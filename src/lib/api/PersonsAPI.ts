@@ -1,8 +1,16 @@
 import PocketBase from 'pocketbase';
-import { db_config } from '$lib/config/default/dbconfig.conf';
+//import { db_config } from '$lib/config/dbconfig.conf';
 import { alerts } from '$lib/stores/store';
+import { getPocketbase } from '$lib/helpers/storageHelper';
 
-const pocketbase = new PocketBase(`http://${db_config.host}:${db_config.port}`);
+let db_config: any;
+let pocketbase: any;
+const loadConfig = async () => {
+	db_config = await getPocketbase();
+	console.log(db_config);
+	pocketbase = new PocketBase(`http://${db_config.host}:${db_config.port}`);
+};
+loadConfig();
 
 const createImageUrl = (record: any, filename: string) => {
 	return (
@@ -64,14 +72,14 @@ export const addPersonnel = async (data: any): Promise<any> => {
 		await pocketbase
 			.collection('personnel')
 			.create(formData)
-			.then((res) => {
+			.then((res: any) => {
 				console.log(res);
 				alerts.update((alerts: any) => [
 					...alerts,
 					{ id: alerts.length++, type: 'success', message: 'Personnel added successfully' }
 				]);
 			})
-			.catch((err) => {
+			.catch((err: any) => {
 				console.log(err);
 				alerts.update((alerts: any) => [
 					...alerts,

@@ -9,7 +9,6 @@
 		try {
 			devices = await fetchDevicesData().then((res) => {
 				const devices = JSON.parse(res);
-				console.log(devices);
 				return devices;
 			});
 		} catch (err) {

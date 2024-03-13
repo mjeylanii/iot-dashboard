@@ -4,7 +4,6 @@
 	import { invoke } from '@tauri-apps/api/tauri';
 	import { storeInit, getMQTT } from '$lib/helpers/storageHelper';
 
-
 	let val = 0;
 	let interval = setInterval(() => {
 		val = val + 1;
@@ -15,7 +14,7 @@
 	$: currentMessage = loading[Math.floor(val / 12.5)];
 </script>
 
-<div data-tauri-drag-region class="w-[100vw] h-[100vh] bg-base-300 rounded-lg shadow-2xl">
+<div data-tauri-drag-region class="w-[100vw] h-[100vh] bg-base-200 rounded-lg shadow-2xl">
 	<div class="flex absolute w-36 h-36 right-0">
 		<div class="bg-repeat w-full h-full heropattern-circuitboard-gray-400" />
 	</div>

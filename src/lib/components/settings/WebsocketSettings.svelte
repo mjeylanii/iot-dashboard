@@ -1,19 +1,30 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+	import { getWebSocket } from '$lib/helpers/storageHelper';
 	let serverAddress = '';
-	let serverPort = '';
+	let serverPort: number;
 	let serverUsername = '';
 	let serverPassword = '';
 	let serverProtocol = '';
 	let serverPath = '';
-	let serverReconnect = '';
-	let serverRooms: any[] = [];
+	let topics: any;
+	onMount(async () => {
+		let data = await getWebSocket();
 
-	const addRoom = () => {
-		serverRooms = [...serverRooms, { name: 'Lights', path: '/room/lights' }];
-	};
+		if (!data) return;
+
+		serverAddress = data.host;
+		serverPort = data.port;
+		serverUsername = data.username;
+		serverPath = data.path;
+		serverProtocol = data.protocol;
+		topics = data.topics;
+	});
+
+	
 </script>
 
-<div class="form-control w-full max-w-xs mx-auto tab-content">
+<div class="form-control w-full max-w-md mx-auto tab-content items-center">
 	<label class="label" for="server-address">
 		<span class="label-text">Server address</span>
 	</label>
@@ -22,6 +33,7 @@
 		placeholder="127.0.0.1"
 		class="input input-bordered w-full max-w-xs"
 		id="server-address"
+		value={serverAddress}
 	/>
 
 	<label class="label" for="server-port">
@@ -32,6 +44,7 @@
 		placeholder="8080"
 		class="input input-bordered w-full max-w-xs"
 		id="server-port"
+		value={serverPort}
 	/>
 
 	<label class="label" for="server-username">
@@ -42,6 +55,7 @@
 		placeholder="admin"
 		class="input input-bordered w-full max-w-xs"
 		id="server-username"
+		value={serverUsername}
 	/>
 
 	<label class="label" for="server-password">
@@ -52,6 +66,7 @@
 		placeholder="password"
 		class="input input-bordered w-full max-w-xs"
 		id="server-password"
+		value={serverPassword}
 	/>
 
 	<label class="label" for="server-protocol">
@@ -70,15 +85,9 @@
 		placeholder="/socket.io"
 		class="input input-bordered w-full max-w-xs"
 		id="server-path"
+		value={serverPath}
 	/>
-
-	<label class="label" for="server-reconnect">
-		<span class="label-text">Server reconnect</span>
-	</label>
-	<select class="select select-bordered w-full max-w-xs" id="server-reconnect">
-		<option value="true">true</option>
-		<option value="false">false</option>
-	</select>
+	<br />
 	<div class=" overflow-x-auto">
 		<table class="table w-full">
 			<!-- head -->
@@ -91,16 +100,23 @@
 				</tr>
 			</thead>
 			<tbody>
-				<!-- row 1 -->
-				<tr>
-					<th>1</th>
-					<td>Lights</td>
-					<td> /room/lights </td>
-					<td>
-						<button class="btn btn-xs btn-primary">Edit</button>
-					</td>
-				</tr>
+				{#if topics?.devices}
+					{#each topics?.devices as device}
+						<tr>
+							<td>{device.name}</td>
+							<td>{device.topic}</td>
+							<td>
+								<button class="btn btn-xs btn-accent text-neutral">Edit</button>
+							</td>
+						</tr>
+					{/each}
+				{/if}
 			</tbody>
+			<tfoot>
+				<th colspan="4">
+					<button class="w-full btn btn-md">Add Device</button>
+				</th>
+			</tfoot>
 		</table>
 	</div>
 </div>

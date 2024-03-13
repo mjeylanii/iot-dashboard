@@ -16,11 +16,15 @@
 
 		alerts.update((alerts) => [
 			...alerts,
-			{ id: alerts.length++, type: 'success', message: 'Person updated successfully' }
+			{
+				id: alerts.length++,
+				type: 'success',
+				message: 'Person updated successfully',
+				time: new Date()
+			}
 		]);
 		const modal = document.getElementById('edit-person-modal' + person.id);
-
-		modal.checked = false;
+		// modal.checked = false;
 	}
 	function enableInput(id: string) {
 		if (id == 'name') {

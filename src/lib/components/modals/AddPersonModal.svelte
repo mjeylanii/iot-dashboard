@@ -41,14 +41,14 @@
 
 			const modal = document.getElementById('add-person-modal');
 			modal.checked = false;
-
 			data.name = '';
 			data.email = '';
 			data.profile_image = null;
-			// alerts.update((alerts) => [
-			// 	...alerts,
-			// 	{ id: alerts.length++, type: 'success', message: 'Person added successfully' }
-			// ]);
+
+			alerts.update((alerts: any) => [
+				...alerts,
+				{ id: alerts.length++, type: 'success', message: 'Person added successfully' }
+			]);
 		}
 	}
 </script>
@@ -57,19 +57,12 @@
 <div class="modal">
 	<div class="modal-box relative">
 		<label for="add-person-modal" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
-		<!-- Add person -->
 		<h3 class="text-lg font-bold">Add person</h3>
 		<br />
 		<div class="flex flex-row gap-4 text-center">
 			<div class="avatar">
 				<div class="w-24 rounded-full">
-					{#if data.profile_image == null}
-						<img
-							src="https://img.icons8.com/material/50/000000/plus.png"
-							alt="Add person"
-							class="w-1/4 h-1/3"
-						/>
-					{:else}
+					{#if data.profile_image == null}{:else}
 						<img
 							src={data.profile_image ? URL.createObjectURL(new Blob(data.profile_image)) : ''}
 							alt="profile"
