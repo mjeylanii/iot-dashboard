@@ -206,9 +206,9 @@ Project Link: [https://github.com/mjeylanii/iot-dashboard](https://github.com/mo
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
+<!--* []()
 * []()
-* []()
-* []()
+* []()-->
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
