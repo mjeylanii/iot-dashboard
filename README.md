@@ -98,6 +98,7 @@
 * [![Tauri][Tauri.app]][Tauri.app]
 * [![Nodered][Nodered.org]][Nodered.org]
 * [![DaisyUI][DaisyUI.com]][DaisyUI.com]
+* [![Rust][Rust-lang.org]][Rust-lang.com]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
