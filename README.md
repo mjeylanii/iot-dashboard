@@ -39,10 +39,10 @@
   <p align="center">
     An IoT dashboard for your home/office
     <br />
-    <a href="https://github.com/mjeylanii/iot-dashboard"><strong>Explore the docs »</strong></a>
+    <!--<a href="https://github.com/mjeylanii/iot-dashboard"><strong>Explore the docs »</strong></a>-->
     <br />
     <br />
-    <a href="https://github.com/mjeylanii/iot-dashboarde">View Demo</a>
+   <!-- <a href="https://github.com/mjeylanii/iot-dashboard">View Demo</a> -->
     ·
     <a href="https://github.com/mjeylanii/iot-dashboard/issues">Report Bug</a>
     ·
