@@ -238,7 +238,7 @@ Project Link: [https://github.com/mjeylanii/iot-dashboard](https://github.com/mo
 [Nodered.org]: https://img.shields.io/badge/nodered-8F0000?style=for-the-badge&logo=nodered&logoColor=white 
 [Nodered-url]: https://nodered.org/
 [DaisyUI.com]: https://img.shields.io/badge/daisyui-5A0EF8?style=for-the-badge&logo=daisyui&logoColor=white
+[DaisyUI-url]: https://daisyui.com/
+[Rust-lang.org]: https://img.shields.io/badge/rust-000000?style=for-the-badge&logo=rust&logoColor=white
 [Rust]: https://rust-lang.org/ 
-[Rust-lang.com]: https://img.shields.io/badge/rust-000000?style=for-the-badge&logo=rust&logoColor=white
-[Rust]: https://rust-lang.com/ 
 
