@@ -30,9 +30,9 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/mjeylanii/iot-dashboard">
+ <!-- <a href="https://github.com/mjeylanii/iot-dashboard">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
+  </a> -->
 
 <h3 align="center">IoT Dashboard</h3>
 
@@ -85,7 +85,7 @@
 
 ![Product Name Screen Shot][product-screenshot]
 
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -116,10 +116,12 @@ This is an example of how to list things you need to use the software and how to
   ```sh
   npm install npm@latest -g
   ```
+* Tauri <a href="https://tauri.app/v1/guides/getting-started/prerequisites/">Get Started</a>
+  
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
+<!--1. Get a free API Key at [https://example.com](https://example.com)
 2. Clone the repo
    ```sh
    git clone https://github.com/github_username/repo_name.git
@@ -149,7 +151,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 
 <!-- ROADMAP -->
-## Roadmap
+<!--## Roadmap
 
 - [ ] Feature 1
 - [ ] Feature 2
@@ -192,7 +194,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+
 
 Project Link: [https://github.com/mjeylanii/iot-dashboard](https://github.com/mojeylanii/iot-dashboard)
 
