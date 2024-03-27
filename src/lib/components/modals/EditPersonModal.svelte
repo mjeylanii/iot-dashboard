@@ -23,8 +23,10 @@
 				time: new Date()
 			}
 		]);
-		const modal = document.getElementById('edit-person-modal' + person.id);
-		// modal.checked = false;
+		const modal: HTMLInputElement = document.getElementById(
+			'edit-person-modal' + person.id
+		) as HTMLInputElement;
+		modal.checked = false;
 	}
 	function enableInput(id: string) {
 		if (id == 'name') {
@@ -37,10 +39,10 @@
 
 <input type="checkbox" id={'edit-person-modal' + person.id} class="modal-toggle" />
 <div class="modal">
-	<div class="modal-box relative">
+	<div class="relative modal-box">
 		<label
 			for={'edit-person-modal' + person.id}
-			class="btn btn-sm btn-circle absolute right-2 top-2">✕</label
+			class="absolute btn btn-sm btn-circle right-2 top-2">✕</label
 		>
 		<!-- Add person -->
 		<h3 class="text-lg font-bold">Add person</h3>
@@ -51,11 +53,11 @@
 					<img src={person.profile_image} alt="profile" />
 				</div>
 			</div>
-			<div class="form-control my-auto">
+			<div class="my-auto form-control">
 				<!-- <label class="label" for="person-image">
 					<span class="label-text">Profile image</span>
 				</label> -->
-				<input bind:files={data.profile_image} type="file" class="file-input w-full max-w-xs" />
+				<input bind:files={data.profile_image} type="file" class="w-full max-w-xs file-input" />
 			</div>
 		</div>
 		<br />

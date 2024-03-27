@@ -138,7 +138,6 @@ async fn get_devices() -> Result<String> {
             devices.push(device);
         }
         if line.contains("MAC Address:") {
-            println!("MAC: {}", line);
             let mac_info = line
                 .split("MAC Address:")
                 .nth(1)

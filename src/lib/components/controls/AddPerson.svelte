@@ -1,7 +1,5 @@
 <script>
 	import AddPersonModal from '../modals/AddPersonModal.svelte';
-	
-
 </script>
 
 <label class="flex flex-col text-center cursor-pointer" for="add-person-modal">

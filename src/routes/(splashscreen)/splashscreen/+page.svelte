@@ -1,5 +1,5 @@
 <script>
-	import loading from '$lib/messages/loading.js';
+	import loading from '$lib/messages/loading.ts';
 	import { onMount } from 'svelte';
 	import { invoke } from '@tauri-apps/api/tauri';
 	import { storeInit, getMQTT } from '$lib/helpers/storageHelper';

@@ -1,7 +1,4 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { devices } from '$lib/stores/store';
-
 	export let service: any;
 	export let light: any;
 
