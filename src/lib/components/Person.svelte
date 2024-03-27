@@ -10,25 +10,25 @@
 
 <EditPersonModal {person} />
 {#if person.status == true}
-	<div class="flex flex-col text-center gap-2">
+	<div class="flex flex-col gap-2 text-center">
 		<div class="avatar online">
 			<div class="w-24 rounded-full">
 				<img src={person.profile_image} alt={person.name} />
 			</div>
 		</div>
-		<label class=" cursor-pointer" for={'edit-person-modal' + person.id}>
+		<label class="cursor-pointer " for={'edit-person-modal' + person.id}>
 			<h1 class="text-xs font-bold">{person.name}</h1>
 		</label>
 	</div>
 {:else}
-	<div class="flex flex-col text-center gap-2">
+	<div class="flex flex-col gap-2 text-center">
 		<div class="avatar offline">
 			<div class="w-24 rounded-full">
 				<img src={person.profile_image} alt={person.name} />
 			</div>
 		</div>
 
-		<label class=" cursor-pointer" for={'edit-person-modal' + person.id}>
+		<label class="cursor-pointer " for={'edit-person-modal' + person.id}>
 			<h1 class="text-xs font-bold">{person.name}</h1>
 		</label>
 	</div>

@@ -4,18 +4,19 @@
 	import { Lights } from '$lib/components/controls/index';
 	import WebSocketService from '$lib/services/WebsocketService';
 	import { devices } from '$lib/stores/store';
-	import { getMQTT, getWebSocket, storeInit } from '$lib/helpers/storageHelper';
+	import { getMQTT, getWebSocket } from '$lib/helpers/storageHelper';
 
 	let devicesArr = [];
 
 	onMount(async () => {
-		const ws_config = await getWebSocket().then((val) => {
+		await getWebSocket().then((val) => {
 			devicesArr = val.topics.devices;
 			devicesArr.forEach((device) => {
 				let ws = new WebSocketService(`ws://${val.host}:${val.port}/ws${device.topic}`);
 				ws.connect();
 				device.service = ws;
 			});
+			
 			devices.set(devicesArr);
 		});
 
@@ -32,10 +33,10 @@
 		{#if device.type == 'light'}
 			<Lights service={device.service} light={device} />
 		{/if}
-		<!-- {#if device.type !== 'light'}
+		{#if device.type !== 'light'}
 			<p>
 				{device.type}
 			</p>
-		{/if} -->
+		{/if}
 	{/each}
 </div>

@@ -39,8 +39,10 @@
 		if (errors.name == '' && errors.email == '') {
 			addPersonnel(data);
 
-			const modal = document.getElementById('add-person-modal');
-			modal.checked = false;
+			const modalToggle: HTMLInputElement = document.getElementById(
+				'add-person-modal'
+			) as HTMLInputElement;
+			modalToggle.checked = false;
 			data.name = '';
 			data.email = '';
 			data.profile_image = null;
@@ -62,7 +64,7 @@
 		<div class="flex flex-row gap-4 text-center">
 			<div class="avatar">
 				<div class="w-24 rounded-full">
-					{#if data.profile_image == null}{:else}
+					{#if data.profile_image == null}
 						<img
 							src={data.profile_image ? URL.createObjectURL(new Blob(data.profile_image)) : ''}
 							alt="profile"

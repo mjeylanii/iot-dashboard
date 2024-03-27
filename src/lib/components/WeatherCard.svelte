@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	import { alerts } from '$lib/stores/store';
 	import WeatherCardLoading from './loading/WeatherCardLoading.svelte';
+	//@ts-ignore
 	import { PUBLIC_OPENWEATHERMAP_API_KEY } from '$env/static/public';
 	let weatherData = {
 		main: {
@@ -25,7 +26,6 @@
 	let coords: { latitude: number; longitude: number } = { latitude: 0, longitude: 0 };
 
 	onMount(async () => {
-		console.log(typeof PUBLIC_OPENWEATHERMAP_API_KEY);
 		await fetch('https://ipapi.co/json/')
 			.then((res) => res.json())
 			.then((res) => {
