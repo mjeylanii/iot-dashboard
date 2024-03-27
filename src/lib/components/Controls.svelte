@@ -1,10 +1,9 @@
 <script>
-	import { onMount } from 'svelte';
-	import { alerts } from '$lib/stores/store';
 	import { Lights } from '$lib/components/controls/index';
-	import WebSocketService from '$lib/services/WebsocketService';
-	import { devices } from '$lib/stores/store';
 	import { getMQTT, getWebSocket } from '$lib/helpers/storageHelper';
+	import WebSocketService from '$lib/services/WebsocketService';
+	import { alerts, devices } from '$lib/stores/store';
+	import { onMount } from 'svelte';
 
 	let devicesArr = [];
 
@@ -16,7 +15,7 @@
 				ws.connect();
 				device.service = ws;
 			});
-			
+
 			devices.set(devicesArr);
 		});
 

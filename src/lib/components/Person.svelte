@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { EditPersonModal } from '$components';
+	import { onMount } from 'svelte';
 
 	export let person: any = null;
 	onMount(async () => {
@@ -16,7 +16,7 @@
 				<img src={person.profile_image} alt={person.name} />
 			</div>
 		</div>
-		<label class="cursor-pointer " for={'edit-person-modal' + person.id}>
+		<label class="cursor-pointer" for={'edit-person-modal' + person.id}>
 			<h1 class="text-xs font-bold">{person.name}</h1>
 		</label>
 	</div>
@@ -28,7 +28,7 @@
 			</div>
 		</div>
 
-		<label class="cursor-pointer " for={'edit-person-modal' + person.id}>
+		<label class="cursor-pointer" for={'edit-person-modal' + person.id}>
 			<h1 class="text-xs font-bold">{person.name}</h1>
 		</label>
 	</div>

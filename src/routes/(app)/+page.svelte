@@ -1,22 +1,22 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { netOptions } from '$lib/chart_options/networkTraffic';
 	import { invoke } from '@tauri-apps/api/tauri';
-	import { fetchPersonnelData, fetchUsersData, checkOnline } from '$lib/api/PersonsAPI';
-	import { checkIfLoggedIn } from '$lib/api/AuthAPI';
-	import { alerts, user } from '$lib/stores/store';
 	import {
-		WeatherCard,
-		InfoModal,
-		SettingsModal,
-		ChartsWrapper,
-		Person,
 		AddPerson,
-		NetworkDevices
+		ChartsWrapper,
+		InfoModal,
+		NetworkDevices,
+		Person,
+		SettingsModal,
+		WeatherCard
 	} from '$components';
-	import GraphCard from '$lib/components/graphs/GraphCard.svelte';
+	import { checkIfLoggedIn } from '$lib/api/AuthAPI';
+	import { checkOnline, fetchPersonnelData, fetchUsersData } from '$lib/api/PersonsAPI';
+	import { netOptions } from '$lib/chart_options/networkTraffic';
 	import Controls from '$lib/components/Controls.svelte';
+	import GraphCard from '$lib/components/graphs/GraphCard.svelte';
 	import { storeInit } from '$lib/helpers/storageHelper';
+	import { alerts, user } from '$lib/stores/store';
+	import { onMount } from 'svelte';
 
 	let personnel: any = [];
 	let users: any = [];
@@ -81,50 +81,14 @@
 			}
 		}
 	}, 5000);
-
-	let devices = [
-		{
-			name: 'Raspberry Pi',
-			ip: '192.168.0.1',
-			imgUrl: '/devices/mcu.png',
-			manufacturer: 'Raspberry Pi Foundation',
-			status: 'online'
-		},
-		{
-			name: 'Raspberry Pi',
-			ip: '192.168.0.155',
-			imgUrl: '/devices/mcu.png',
-			manufacturer: 'Raspberry Pi Foundation',
-			status: 'online'
-		},
-		{
-			name: 'ESP-32',
-			ip: '192.168.1.1',
-			imgUrl: '/devices/mcu.png',
-			manufacturer: 'Espressif Systems',
-			status: 'online'
-		}
-	];
 </script>
 
 <SettingsModal />
 <InfoModal />
 <div class="flex flex-col gap-12">
 	<div class="flex flex-col justify-center gap-4">
-		<!-- <WelcomeCard /> -->
 		<WeatherCard />
 	</div>
-	<!-- <h2 class="px-4 text-3xl font-bold">Controls</h2>
-	<div class="text-xl font-medium divider">IoT Devices</div>
-	<div class="flex flex-col justify-center gap-4">
-		<div class="grid grid-cols-3 gap-4">
-			{#each devices as device}
-				<Device {device} />
-			{/each}
-			<AddDevice />
-		</div>
-	</div> -->
-
 	<div class="text-xl font-medium divider">Controls</div>
 	<div class="relative flex flex-col justify-center gap-4">
 		<Controls />

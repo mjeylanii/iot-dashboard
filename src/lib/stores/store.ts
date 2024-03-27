@@ -33,7 +33,7 @@ import { Store } from 'tauri-plugin-store-api';
  * A writable store that holds an array of alert objects.
  * @type {import('svelte/store').Writable<Alert[]>}
  */
-export const alerts = writable([{id: 0,  type: '', message: '', time: new Date() }]);
+export const alerts = writable([{ id: 0, type: '', message: '', time: new Date() }]);
 
 /*
 / Auth
@@ -59,4 +59,4 @@ export const devices = writable<any>([]);
  * A writable store that holds an array of person objects.
  * @type {import('svelte/store').Writable<Person[]>}
  */
-export const people = writable([{ name: '', status: '', time:  new Date() }]);
+export const people = writable([{ name: '', status: '', time: new Date() }]);

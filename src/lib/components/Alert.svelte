@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { alerts } from '$lib/stores/store.js';
+
 	export let type = 'info';
 	export let id: number;
 

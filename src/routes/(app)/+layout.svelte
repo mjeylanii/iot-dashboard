@@ -1,9 +1,12 @@
 <script lang="ts">
 	import Titlebar from '$lib/Titlebar.svelte';
 	import { Svrollbar } from 'svrollbar';
+
 	import '../../app.css';
+
 	import { Alert, Navbar } from '$components';
 	import { alerts } from '$lib/stores/store';
+
 	let loc = 'app';
 </script>
 

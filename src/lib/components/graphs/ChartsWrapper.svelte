@@ -1,11 +1,10 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { humidity, temperature, pressure } from '$lib/stores/sensors';
+	import { humidityOptions, psiOptions, temperatureOptions } from '$lib/chart_options/index';
 	import GraphCard from '$lib/components/graphs/GraphCard.svelte';
-	import { psiOptions, temperatureOptions, humidityOptions } from '$lib/chart_options/index';
-	//import { ws_config } from '$lib/config/default/websocket.conf';
-	import { alerts } from '$lib/stores/store';
 	import { getWebSocket } from '$lib/helpers/storageHelper';
+	import { humidity, pressure, temperature } from '$lib/stores/sensors';
+	import { alerts } from '$lib/stores/store';
+	import { onMount } from 'svelte';
 
 	let ws: WebSocket;
 	let response = '';
@@ -15,13 +14,10 @@
 		pressure: 0
 	};
 	onMount(async () => {
-		//Check if the websocket is already connected
 		if (ws && ws.readyState == 1) {
 			console.log('Websocket is already connected');
-			//Close the websocket
 			ws.close();
 		} else {
-			//Connect to the websocket
 			getWebSocket().then((vals: any) => {
 				ws = new WebSocket(`ws://${vals.host}:${vals.port}/ws${vals.topics.climate}`);
 				ws.onopen = () => {
@@ -38,15 +34,11 @@
 				};
 				ws.onmessage = (event) => {
 					response = event.data;
-					//Timestamp
-
 					let timestamp = new Date().getTime();
-					//Parse the response
 					let parsedResponse = JSON.parse(response);
 					console.log(parsedResponse);
 					data = parsedResponse;
 					console.log(data);
-					//Update the store
 					temperature.update((value) => {
 						value.push({ time: timestamp, value: parsedResponse.temperature });
 						return value;
@@ -62,8 +54,7 @@
 				};
 				ws.onclose = (event) => {
 					if (event.reason == '') return;
-					console.log(event);
-					console.log('Websocket is closed');
+
 					alerts.update((alerts) => [
 						...alerts,
 						{
@@ -76,8 +67,6 @@
 				};
 
 				ws.onerror = (event) => {
-					console.log(event);
-					console.log('Error connecting to the server');
 					alerts.update((alerts) => [
 						...alerts,
 						{

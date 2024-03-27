@@ -2,22 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 /* Remvoe scrollbar */
 ::-webkit-scrollbar {
-    /*  Fix scrollbar below   */
+	/*  Fix scrollbar below   */
 
-    display: none;
-
+	display: none;
 }
 
 .body {
-    --svrollbar-track-width: 20px;
-    --svrollbar-track-background: #85b4b9;
-    --svrollbar-track-opacity: 1;
+	--svrollbar-track-width: 20px;
+	--svrollbar-track-background: #85b4b9;
+	--svrollbar-track-opacity: 1;
 
-    --svrollbar-thumb-width: 10px;
-    --svrollbar-thumb-background: #d9ab55;
-    --svrollbar-thumb-opacity: 1;
+	--svrollbar-thumb-width: 10px;
+	--svrollbar-thumb-background: #d9ab55;
+	--svrollbar-thumb-opacity: 1;
 }

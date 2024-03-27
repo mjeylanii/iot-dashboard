@@ -1,13 +1,13 @@
 <script lang="js">
 	// @ts-nocheck
+	import { humidity, pressure, temperature } from '$lib/stores/sensors';
 	import Chart from 'chart.js/auto';
 	import { onMount } from 'svelte';
-	import { temperature, humidity, pressure } from '$lib/stores/sensors';
+
 	export let chartId = '';
 	export let options;
 	export let data;
 	let chart;
-	//Get last object from the store array and return the value
 	let store =
 		chartId == 'Humidity'
 			? humidity
@@ -16,17 +16,13 @@
 			: chartId == 'Temperature'
 			? temperature
 			: null;
-
-	//Place holder network traffic data
 	onMount(async () => {
 		var ctx = document.getElementById(chartId).getContext('2d');
 		var chart = new Chart(ctx, {
 			type: 'line',
 			data: {
-				//1 to 60
 				datasets: [
 					{
-						//Color according to chartId
 						borderColor:
 							chartId == 'Humidity'
 								? '#4c51bf'
@@ -35,7 +31,6 @@
 								: chartId == 'Temperature'
 								? '#4299e1'
 								: '#38a169',
-						//RGB colors
 						backgroundColor:
 							chartId == 'Humidity'
 								? 'rgba(76, 81, 191, 0.1)'
@@ -44,10 +39,8 @@
 								: chartId == 'Temperature'
 								? 'rgba(66, 153, 225, 0.1)'
 								: 'rgba(56, 161, 105, 0.1)',
-
 						borderWidth: 1,
 						data: [],
-
 						fill: 'start',
 						pointRadius: chartId == 'Network Traffic' ? 3 : 0,
 						pointHitRadius: 3
@@ -58,11 +51,8 @@
 		});
 		function addData(label, data) {
 			if (typeof data == undefined && chart) return;
-
 			if (chart.data.labels.length >= 60) {
-				// Remove the oldest data point
 				chart.data.labels.shift();
-
 				chart.data.datasets.forEach((dataset) => {
 					dataset.data.shift();
 				});
@@ -76,11 +66,8 @@
 		}
 		if (store != null) {
 			store.subscribe((value) => {
-				//Skip the first value
 				if (value.length > 1) {
-					//Get the last value
 					let lastValue = value[value.length - 1];
-					//Add the value to the chart
 					addData(lastValue.time, lastValue.value);
 				}
 			});

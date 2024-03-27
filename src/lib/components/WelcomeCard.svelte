@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+
 	let showWelcomeCard = true;
 </script>
 
 {#if showWelcomeCard}
-	<div class="w-1/2 shadow-md	 card bg-base-200 mx-auto">
+	<div class="w-1/2 shadow-md card bg-base-200 mx-auto">
 		<div class="card-body">
 			<h2 class="card-title">Welcome Back!</h2>
 			<p>Welcome back to your dashboard. Here you can see all the latest</p>

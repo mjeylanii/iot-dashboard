@@ -11,7 +11,7 @@ const initialSettings = {
 		host: 'localhost',
 		port: 8080,
 		username: '',
-		password: '', // Encrypt before storing
+		password: '',
 		protocol: 'ws',
 		path: '/ws',
 		topics: {

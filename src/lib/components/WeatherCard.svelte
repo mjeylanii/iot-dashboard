@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { fetchWeatherData } from '../api/WeatherAPI';
-	import { onMount } from 'svelte';
-	import { alerts } from '$lib/stores/store';
-	import WeatherCardLoading from './loading/WeatherCardLoading.svelte';
 	//@ts-ignore
 	import { PUBLIC_OPENWEATHERMAP_API_KEY } from '$env/static/public';
+	import { alerts } from '$lib/stores/store';
+	import { onMount } from 'svelte';
+
+	import { fetchWeatherData } from '../api/WeatherAPI';
+
 	let weatherData = {
 		main: {
 			temp: 0,
@@ -58,7 +59,7 @@
 </script>
 
 {#if isLoading}
-	<WeatherCardLoading />
+	Loading
 {:else}
 	<div class="flex justify-between p-12 shadow-md rounded-xl bg-base-200">
 		<div class="flex flex-row items-center justify-center gap-8">

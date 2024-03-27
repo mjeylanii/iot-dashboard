@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { getWebSocket } from '$lib/helpers/storageHelper';
+	import { onMount, setContext } from 'svelte';
+
 	import InputField from './InputField.svelte';
 	import SelectField from './SelectField.svelte';
-	import { setContext } from 'svelte';
 
 	let serverAddress = '';
 	let serverPort: number;

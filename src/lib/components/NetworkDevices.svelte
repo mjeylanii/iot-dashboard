@@ -1,7 +1,9 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { fetchDevicesData } from '../api/DevicesAPI';
 	import { alerts } from '$lib/stores/store.js';
+	import { onMount } from 'svelte';
+
+	import { fetchDevicesData } from '../api/DevicesAPI';
+
 	let loading = true;
 	let devices: any;
 	let error = false;

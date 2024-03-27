@@ -5,5 +5,10 @@ export const settings = writable({
 	websocket: { host: ' ', port: ' ', username: ' ', password: ' ' },
 	weather: { city: ' ', country: ' ' },
 	location: { latitude: ' ', longitude: ' ' },
-	topics: { temperature: 'tempereature', humidity: 'humidity', pressure: 'pressure', light: 'light' }
+	topics: {
+		temperature: 'tempereature',
+		humidity: 'humidity',
+		pressure: 'pressure',
+		light: 'light'
+	}
 });

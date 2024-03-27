@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
+
 	const dispatch = createEventDispatcher();
 	const submit = () => dispatch('submit');
 	export let email = '';
@@ -9,7 +10,6 @@
 
 <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
 	<div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0">
-		<!-- Enter email -->
 		<div class="p-6 space-y-4 md:space-y-6 sm:p-8">
 			<h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
 				Enter your email
@@ -18,7 +18,6 @@
 				<div>
 					<label for="email" class=" mb-2 text-sm font-medium text-gray-900 flex gap-4"
 						>Your email
-						<!-- Error -->
 						{#if errors.email}
 							<span class=" text-red-500">{errors.email}</span>
 						{/if}

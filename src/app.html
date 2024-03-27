@@ -1,34 +1,29 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
+		<meta name="viewport" content="width=device-width" />
+		<script src="https://cdn.jsdelivr.net/npm/theme-change@2.0.2/index.js"></script>
+		%sveltekit.head%
+	</head>
 
-<head>
-	<meta charset="utf-8" />
-	<link rel="icon" href="%sveltekit.assets%/favicon.png" />
-	<meta name="viewport" content="width=device-width" />
-	<script src="https://cdn.jsdelivr.net/npm/theme-change@2.0.2/index.js"></script>
-	%sveltekit.head%
-</head>
-
-<body class="bg-base-100 rounded-lg" data-sveltekit-preload-data="hover">
-	<div style="display: contents" class=" ">%sveltekit.body%</div>
-</body>
-<script>
-	/**
-	 * this is a hack for error: global is not defined
-	 */
-
-</script>
-<style>
-	body {
-		--svrollbar-track-width: 20px;
-		--svrollbar-thumb-width: 10px;
-		--svrollbar-thumb-background: #2b2b2b;
-		--svrollbar-thumb-opacity: 1;
-		--svrollbar-thumb-height: 5px;
-		--svrollbar-thumb-radius: 0;
-
-	}
-</style>
-
-
+	<body class="bg-base-100 rounded-lg" data-sveltekit-preload-data="hover">
+		<div style="display: contents" class=" ">%sveltekit.body%</div>
+	</body>
+	<script>
+		/**
+		 * this is a hack for error: global is not defined
+		 */
+	</script>
+	<style>
+		body {
+			--svrollbar-track-width: 20px;
+			--svrollbar-thumb-width: 10px;
+			--svrollbar-thumb-background: #2b2b2b;
+			--svrollbar-thumb-opacity: 1;
+			--svrollbar-thumb-height: 5px;
+			--svrollbar-thumb-radius: 0;
+		}
+	</style>
 </html>

@@ -1,13 +1,14 @@
 <script lang="ts">
+	import { invoke } from '@tauri-apps/api/tauri';
+	import { appWindow } from '@tauri-apps/api/window';
 	import { onMount } from 'svelte';
+	//@ts-ignore
+	import Icon from 'svelte-icons-pack/Icon.svelte';
 	import VscChromeClose from 'svelte-icons-pack/vsc/VscChromeClose';
 	import VscChromeMaximize from 'svelte-icons-pack/vsc/VscChromeMaximize';
 	import VscChromeMinimize from 'svelte-icons-pack/vsc/VscChromeMinimize';
 	import VscChromeRestore from 'svelte-icons-pack/vsc/VscChromeRestore';
-	import { invoke } from '@tauri-apps/api/tauri';
-	//@ts-ignore
-	import Icon from 'svelte-icons-pack/Icon.svelte';
-	import { appWindow } from '@tauri-apps/api/window';
+
 	let isMaximized: boolean;
 	export let loc: string;
 	onMount(() => {

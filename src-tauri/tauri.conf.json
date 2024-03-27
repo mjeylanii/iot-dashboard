@@ -18,7 +18,6 @@
 				"readFile": true,
 				"writeFile": true,
 				"scope": ["$APPCONFIG", "$APPCONFIG/*"]
-				
 			},
 			"window": {
 				"all": false,

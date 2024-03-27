@@ -1,6 +1,5 @@
 <script lang="ts">
-
-    let device 
+	let device;
 </script>
 
 <div class="w-full h-full checkbox bg-base-200 group">

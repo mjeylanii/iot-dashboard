@@ -1,6 +1,8 @@
 <script>
 	import '../../../app.css';
+
 	import Titlebar from '$lib/Titlebar.svelte';
+
 	let loc = 'login';
 </script>
 

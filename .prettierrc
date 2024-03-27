@@ -3,7 +3,8 @@
 	"singleQuote": true,
 	"trailingComma": "none",
 	"printWidth": 100,
-	"plugins": ["prettier-plugin-svelte", "prettier-plugin-tailwindcss"],
+	"plugins": ["prettier-plugin-svelte", "@ianvs/prettier-plugin-sort-imports"],
 	"pluginSearchDirs": ["."],
+	"importOrder": ["^@core/(.*)$", "", "^$server/(.*)$", "", "^$lib/(.*)$", "", "^[./]"],
 	"overrides": [{ "files": "*.svelte", "options": { "parser": "svelte" } }]
 }

@@ -1,4 +1,4 @@
-import { writable, readable } from 'svelte/store';
+import { readable, writable } from 'svelte/store';
 
 export const temperature = writable([{ time: 0, value: 0 }]);
 

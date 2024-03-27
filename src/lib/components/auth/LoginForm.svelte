@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
+
 	export let email = '';
 	export let password = '';
 	export let resettingPassword = false;
@@ -19,7 +20,6 @@
 				<div>
 					<label for="email" class="block mb-2 text-sm font-medium text-gray-900"
 						>Your email
-						<!-- Error -->
 						{#if errors.email}
 							<span class="text-red-500">{'*' + errors.email}</span>
 						{/if}
@@ -87,7 +87,6 @@
 					{/if}
 				</button>
 			</div>
-			<!-- Login error -->
 			{#if errors.login}
 				<div class="text-red-500">{errors.login}</div>
 			{/if}

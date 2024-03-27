@@ -69,7 +69,7 @@
 
 <input type="checkbox" id="settings-modal" class="modal-toggle" />
 <div class="modal">
-	<div class="modal-box relative mx-w-xl">
+	<div class="modal-box relative w-[90vw] md:h-[80vh] h-[60vh] mt-10">
 		<label for="settings-modal" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
 		<h3 class="text-lg font-bold">Settings</h3>
 		<br />

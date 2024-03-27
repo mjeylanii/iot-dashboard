@@ -1,7 +1,8 @@
-import { Store } from 'tauri-plugin-store-api';
-import sanitizeInput from '$lib/helpers/inputHelper';
 import initialSettings from '$lib/constants/initialSettings';
-import type { Settings, Pocketbase, MQTT, WebSocket } from '$lib/types';
+import sanitizeInput from '$lib/helpers/inputHelper';
+import type { MQTT, Pocketbase, Settings, WebSocket } from '$lib/types';
+import { Store } from 'tauri-plugin-store-api';
+
 const store = new Store('.settings.dat');
 
 const storeInit = async () => {
