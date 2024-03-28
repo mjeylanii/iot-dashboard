@@ -1,14 +1,11 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	import { invoke } from '@tauri-apps/api/tauri';
-
-	import { Alert } from '$components';
 	import { authenticateWithDatabase, resetPassword } from '$lib/api/AuthAPI';
 	import LoginForm from '$lib/components/auth/LoginForm.svelte';
 	import PasswordResetForm from '$lib/components/auth/PasswordResetForm.svelte';
-	import { getMQTT, storeInit } from '$lib/helpers/storageHelper';
-	import { alerts } from '$stores';
+
+	import { invoke } from '@tauri-apps/api/tauri';
 
 	let email = '';
 	let password = '';
@@ -16,13 +13,10 @@
 	let resetSent = false;
 	let loggingIn = false;
 
-	//Async onmount
 	onMount(async () => {
-		storeInit();
 		invoke('close_splashscreen');
 	});
 
-	//Error handling
 	let errors: any = {};
 
 	const validateForm = () => {
@@ -38,13 +32,15 @@
 
 		return valid;
 	};
-	//Submit handler
+
 	const handleSubmit = async () => {
+		invoke("open_")
 		invoke('close_login');
+
 		if (validateForm() == false) {
 			return;
 		}
-		//Clear errors
+
 		loggingIn = true;
 		errors.email = '';
 		errors.password = '';
@@ -68,7 +64,6 @@
 			return;
 		}
 		resettingPassword = false;
-		//Clear errors
 		errors.email = '';
 		errors.password = '';
 		errors.login = '';

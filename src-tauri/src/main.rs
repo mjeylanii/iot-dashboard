@@ -58,8 +58,6 @@ async fn open_login(window: tauri::Window) {
 }
 
 fn main() {
-    //Get app data dir
-
     tauri::Builder::default()
         .setup(|app| {
             let splashscreen = app.get_window("splashscreen").unwrap();
