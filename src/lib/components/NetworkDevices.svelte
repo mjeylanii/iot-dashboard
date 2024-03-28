@@ -3,7 +3,7 @@
 
 	import { alerts } from '$stores';
 
-	import { fetchDevicesData } from '../api/DevicesAPI';
+	import { fetchDevicesData } from '$api;
 
 	let loading = true;
 	let devices: any;

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
+	import { AuthAPI, PesronsAPI } from '$api';
 	import {
 		AddPerson,
 		ChartsWrapper,
@@ -11,8 +12,6 @@
 		WeatherCard,
 	} from '$components';
 	import { StorageHelper } from '$helpers';
-	import { checkIfLoggedIn } from '$lib/api/AuthAPI';
-	import { checkOnline, fetchPersonnelData, fetchUsersData } from '$lib/api/PersonsAPI';
 	import { netOptions } from '$lib/chart_options/networkTraffic';
 	import Controls from '$lib/components/Controls.svelte';
 	import GraphCard from '$lib/components/graphs/GraphCard.svelte';

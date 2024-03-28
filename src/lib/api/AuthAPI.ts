@@ -1,11 +1,11 @@
-import { getPocketbase } from '$lib/helpers/storageHelper';
-import { alerts } from '$lib/stores/ui';
+import { StorageHelper } from '$helpers';
+import { alerts } from '$stores';
 import PocketBase from 'pocketbase';
 
 let db_config: any;
 let pocketbase: any;
 const loadConfig = async () => {
-	db_config = await getPocketbase();
+	db_config = await StorageHelper.getPocketbase();
 	console.log(db_config);
 	pocketbase = new PocketBase(`http://${db_config.host}:${db_config.port}`);
 };

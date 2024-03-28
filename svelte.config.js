@@ -13,9 +13,11 @@ const config = {
 		// See https://kit.svelte.dev/docs/adapters for more information about adapters.
 		adapter: adapter({ 'index.html': '200.html' }),
 		alias: {
+			$api: './src/lib/api/index.ts',
 			$components: './src/lib/components/index.ts',
-			$helpers: './src/lib/helpers/index.ts',
 			$constants: './src/lib/constants/index.ts',
+			$helpers: './src/lib/helpers/index.ts',
+			$services: '.src/lib/services/index.ts',
 			$stores: './src/lib/stores/index.ts',
 		},
 	},
