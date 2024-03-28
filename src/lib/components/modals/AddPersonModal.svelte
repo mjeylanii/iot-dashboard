@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { addPersonnel } from '$lib/api/PersonsAPI';
-	import { alerts } from '$lib/stores/store';
+	import { alerts } from '$stores';
 
 	const formData = new FormData();
 	let date = new Date();

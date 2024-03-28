@@ -6,7 +6,7 @@
 	import '../../app.css';
 
 	import { Alert, Navbar } from '$components';
-	import { alerts } from '$lib/stores/store';
+	import { alerts } from '$lib/stores';
 
 	let loc = 'app';
 </script>

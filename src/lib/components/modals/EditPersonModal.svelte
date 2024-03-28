@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { updatePersonnel } from '$lib/api/PersonsAPI';
-	import { alerts } from '$lib/stores/store';
+	import { alerts } from '$stores';
 
 	export let person: any;
 

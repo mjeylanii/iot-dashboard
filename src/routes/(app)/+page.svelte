@@ -10,7 +10,7 @@
 		SettingsModal,
 		WeatherCard,
 	} from '$components';
-	import { storeInit } from '$helpers';
+	import { StorageHelper } from '$helpers';
 	import { checkIfLoggedIn } from '$lib/api/AuthAPI';
 	import { checkOnline, fetchPersonnelData, fetchUsersData } from '$lib/api/PersonsAPI';
 	import { netOptions } from '$lib/chart_options/networkTraffic';
@@ -24,7 +24,7 @@
 	let users: any = [];
 
 	onMount(async () => {
-		storeInit();
+		StorageHelper.storeInit();
 
 		let loggedIn = await checkIfLoggedIn();
 		if (!loggedIn) {

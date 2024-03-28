@@ -15,8 +15,8 @@ const config = {
 		alias: {
 			$components: './src/lib/components/index.ts',
 			$helpers: './src/lib/helpers/index.ts',
-			$constants: '.src/lib/constants/index.ts',
-			$stores: '.src/lib/stores/index.ts',
+			$constants: './src/lib/constants/index.ts',
+			$stores: './src/lib/stores/index.ts',
 		},
 	},
 };

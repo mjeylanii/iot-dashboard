@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	import { getWebSocket } from '$helpers';
+	import { StorageHelper } from '$helpers';
 	import { humidityOptions, psiOptions, temperatureOptions } from '$lib/chart_options/index';
 	import GraphCard from '$lib/components/graphs/GraphCard.svelte';
-	import { alerts, sensors } from '$stores';
+	import { alerts, Sensors } from '$stores';
 
 	let ws: WebSocket;
 	let response = '';
@@ -18,7 +18,7 @@
 			console.log('Websocket is already connected');
 			ws.close();
 		} else {
-			getWebSocket().then((vals: any) => {
+			StorageHelper.getWebSocket().then((vals: any) => {
 				ws = new WebSocket(`ws://${vals.host}:${vals.port}/ws${vals.topics.climate}`);
 				ws.onopen = () => {
 					console.log('Websocket is connected');
@@ -39,15 +39,15 @@
 					console.log(parsedResponse);
 					data = parsedResponse;
 					console.log(data);
-					temperature.update((value) => {
+					Sensors.temperature.update((value) => {
 						value.push({ time: timestamp, value: parsedResponse.temperature });
 						return value;
 					});
-					humidity.update((value) => {
+					Sensors.humidity.update((value) => {
 						value.push({ time: timestamp, value: parsedResponse.humidity });
 						return value;
 					});
-					pressure.update((value) => {
+					Sensors.pressure.update((value) => {
 						value.push({ time: timestamp, value: parsedResponse.pressure });
 						return value;
 					});
