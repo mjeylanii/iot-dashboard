@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { alerts } from '$lib/stores/store.js';
 	import { onMount } from 'svelte';
+
+	import { alerts } from '$stores';
 
 	import { fetchDevicesData } from '../api/DevicesAPI';
 
@@ -22,8 +23,8 @@
 					id: alerts.length++,
 					type: 'error',
 					message: 'Error while fetching devices data',
-					time: new Date()
-				}
+					time: new Date(),
+				},
 			]);
 			return [];
 		} finally {

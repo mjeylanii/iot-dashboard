@@ -9,7 +9,7 @@
 	const data = {
 		name: person.name,
 		email: person.email,
-		profile_image: null
+		profile_image: null,
 	};
 	function Save() {
 		updatePersonnel(person.id, data);
@@ -20,11 +20,11 @@
 				id: alerts.length++,
 				type: 'success',
 				message: 'Person updated successfully',
-				time: new Date()
-			}
+				time: new Date(),
+			},
 		]);
 		const modal: HTMLInputElement = document.getElementById(
-			'edit-person-modal' + person.id
+			'edit-person-modal' + person.id,
 		) as HTMLInputElement;
 		modal.checked = false;
 	}

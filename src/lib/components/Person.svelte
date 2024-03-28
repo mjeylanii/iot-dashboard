@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { EditPersonModal } from '$components';
 	import { onMount } from 'svelte';
+
+	import { EditPersonModal } from '$components';
 
 	export let person: any = null;
 	onMount(async () => {

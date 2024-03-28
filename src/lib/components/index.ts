@@ -47,5 +47,5 @@ export {
 	EditPersonModal,
 	NetworkDevices,
 	ChartsWrapper,
-	TermsAndConditionsModal
+	TermsAndConditionsModal,
 };

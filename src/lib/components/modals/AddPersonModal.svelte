@@ -9,13 +9,13 @@
 		last_present: date.toUTCString(),
 		email: '',
 		online: false,
-		profile_image: null
+		profile_image: null,
 	};
 
 	let errors = {
 		name: '',
 		email: '',
-		profile_image: ''
+		profile_image: '',
 	};
 	function validate() {
 		if (data.name == '') {
@@ -41,7 +41,7 @@
 			addPersonnel(data);
 
 			const modalToggle: HTMLInputElement = document.getElementById(
-				'add-person-modal'
+				'add-person-modal',
 			) as HTMLInputElement;
 			modalToggle.checked = false;
 			data.name = '';
@@ -50,7 +50,7 @@
 
 			alerts.update((alerts: any) => [
 				...alerts,
-				{ id: alerts.length++, type: 'success', message: 'Person added successfully' }
+				{ id: alerts.length++, type: 'success', message: 'Person added successfully' },
 			]);
 		}
 	}

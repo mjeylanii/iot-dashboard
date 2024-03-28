@@ -1,8 +1,9 @@
 <script lang="js">
 	// @ts-nocheck
+	import { onMount } from 'svelte';
+
 	import { humidity, pressure, temperature } from '$lib/stores/sensors';
 	import Chart from 'chart.js/auto';
-	import { onMount } from 'svelte';
 
 	export let chartId = '';
 	export let options;
@@ -43,11 +44,11 @@
 						data: [],
 						fill: 'start',
 						pointRadius: chartId == 'Network Traffic' ? 3 : 0,
-						pointHitRadius: 3
-					}
-				]
+						pointHitRadius: 3,
+					},
+				],
 			},
-			options: options
+			options: options,
 		});
 		function addData(label, data) {
 			if (typeof data == undefined && chart) return;

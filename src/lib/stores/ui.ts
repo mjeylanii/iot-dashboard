@@ -1,5 +1,4 @@
 import { writable } from 'svelte/store';
-import { Store } from 'tauri-plugin-store-api';
 
 /**
  * Represents a person object.

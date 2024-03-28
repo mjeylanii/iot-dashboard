@@ -7,5 +7,5 @@ export default [
 	'Just a little bit more',
 	'Just a few more seconds',
 	'Just a few more minutes',
-	'Done!'
+	'Done!',
 ];

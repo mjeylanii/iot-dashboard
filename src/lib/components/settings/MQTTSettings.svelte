@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { getMQTT, setMQTT } from '$lib/helpers/storageHelper';
 	import { onMount } from 'svelte';
+
+	import { getMQTT, setMQTT } from '$lib/helpers/storageHelper';
 
 	onMount(async () => {});
 </script>

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Titlebar from '$lib/Titlebar.svelte';
+
 	import { Svrollbar } from 'svrollbar';
 
 	import '../../app.css';

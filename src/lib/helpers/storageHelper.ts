@@ -1,6 +1,7 @@
+import type { MQTT, Pocketbase, Settings, WebSocket } from '$lib/types';
+
 import initialSettings from '$lib/constants/initialSettings';
 import sanitizeInput from '$lib/helpers/inputHelper';
-import type { MQTT, Pocketbase, Settings, WebSocket } from '$lib/types';
 import { Store } from 'tauri-plugin-store-api';
 
 const store = new Store('.settings.dat');
@@ -85,5 +86,5 @@ export {
 	setWebSocket,
 	setPocketbase,
 	getPocketbase,
-	resetSettings
+	resetSettings,
 };

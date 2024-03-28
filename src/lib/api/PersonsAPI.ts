@@ -1,6 +1,6 @@
 import { getPocketbase } from '$lib/helpers/storageHelper';
 //import { db_config } from '$lib/config/dbconfig.conf';
-import { alerts } from '$lib/stores/store';
+import { alerts } from '$lib/stores/ui';
 import PocketBase from 'pocketbase';
 
 let db_config: any;
@@ -31,7 +31,7 @@ export const fetchPersonnelData = async (): Promise<any[]> => {
 			name: person.name,
 			email: person.email,
 			status: person.online,
-			profile_image: person.profile_image
+			profile_image: person.profile_image,
 		}));
 		return personnel;
 	} catch (err) {
@@ -50,7 +50,7 @@ export const fetchOnePersonnelData = async (id: string): Promise<any> => {
 			name: res.name,
 			email: res.email,
 			status: res.online,
-			profile_image: res.profile_image
+			profile_image: res.profile_image,
 		};
 		return personnel;
 	} catch (err) {
@@ -76,7 +76,7 @@ export const addPersonnel = async (data: any): Promise<any> => {
 				console.log(res);
 				alerts.update((alerts: any) => [
 					...alerts,
-					{ id: alerts.length++, type: 'success', message: 'Personnel added successfully' }
+					{ id: alerts.length++, type: 'success', message: 'Personnel added successfully' },
 				]);
 			})
 			.catch((err: any) => {
@@ -86,8 +86,8 @@ export const addPersonnel = async (data: any): Promise<any> => {
 					{
 						id: alerts.length++,
 						type: 'error',
-						message: 'Error adding personnel. Check if already exists'
-					}
+						message: 'Error adding personnel. Check if already exists',
+					},
 				]);
 			});
 	} catch (err) {
@@ -119,7 +119,7 @@ export const fetchUsersData = async (): Promise<any[]> => {
 			name: user.name,
 			email: user.email,
 			role: user.role,
-			password: user.password
+			password: user.password,
 		}));
 		return users;
 	} catch (err) {

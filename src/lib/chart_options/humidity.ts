@@ -1,58 +1,58 @@
 export const humidityOptions = {
 	plugins: {
 		legend: {
-			display: false
+			display: false,
 		},
 		tooltip: {
 			enabled: false,
 			mode: 'index',
-			intersect: false
-		}
+			intersect: false,
+		},
 	},
 	maintainAspectRatio: false,
 	hover: {
 		mode: 'index',
-		intersec: false
+		intersec: false,
 	},
 	legend: {
-		display: false
+		display: false,
 	},
 	tooltips: {
 		enabled: false,
 		mode: 'index',
-		intersect: false
+		intersect: false,
 	},
 	elements: {
 		point: {
-			radius: 0
+			radius: 0,
 		},
 		line: {
-			tension: 0.5
-		}
+			tension: 0.5,
+		},
 	},
 
 	scales: {
 		y: {
 			display: false,
 			grid: {
-				display: false
+				display: false,
 			},
 			ticks: {
 				display: true,
 				min: 0,
-				max: false
-			}
+				max: false,
+			},
 		},
 		x: {
 			display: false,
 			grid: {
-				display: false
+				display: false,
 			},
 			ticks: {
 				display: true,
 				min: 0,
-				max: 60
-			}
-		}
-	}
+				max: 60,
+			},
+		},
+	},
 };

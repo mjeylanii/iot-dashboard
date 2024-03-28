@@ -1,7 +1,9 @@
 <script>
-	import { invoke } from '@tauri-apps/api/tauri';
-	import { user } from '$lib/stores/store';
 	import { onMount } from 'svelte';
+
+	import { invoke } from '@tauri-apps/api/tauri';
+
+	import { user } from '$stores';
 	import { themeChange } from 'theme-change';
 
 	onMount(() => {

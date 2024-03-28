@@ -1,58 +1,58 @@
 export const netOptions = {
 	plugins: {
 		legend: {
-			display: true
+			display: true,
 		},
 		tooltip: {
 			enabled: true,
 			mode: 'index',
-			intersect: false
-		}
+			intersect: false,
+		},
 	},
 	maintainAspectRatio: false,
 	hover: {
 		mode: 'index',
-		intersec: false
+		intersec: false,
 	},
 	legend: {
-		display: true
+		display: true,
 	},
 	tooltips: {
 		enabled: true,
 		mode: 'index',
-		intersect: false
+		intersect: false,
 	},
 	elements: {
 		point: {
-			radius: 0
+			radius: 0,
 		},
 		line: {
-			tension: 0.5
-		}
+			tension: 0.5,
+		},
 	},
 
 	scales: {
 		y: {
 			display: true,
 			grid: {
-				display: true
+				display: true,
 			},
 			ticks: {
 				display: true,
 				min: 0,
-				max: true
-			}
+				max: true,
+			},
 		},
 		x: {
 			display: true,
 			grid: {
-				display: true
+				display: true,
 			},
 			ticks: {
 				display: true,
 				min: 0,
-				max: 60
-			}
-		}
-	}
+				max: 60,
+			},
+		},
+	},
 };

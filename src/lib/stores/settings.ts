@@ -9,6 +9,6 @@ export const settings = writable({
 		temperature: 'tempereature',
 		humidity: 'humidity',
 		pressure: 'pressure',
-		light: 'light'
-	}
+		light: 'light',
+	},
 });

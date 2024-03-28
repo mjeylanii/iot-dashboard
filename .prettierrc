@@ -1,10 +1,31 @@
 {
 	"useTabs": true,
 	"singleQuote": true,
-	"trailingComma": "none",
+	"trailingComma": "all",
 	"printWidth": 100,
 	"plugins": ["prettier-plugin-svelte", "@ianvs/prettier-plugin-sort-imports"],
 	"pluginSearchDirs": ["."],
-	"importOrder": ["^@core/(.*)$", "", "^$server/(.*)$", "", "^$lib/(.*)$", "", "^[./]"],
+	"importOrder": [
+		"^svelte",
+		"",
+		"<TYPES>",
+		"",
+		"<THIRD_PARTY_MODULES>",
+		"",
+		"@tauri-apps/(.*)$",
+		"",
+		"<TYPES>^[.|..|~]",
+		"^$components",
+		"",
+		"^$helpers",
+		"",
+		"^$stores",
+		"",
+		"^$lib/",
+		"",
+		"^[./]"
+	],
+	"importOrderParserPlugins": ["typescript", "jsx", "decorators-legacy"],
+	"importOrderTypeScriptVersion": "4.4.0",
 	"overrides": [{ "files": "*.svelte", "options": { "parser": "svelte" } }]
 }

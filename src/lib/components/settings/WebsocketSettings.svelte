@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { getWebSocket } from '$lib/helpers/storageHelper';
-	import { onMount, setContext } from 'svelte';
-
 	import InputField from './InputField.svelte';
 	import SelectField from './SelectField.svelte';
+	import { onMount, setContext } from 'svelte';
+
+	import { getWebSocket } from '$lib/helpers/storageHelper';
 
 	let serverAddress = '';
 	let serverPort: number;
@@ -87,7 +87,7 @@
 		onChange={handleInputChange}
 		options={[
 			{ label: 'ws', value: 'ws' },
-			{ label: 'wss', value: 'wss' }
+			{ label: 'wss', value: 'wss' },
 		]}
 	/>
 	<InputField

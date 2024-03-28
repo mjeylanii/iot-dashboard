@@ -1,4 +1,4 @@
-import { alerts, devices } from '../stores/store';
+import { alerts, devices } from '../stores/ui';
 
 class WebSocketService {
 	ws!: WebSocket;
@@ -57,8 +57,8 @@ class WebSocketService {
 				id: alerts.length + 1,
 				type: 'warning',
 				message: 'Server closed connection',
-				time: new Date()
-			}
+				time: new Date(),
+			},
 		]);
 	}
 
@@ -68,7 +68,7 @@ class WebSocketService {
 		alerts.update((alerts) => {
 			//Check if the alert is already in the array
 			const alertIndex = alerts.findIndex(
-				(alert) => alert.message == 'Error connecting to the websocket'
+				(alert) => alert.message == 'Error connecting to the websocket',
 			);
 			if (alertIndex == -1) {
 				return [
@@ -77,8 +77,8 @@ class WebSocketService {
 						id: alerts.length + 1,
 						type: 'error',
 						message: 'Error connecting to the websocket',
-						time: new Date()
-					}
+						time: new Date(),
+					},
 				];
 			}
 			return alerts;

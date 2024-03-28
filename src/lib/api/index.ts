@@ -1,0 +1,1 @@
+import { authenticateWithDatabase } from './AuthAPI';

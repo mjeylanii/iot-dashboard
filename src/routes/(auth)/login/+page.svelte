@@ -1,14 +1,14 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+
 	import { invoke } from '@tauri-apps/api/tauri';
+
 	import { Alert } from '$components';
 	import { authenticateWithDatabase, resetPassword } from '$lib/api/AuthAPI';
 	import LoginForm from '$lib/components/auth/LoginForm.svelte';
 	import PasswordResetForm from '$lib/components/auth/PasswordResetForm.svelte';
 	import { getMQTT, storeInit } from '$lib/helpers/storageHelper';
-	import { alerts } from '$lib/stores/store';
-	import { onMount } from 'svelte';
-
-	//import { get, init, set, save } from '$lib/helpers/storageHelper';
+	import { alerts } from '$stores';
 
 	let email = '';
 	let password = '';

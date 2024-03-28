@@ -1,5 +1,5 @@
 import { getPocketbase } from '$lib/helpers/storageHelper';
-import { alerts } from '$lib/stores/store';
+import { alerts } from '$lib/stores/ui';
 import PocketBase from 'pocketbase';
 
 let db_config: any;

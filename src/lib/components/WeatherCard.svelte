@@ -1,8 +1,9 @@
 <script lang="ts">
 	//@ts-ignore
-	import { PUBLIC_OPENWEATHERMAP_API_KEY } from '$env/static/public';
-	import { alerts } from '$lib/stores/store';
 	import { onMount } from 'svelte';
+
+	import { PUBLIC_OPENWEATHERMAP_API_KEY } from '$env/static/public';
+	import { alerts } from '$stores';
 
 	import { fetchWeatherData } from '../api/WeatherAPI';
 
@@ -11,17 +12,17 @@
 			temp: 0,
 			feels_like: 0,
 			temp_min: 0,
-			temp_max: 0
+			temp_max: 0,
 		},
 		weather: [
 			{
 				main: '',
 				description: '',
-				icon: ''
-			}
+				icon: '',
+			},
 		],
 		dt: 0,
-		name: ''
+		name: '',
 	};
 	let isLoading = true;
 	let coords: { latitude: number; longitude: number } = { latitude: 0, longitude: 0 };
@@ -36,7 +37,7 @@
 		await fetchWeatherData(
 			PUBLIC_OPENWEATHERMAP_API_KEY,
 			coords.latitude.toString(),
-			coords.longitude.toString()
+			coords.longitude.toString(),
 		)
 			.then((res) => {
 				if (res === undefined) return;
@@ -51,8 +52,8 @@
 						id: alerts.length++,
 						type: 'error',
 						message: 'Unable to fetch weather data',
-						time: new Date()
-					}
+						time: new Date(),
+					},
 				]);
 			});
 	});
@@ -80,7 +81,7 @@
 						weekday: 'long',
 						month: 'long',
 						day: 'numeric',
-						year: 'numeric'
+						year: 'numeric',
 					})}
 				</p>
 			</div>

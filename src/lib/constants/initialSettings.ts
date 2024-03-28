@@ -5,7 +5,7 @@ const initialSettings = {
 		BROKER_USERNAME: 'mqtt_user',
 		BROKER_PASSWORD: 'mqtt_password',
 		CLIENT_ID: 'web' + new Date().getTime(),
-		topics: []
+		topics: [],
 	},
 	WebSocket: {
 		host: 'localhost',
@@ -16,16 +16,16 @@ const initialSettings = {
 		path: '/ws',
 		topics: {
 			climate: '/climate',
-			devices: []
-		}
+			devices: [],
+		},
 	},
 	Pocketbase: {
 		host: '192.168.0.116',
 		user: 'XXXX',
 		password: 'XXXX',
 		database: 'XXXX',
-		port: 8090
-	}
+		port: 8090,
+	},
 };
 
 export default initialSettings;

@@ -1,5 +1,5 @@
 import { humidity, pressure, temperature } from '$lib/stores/sensors';
-import { alerts } from '$lib/stores/store';
+import { alerts } from '$lib/stores/ui';
 
 class ClimateWebSocketService {
 	ws!: WebSocket;
@@ -32,8 +32,8 @@ class ClimateWebSocketService {
 				id: alerts.length + 1,
 				type: 'success',
 				message: 'Connected to the server',
-				time: new Date()
-			}
+				time: new Date(),
+			},
 		]);
 	}
 
@@ -68,8 +68,8 @@ class ClimateWebSocketService {
 				id: alerts.length + 1,
 				type: 'warning',
 				message: 'Server closed connection',
-				time: new Date()
-			}
+				time: new Date(),
+			},
 		]);
 	}
 
@@ -82,8 +82,8 @@ class ClimateWebSocketService {
 				id: alerts.length + 1,
 				type: 'error',
 				message: 'Error connecting to WebSocket',
-				time: new Date()
-			}
+				time: new Date(),
+			},
 		]);
 	}
 }

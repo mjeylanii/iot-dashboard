@@ -1,17 +1,17 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+
+	import { getWebSocket } from '$helpers';
 	import { humidityOptions, psiOptions, temperatureOptions } from '$lib/chart_options/index';
 	import GraphCard from '$lib/components/graphs/GraphCard.svelte';
-	import { getWebSocket } from '$lib/helpers/storageHelper';
-	import { humidity, pressure, temperature } from '$lib/stores/sensors';
-	import { alerts } from '$lib/stores/store';
-	import { onMount } from 'svelte';
+	import { alerts, sensors } from '$stores';
 
 	let ws: WebSocket;
 	let response = '';
 	$: data = {
 		temperature: 0,
 		humidity: 0,
-		pressure: 0
+		pressure: 0,
 	};
 	onMount(async () => {
 		if (ws && ws.readyState == 1) {
@@ -28,8 +28,8 @@
 							id: alerts.length + 1,
 							type: 'success',
 							message: 'Successfully connected to the server',
-							time: new Date()
-						}
+							time: new Date(),
+						},
 					]);
 				};
 				ws.onmessage = (event) => {
@@ -61,8 +61,8 @@
 							id: alerts.length + 1,
 							type: 'warning',
 							message: 'Server closed connection',
-							time: new Date()
-						}
+							time: new Date(),
+						},
 					]);
 				};
 
@@ -73,8 +73,8 @@
 							id: alerts.length + 1,
 							type: 'error',
 							message: 'Error connecting to websocket',
-							time: new Date()
-						}
+							time: new Date(),
+						},
 					]);
 				};
 			});

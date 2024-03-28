@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { invoke } from '@tauri-apps/api/tauri';
+	import { onMount } from 'svelte';
+
 	import {
 		AddPerson,
 		ChartsWrapper,
@@ -7,16 +8,17 @@
 		NetworkDevices,
 		Person,
 		SettingsModal,
-		WeatherCard
+		WeatherCard,
 	} from '$components';
+	import { storeInit } from '$helpers';
 	import { checkIfLoggedIn } from '$lib/api/AuthAPI';
 	import { checkOnline, fetchPersonnelData, fetchUsersData } from '$lib/api/PersonsAPI';
 	import { netOptions } from '$lib/chart_options/networkTraffic';
 	import Controls from '$lib/components/Controls.svelte';
 	import GraphCard from '$lib/components/graphs/GraphCard.svelte';
-	import { storeInit } from '$lib/helpers/storageHelper';
-	import { alerts, user } from '$lib/stores/store';
-	import { onMount } from 'svelte';
+	import { alerts, user } from '$stores';
+
+	import { invoke } from '@tauri-apps/api/tauri';
 
 	let personnel: any = [];
 	let users: any = [];
@@ -39,8 +41,8 @@
 					id: alerts.length + 1,
 					type: 'error',
 					message: err.message,
-					time: new Date()
-				}
+					time: new Date(),
+				},
 			]);
 			console.log(users);
 		}
@@ -56,8 +58,8 @@
 					id: alerts.length + 1,
 					type: 'error',
 					message: err.message,
-					time: new Date()
-				}
+					time: new Date(),
+				},
 			]);
 		}
 	});
@@ -75,8 +77,8 @@
 						id: alerts.length + 1,
 						type: 'error',
 						message: err.message,
-						time: new Date()
-					}
+						time: new Date(),
+					},
 				]);
 			}
 		}
