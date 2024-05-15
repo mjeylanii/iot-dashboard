@@ -1,3 +1,8 @@
-import type { MQTT, Pocketbase, Settings, WebSocket } from './settings.type';
+import type {
+	MQTTSettings,
+	PocketbaseSettings,
+	Settings,
+	WebSocketSettings,
+} from './settings.type';
 
-export { Settings, MQTT, WebSocket, Pocketbase };
+export type { MQTTSettings, PocketbaseSettings, Settings, WebSocketSettings };

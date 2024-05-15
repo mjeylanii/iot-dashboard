@@ -1,30 +1,46 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
+	import type { PocketbaseSettings } from '$lib/types';
+
 	import {
 		AddPerson,
 		ChartsWrapper,
+		Content,
 		InfoModal,
+		Messages,
+		MyTasks,
 		NetworkDevices,
 		Person,
 		SettingsModal,
+		Task,
 		WeatherCard,
 	} from '$components';
 	import { StorageHelper } from '$helpers';
-	import { checkIfLoggedIn } from '$lib/api/AuthAPI';
-	import { checkOnline, fetchPersonnelData, fetchUsersData } from '$lib/api/PersonsAPI';
+	import { AuthAPI, PersonsAPI } from '$lib/api';
 	import { netOptions } from '$lib/chart_options/networkTraffic';
 	import Controls from '$lib/components/Controls.svelte';
 	import GraphCard from '$lib/components/graphs/GraphCard.svelte';
 	import { alerts, user } from '$stores';
-
-	import { invoke } from '@tauri-apps/api/tauri';
+	import PocketBase from 'pocketbase';
 
 	let personnel: any = [];
 	let users: any = [];
 
 	onMount(async () => {
 		StorageHelper.storeInit();
+		let db_config: PocketbaseSettings;
+		let pocketbase: PocketBase;
+
+		const loadConfig = async () => {
+			db_config = await StorageHelper.getPocketbase();
+
+			console.log(db_config);
+			pocketbase = new PocketBase(`http://${db_config.host}:${db_config.port}`);
+		};
+
+		loadConfig();
+		const authAPI = new AuthAPI();
 
 		let loggedIn = await checkIfLoggedIn();
 		if (!loggedIn) {
@@ -44,8 +60,8 @@
 					time: new Date(),
 				},
 			]);
-			console.log(users);
 		}
+
 		try {
 			await fetchPersonnelData().then((res) => {
 				personnel = res;
@@ -88,6 +104,11 @@
 <SettingsModal />
 <InfoModal />
 <div class="flex flex-col gap-12">
+	<Content>
+		<Messages />
+		<MyTasks />
+		<Task />
+	</Content>
 	<div class="flex flex-col justify-center gap-4">
 		<WeatherCard />
 	</div>

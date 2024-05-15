@@ -1,47 +1,19 @@
 type Settings = {
-	MQTT: {
-		BROKER_IP: string;
-		BROKER_PORT: string;
-		BROKER_USERNAME: string;
-		BROKER_PASSWORD: string;
-		CLIENT_ID: string;
-		topics: [];
-	};
-	WebSocket: {
-		host: string;
-		port: number;
-		username: string;
-		password: string;
-		protocol: string;
-		path: string;
-		topics: {
-			climate: string;
-			devices: {
-				type: string;
-				topic: string;
-				name: string;
-				state: boolean;
-			}[];
-		};
-	};
-	Pocketbase: {
-		host: string;
-		user: string;
-		password: string;
-		database: string;
-		port: number;
-	};
+	MQTT: MQTTSettings;
+	WebSocket: WebSocketSettings;
+	Pocketbase: PocketbaseSettings;
 };
 
-type MQTT = {
+type MQTTSettings = {
 	BROKER_IP: string;
-	BROKER_PORT: string;
+	BROKER_PORT: number;
 	BROKER_USERNAME: string;
 	BROKER_PASSWORD: string;
 	CLIENT_ID: string;
 	topics: [];
 };
-type WebSocket = {
+
+type WebSocketSettings = {
 	host: string;
 	port: number;
 	username: string;
@@ -59,14 +31,12 @@ type WebSocket = {
 	};
 };
 
-type Pocketbase = {
-	Pocketbase: {
-		host: string;
-		user: string;
-		password: string;
-		database: string;
-		port: number;
-	};
+type PocketbaseSettings = {
+	host: string;
+	user: string;
+	password: string;
+	database: string;
+	port: number;
 };
 
-export type { Settings, MQTT, WebSocket, Pocketbase };
+export type { Settings, MQTTSettings, WebSocketSettings, PocketbaseSettings };

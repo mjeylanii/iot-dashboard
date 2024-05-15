@@ -1,59 +1,62 @@
-import { getPocketbase } from '$lib/helpers/storageHelper';
-import { alerts } from '$lib/stores/ui';
-import PocketBase from 'pocketbase';
+import type { UsersRecord } from '$lib/types/pocketbase.types';
+import type { AdminAuthResponse } from 'pocketbase';
+import type PocketBase from 'pocketbase';
 
-let db_config: any;
-let pocketbase: any;
-const loadConfig = async () => {
-	db_config = await getPocketbase();
-	console.log(db_config);
-	pocketbase = new PocketBase(`http://${db_config.host}:${db_config.port}`);
-};
-loadConfig();
-
-export const authenticateWithDatabase = async (email: string, password: string): Promise<any> => {
-	try {
-		const res = await pocketbase.admins.authWithPassword(email, password);
-		console.log(res);
-		return res;
-	} catch (err) {
-		throw new Error('Error authenticating with the database');
+export class AuthAPI {
+	private pocketbase: PocketBase;
+	constructor(pocketbase: PocketBase) {
+		this.pocketbase = pocketbase;
 	}
-};
 
-export const logOut = async (): Promise<any> => {
-	try {
-		const res = await pocketbase.authStore.clear();
-		return res;
-	} catch (err) {
-		throw new Error('Error logging out');
-	}
-};
+	public async logIn(email: string, password: string): Promise<AdminAuthResponse> {
+		try {
+			const res = await this.pocketbase.admins.authWithPassword(email, password);
 
-export const updateUserPassword = async (id: string, data: any): Promise<any> => {
-	try {
-		const res = await pocketbase.collection('users').update(id, data);
-		return res;
-	} catch (err) {
-		throw new Error('Error updating user password');
+			return res;
+		} catch (err) {
+			throw new Error('Error authenticating with the database');
+		}
 	}
-};
 
-export const resetPassword = async (email: string): Promise<any> => {
-	try {
-		const res = await pocketbase.admins.requestPasswordReset(email);
-		console.log(res);
-		return res;
-	} catch (err) {
-		throw new Error('Error resetting password');
-	}
-};
+	public async logOut() {
+		try {
+			const res = this.pocketbase.authStore.clear();
 
-export const checkIfLoggedIn = async (): Promise<any> => {
-	try {
-		const res = await pocketbase.authStore.isValid;
-		return res;
-	} catch (err) {
-		throw new Error('Error checking if logged in');
+			return res;
+		} catch (err) {
+			throw new Error('Error logging out');
+		}
 	}
-};
+
+	public async updateUserPassword(id: string, newPassword: FormData): Promise<UsersRecord> {
+		try {
+			const res = await this.pocketbase.collection('users').update<UsersRecord>(id, newPassword);
+
+			return res;
+		} catch (err) {
+			throw new Error('Error updating user password');
+		}
+	}
+
+	public async resetPassword(email: string): Promise<boolean> {
+		try {
+			const res = await this.pocketbase.admins.requestPasswordReset(email);
+
+			console.log(res);
+
+			return res;
+		} catch (err) {
+			throw new Error('Error resetting password');
+		}
+	}
+
+	public async checkIfLoggedIn(): Promise<boolean> {
+		try {
+			const res = this.pocketbase.authStore.isValid;
+
+			return res;
+		} catch (err) {
+			throw new Error('Error checking if logged in');
+		}
+	}
+}

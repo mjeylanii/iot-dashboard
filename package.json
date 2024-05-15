@@ -11,7 +11,8 @@
 		"test:unit": "vitest",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write .",
-		"tauri": "tauri"
+		"tauri": "tauri",
+		"pocketbase:types": "npx pocketbase-typegen --db ./pocketbase/pb_data/data.db --out ./src/lib/types/pocketbase.types.ts"
 	},
 	"devDependencies": {
 		"@ianvs/prettier-plugin-sort-imports": "^4.2.1",
@@ -46,7 +47,7 @@
 		"daisyui": "^2.51.5",
 		"dotenv": "^16.0.3",
 		"paho-mqtt": "^1.1.0",
-		"pocketbase": "^0.13.1",
+		"pocketbase": "^0.21.2",
 		"svelte-icons-pack": "^2.1.0",
 		"svrollbar": "^0.12.0",
 		"tailwindcss-hero-patterns": "^0.1.2",

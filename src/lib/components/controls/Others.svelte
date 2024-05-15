@@ -1,8 +1,9 @@
 <script lang="ts">
 	let device;
+	let isChecked = device!.status == 'on' ? true : false;
 </script>
 
-<div class="w-full h-full checkbox bg-base-200 group">
+/* <div class="w-full h-full checkbox bg-base-200 group">
 	<label class="checkbox-wrapper">
 		<input
 			id={`${light.id}`}
@@ -40,6 +41,7 @@
 		</span>
 	</label>
 </div>
+*/
 
 <style>
 	.checkbox-input {
