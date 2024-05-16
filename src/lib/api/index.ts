@@ -1,6 +1,6 @@
 import AuthAPI from './AuthAPI';
-import fetchNetworkDevicesData from './DevicesAPI';
+import FetchNetworkDevicesData from './DevicesAPI';
 import PersonsAPI from './PersonsAPI';
 import WeatherAPI from './WeatherAPI';
 
-export { AuthAPI, PersonsAPI, WeatherAPI, fetchNetworkDevicesData };
+export { AuthAPI, PersonsAPI, WeatherAPI, FetchNetworkDevicesData };

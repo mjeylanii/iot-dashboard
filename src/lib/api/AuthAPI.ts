@@ -1,9 +1,9 @@
+import type { TypedPocketBase, UsersResponse } from '$lib/types/pocketbase.type';
 import type { AuthAPIType } from '$types';
-import type { AdminAuthResponse, RecordModel } from 'pocketbase';
 import type PocketBase from 'pocketbase';
 
 export default class AuthAPI implements AuthAPIType {
-	private pocketbase: PocketBase;
+	private pocketbase: TypedPocketBase;
 
 	constructor(pocketbase: PocketBase) {
 		this.pocketbase = pocketbase;
@@ -29,7 +29,7 @@ export default class AuthAPI implements AuthAPIType {
 		}
 	}
 
-	public async updateUserPassword(id: string, newPassword: FormData): Promise<RecordModel> {
+	public async updateUserPassword(id: string, newPassword: FormData): Promise<UsersResponse> {
 		try {
 			const res = await this.pocketbase.collection('users').update(id, newPassword);
 

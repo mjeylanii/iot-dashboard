@@ -57,7 +57,6 @@
 				{#each devices as device}
 					<tr>
 						<td>
-							<!-- Device image -->
 							<img
 								src="https://img.icons8.com/ios/50/000000/router.png"
 								alt="Device"
