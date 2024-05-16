@@ -1,8 +1,10 @@
 <script lang="ts">
-	import { updatePersonnel } from '$lib/api/PersonsAPI';
+	import type { UsersRecord } from '$lib/types/pocketbase.type';
+
+	import { PersonsAPI } from '$api';
 	import { alerts } from '$stores';
 
-	export let person: any;
+	export let user: UsersRecord;
 
 	let nameInputEnabled = false;
 	let emailInputEnabled = false;
@@ -11,8 +13,11 @@
 		email: person.email,
 		profile_image: null,
 	};
+
 	function Save() {
-		updatePersonnel(person.id, data);
+		const personsAPI = new PersonsAPI();
+
+		//	personsAPI.updatePerson(person.id, );
 
 		alerts.update((alerts) => [
 			...alerts,

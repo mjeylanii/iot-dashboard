@@ -1,8 +1,18 @@
+import type { AuthAPIType, PersonsAPIType } from './api.type';
 import type {
 	MQTTSettings,
 	PocketbaseSettings,
 	Settings,
 	WebSocketSettings,
 } from './settings.type';
+import type { Alert } from './stores.type';
 
-export type { MQTTSettings, PocketbaseSettings, Settings, WebSocketSettings };
+export type {
+	PersonsAPIType,
+	MQTTSettings,
+	PocketbaseSettings,
+	Settings,
+	WebSocketSettings,
+	Alert,
+	AuthAPIType,
+};

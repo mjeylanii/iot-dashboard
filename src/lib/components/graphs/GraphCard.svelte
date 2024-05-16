@@ -1,8 +1,7 @@
-<script lang="js">
-	// @ts-nocheck
+<script lang="ts">
 	import { onMount } from 'svelte';
 
-	import { humidity, pressure, temperature } from '$lib/stores/sensors';
+	import { humidity, pressure, temperature } from '$stores';
 	import Chart from 'chart.js/auto';
 
 	export let chartId = '';
@@ -18,7 +17,7 @@
 			? temperature
 			: null;
 	onMount(async () => {
-		var ctx = document.getElementById(chartId).getContext('2d');
+		var ctx = document!.getElementById(chartId)!.getContext('2d')!;
 		var chart = new Chart(ctx, {
 			type: 'line',
 			data: {
@@ -50,6 +49,7 @@
 			},
 			options: options,
 		});
+
 		function addData(label, data) {
 			if (typeof data == undefined && chart) return;
 			if (chart.data.labels.length >= 60) {

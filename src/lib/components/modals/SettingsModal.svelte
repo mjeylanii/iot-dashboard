@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { getMQTT, getWebSocket, setMQTT, setWebSocket } from '$lib/helpers/storageHelper';
+	import {StorageHelper} from '$helpers';
 
 	import { WebsocketSettings, MQTTSettings } from '$lib/components/settings/';
 
@@ -14,7 +14,9 @@
 		activeTab = index;
 	}
 	onMount(async () => {
-		getMQTT();
+	      let storageHelper = new StorageHelper();
+
+
 	});
 	function saveSettings() {
 		switch (activeTab) {

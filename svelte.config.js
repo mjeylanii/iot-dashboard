@@ -17,6 +17,9 @@ const config = {
 			$helpers: './src/lib/helpers/index.ts',
 			$constants: './src/lib/constants/index.ts',
 			$stores: './src/lib/stores/index.ts',
+			$api: './src/lib/api/index.ts',
+			$services: './src/lib/services/index.ts',
+			$types: './src/lib/types/index.ts',
 		},
 	},
 };

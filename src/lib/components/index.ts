@@ -1,20 +1,22 @@
-import { default as Alert } from './Alert.svelte';
-import { default as Content } from './Content.svelte';
-import { AddDevice, AddPerson, Fan, Lights } from './controls';
-import { default as Device } from './Device.svelte';
-import { default as DeviceStats } from './DeviceStats.svelte';
-import { default as ChartsWrapper } from './graphs/ChartsWrapper.svelte';
-import { default as Messages } from './Messages.svelte';
-import { default as AddPersonModal } from './modals/AddPersonModal.svelte';
-import { default as EditPersonModal } from './modals/EditPersonModal.svelte';
-import { default as InfoModal } from './modals/InfoModal.svelte';
-import { default as SettingsModal } from './modals/SettingsModal.svelte';
-import { default as TermsAndConditionsModal } from './modals/TermsConditionsModal.svelte';
-import { default as Navbar } from './Navbar.svelte';
-import { default as NetworkDevices } from './NetworkDevices.svelte';
-import { default as Person } from './Person.svelte';
+import Alert from './Alert.svelte';
+import Content from './Content.svelte';
+import { AddDevice, AddPerson, Controls, Fan, Lights } from './controls';
+import Device from './Device.svelte';
+import DeviceStats from './DeviceStats.svelte';
+import { ChartsWrapper } from './graphs';
+import { MessageCard } from './messages';
+import {
+	AddPersonModal,
+	EditPersonModal,
+	InfoModal,
+	SettingsModal,
+	TermsAndConditionsModal,
+} from './modals';
+import Navbar from './Navbar.svelte';
+import NetworkDevices from './NetworkDevices.svelte';
+import Person from './Person.svelte';
 import { MyTasks, Task } from './tasks';
-import { default as WeatherCard } from './WeatherCard.svelte';
+import WeatherCard from './WeatherCard.svelte';
 
 export {
 	Alert,
@@ -36,6 +38,7 @@ export {
 	Content,
 	MyTasks,
 	Task,
-	Messages,
+	MessageCard,
 	Fan,
+	Controls,
 };

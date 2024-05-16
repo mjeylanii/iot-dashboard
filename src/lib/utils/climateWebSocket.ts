@@ -1,5 +1,4 @@
-import { humidity, pressure, temperature } from '$lib/stores/sensors';
-import { alerts } from '$lib/stores/ui';
+import { alerts, humidity, pressure, temperature } from '$stores';
 
 class ClimateWebSocketService {
 	ws!: WebSocket;

@@ -1,9 +1,15 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	import { authenticateWithDatabase, resetPassword } from '$lib/api/AuthAPI';
+	import type { TypedPocketBase } from '$lib/types/pocketbase.type';
+	import type { PocketbaseSettings } from '$types';
+	import type PocketBaseType from 'pocketbase';
+
+	import { AuthAPI } from '$api';
+	import { StorageHelper } from '$helpers';
 	import LoginForm from '$lib/components/auth/LoginForm.svelte';
 	import PasswordResetForm from '$lib/components/auth/PasswordResetForm.svelte';
+	import PocketBase from 'pocketbase';
 
 	import { invoke } from '@tauri-apps/api/tauri';
 
@@ -12,8 +18,15 @@
 	let resettingPassword = false;
 	let resetSent = false;
 	let loggingIn = false;
+	let pocketbase: PocketBaseType = new PocketBase('http://localhost:3030');
+	let authAPI: AuthAPI;
 
 	onMount(async () => {
+		let storageHelper = new StorageHelper();
+		storageHelper.storeInit();
+		let db_config: PocketbaseSettings = await storageHelper.getPocketbase();
+		pocketbase = new PocketBase(`http://${db_config.host}:${db_config.port}`) as TypedPocketBase;
+		authAPI = new AuthAPI(pocketbase);
 		invoke('close_splashscreen');
 	});
 
@@ -34,7 +47,6 @@
 	};
 
 	const handleSubmit = async () => {
-		invoke("open_")
 		invoke('close_login');
 
 		if (validateForm() == false) {
@@ -46,7 +58,8 @@
 		errors.password = '';
 		errors.login = '';
 		invoke('close_login');
-		await authenticateWithDatabase(email, password)
+		await authAPI
+			.logIn(email, password)
 			.then((result) => {
 				console.log(result);
 				invoke('close_login');
@@ -68,7 +81,8 @@
 		errors.password = '';
 		errors.login = '';
 
-		await resetPassword(email)
+		await authAPI
+			.resetPassword(email)
 			.then((result) => {
 				console.log(result);
 				if (result) {

@@ -1,15 +1,36 @@
 <script lang="ts">
-	import { addPersonnel } from '$lib/api/PersonsAPI';
+	import { onMount } from 'svelte';
+
+	import type { AuthSystemFields, TypedPocketBase, UsersRecord } from '$lib/types/pocketbase.type';
+	import type { PocketbaseSettings } from '$types';
+	import type PocketBaseType from 'pocketbase';
+
+	import { PersonsAPI } from '$api';
+	import { StorageHelper } from '$helpers';
 	import { alerts } from '$stores';
+	import PocketBase from 'pocketbase';
+
+	let personsAPI: PersonsAPI;
+
+	onMount(async () => {
+		let storageHelper = new StorageHelper();
+		let db_config: PocketbaseSettings = await storageHelper.getPocketbase();
+		let pocketbase: PocketBaseType = new PocketBase(
+			`http://${db_config.host}:${db_config.port}`,
+		) as TypedPocketBase;
+		personsAPI = new PersonsAPI(pocketbase);
+	});
 
 	const formData = new FormData();
+
 	let date = new Date();
-	const data = {
+
+	const data: UsersRecord & AuthSystemFields = {
 		name: '',
-		last_present: date.toUTCString(),
 		email: '',
+		avatar: '',
 		online: false,
-		profile_image: null,
+		tasks: [],
 	};
 
 	let errors = {
@@ -28,17 +49,17 @@
 		} else {
 			errors.email = '';
 		}
-		// if (data.profile_image != null && data.profile_image.size > 1000000) {
-		// 	errors.profile_image = 'File size must be less than 1MB';
-		// } else {
-		// 	errors.profile_image = '';
-		// }
 	}
 	function addPerson() {
 		validate();
 
 		if (errors.name == '' && errors.email == '') {
-			addPersonnel(data);
+			let formData = new FormData();
+			formData.append('name', data.name);
+			formData.append('email', data.email);
+			formData.append('avatar', data.avatar);
+
+			personsAPI.createPerson(formData);
 
 			const modalToggle: HTMLInputElement = document.getElementById(
 				'add-person-modal',

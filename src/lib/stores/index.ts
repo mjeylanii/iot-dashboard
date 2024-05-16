@@ -1,5 +1,6 @@
-import * as Sensors from './sensors';
-import { settings } from './settings';
-import { alerts, devices, people, user } from './ui';
+import { humidity, pressure, temperature } from './sensors.store';
+import { settings } from './settings.store';
+import { alerts, devices, people } from './ui.store';
+import { users } from './users.store';
 
-export { Sensors, settings, alerts, user, devices, people };
+export { settings, alerts, users, devices, people, humidity, temperature, pressure };

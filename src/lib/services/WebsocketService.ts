@@ -1,6 +1,6 @@
-import { alerts, devices } from '../stores/ui';
+import { alerts, devices } from '$stores';
 
-class WebSocketService {
+export default class WebSocketService {
 	ws!: WebSocket;
 	response = '';
 	topic = '';
@@ -90,5 +90,3 @@ class WebSocketService {
 		this.ws.send(JSON.stringify(command));
 	}
 }
-
-export default WebSocketService;

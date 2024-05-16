@@ -43,6 +43,7 @@ async fn open_main(window: tauri::Window) {
         main.show().unwrap();
     }
 }
+
 #[tauri::command]
 async fn close_main(window: tauri::Window) {
     if let Some(main) = window.get_window("main") {

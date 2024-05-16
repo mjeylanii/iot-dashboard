@@ -2,10 +2,9 @@
 	//@ts-ignore
 	import { onMount } from 'svelte';
 
+	import { WeatherAPI } from '$api';
 	import { PUBLIC_OPENWEATHERMAP_API_KEY } from '$env/static/public';
 	import { alerts } from '$stores';
-
-	import { fetchWeatherData } from '../api/WeatherAPI';
 
 	let weatherData = {
 		main: {
@@ -34,7 +33,7 @@
 				coords.latitude = res.latitude;
 				coords.longitude = res.longitude;
 			});
-		await fetchWeatherData(
+		await WeatherAPI(
 			PUBLIC_OPENWEATHERMAP_API_KEY,
 			coords.latitude.toString(),
 			coords.longitude.toString(),

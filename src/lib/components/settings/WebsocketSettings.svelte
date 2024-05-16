@@ -1,9 +1,10 @@
 <script lang="ts">
-	import InputField from './InputField.svelte';
-	import SelectField from './SelectField.svelte';
 	import { onMount, setContext } from 'svelte';
 
-	import { getWebSocket } from '$lib/helpers/storageHelper';
+	import { StorageHelper } from '$helpers';
+
+	import InputField from './InputField.svelte';
+	import SelectField from './SelectField.svelte';
 
 	let serverAddress = '';
 	let serverPort: number;
@@ -15,7 +16,7 @@
 	let addNewDevice: boolean = false;
 
 	onMount(async () => {
-		let data = await getWebSocket();
+		let data = await StorageHelper.getWebSocket();
 
 		if (!data) return;
 

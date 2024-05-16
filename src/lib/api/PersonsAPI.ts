@@ -1,132 +1,133 @@
+import type { TypedPocketBase, UsersResponse } from '$lib/types/pocketbase.type';
+import type { Alert, PersonsAPIType } from '$types';
 import type PocketBase from 'pocketbase';
 
-import { getPocketbase } from '$lib/helpers/storageHelper';
-//import { db_config } from '$lib/config/dbconfig.conf';
-import { alerts } from '$lib/stores/ui';
+import { alerts, users } from '$stores';
 
-/*let db_config: any;
-let pocketbase: any;
-const loadConfig = async () => {
-	db_config = await getPocketbase();
-	console.log(db_config);
-	pocketbase = new PocketBase(`http://${db_config.host}:${db_config.port}`);
-};
-loadConfig();*/
-
-export class PersonsAPI {
-	private pocketbase: PocketBase;
+export default class PersonsAPI implements PersonsAPIType {
+	private pocketbase: TypedPocketBase;
 	constructor(pocketbase: PocketBase) {
 		this.pocketbase = pocketbase;
 	}
-	/* const createImageUrl = (record: any, filename: string) => {
-		return (
-			`http://${db_config.host}:${db_config.port}/api/files/personnel/` + record.id + '/' + filename
-		);
-};*/
-	public async fetchPersonnelData(): Promise<User[]> {
+
+	public async getPersons(): Promise<UsersResponse[]> {
 		try {
-			const res = await this.pocketbase.collection('personnel').getFullList();
-			console.log(res);
-			res.forEach((person: any) => {
-				const firstFilename = person.profile_image;
-				person.profile_image = createImageUrl(person, firstFilename);
-			});
-			const personnel = res.map((person: any) => ({
-				id: person.id,
-				name: person.name,
-				email: person.email,
-				status: person.online,
-				profile_image: person.profile_image,
-			}));
-			return personnel;
+			const res = await this.pocketbase.collection('users').getFullList();
+
+			return res;
 		} catch (err) {
+			alerts.update((alerts: Alert[]) => [
+				...alerts,
+				{
+					id: alerts.length++,
+					type: 'error',
+					message: 'Error fetching personnel data from the database',
+					time: new Date(),
+				},
+			]);
+
 			throw new Error('Error fetching personnel data from the database');
 		}
 	}
 
-	public async fetchOnePersonnelData(id: string): Promise<User> {
+	public async getPerson(id: string): Promise<UsersResponse> {
 		try {
-			const res = await this.pocketbase.collection('personnel').getOne(id);
-			console.log(res);
-			const firstFilename = res.profile_image;
-			res.profile_image = createImageUrl(res, firstFilename);
-			const personnel = {
-				id: res.id,
-				name: res.name,
-				email: res.email,
-				status: res.online,
-				profile_image: res.profile_image,
-			};
-			return personnel;
+			const res = await this.pocketbase.collection('users').getOne(id);
+			return res;
 		} catch (err) {
+			alerts.update((alerts: Alert[]) => [
+				...alerts,
+				{
+					id: alerts.length++,
+					type: 'error',
+					message: 'Error fetching personnel data from the database',
+					time: new Date(),
+				},
+			]);
 			throw new Error('Error fetching personnel data from the database');
 		}
 	}
 
-	public async addPersonnel(data: any): Promise<any> {
-		const formData = new FormData();
-		if (data.profile_image) {
-			formData.append('profile_image', data.profile_image[0]);
-		}
-		formData.append('name', data.name);
-		formData.append('email', data.email);
-		formData.append('last_present', data.last_present);
-		formData.append('online', data.online);
-
+	public async createPerson(formData: FormData): Promise<UsersResponse> {
 		try {
-			await this.pocketbase
-				.collection('personnel')
-				.create(formData)
-				.then((res: any) => {
-					console.log(res);
-					alerts.update((alerts: any) => [
-						...alerts,
-						{ id: alerts.length++, type: 'success', message: 'Personnel added successfully' },
-					]);
-				})
-				.catch((err: any) => {
-					console.log(err);
-					alerts.update((alerts: any) => [
-						...alerts,
-						{
-							id: alerts.length++,
-							type: 'error',
-							message: 'Error adding personnel. Check if already exists',
-						},
-					]);
-				});
+			const res = await this.pocketbase.collection('users').create(formData);
+
+			if (!res) {
+				alerts.update((alerts: Alert[]) => [
+					...alerts,
+					{
+						id: alerts.length++,
+						type: 'error',
+						message: 'Error adding personnel. Check if already exists',
+						time: new Date(),
+					},
+				]);
+				throw new Error('Error adding personnel to the database');
+			}
+
+			users.update((users) => [...users, res]);
+
+			alerts.update((alerts: Alert[]) => [
+				...alerts,
+				{
+					id: alerts.length++,
+					type: 'success',
+					message: 'Personnel added successfully',
+					time: new Date(),
+				},
+			]);
+
+			return res;
 		} catch (err) {
+			alerts.update((alerts: Alert[]) => [
+				...alerts,
+				{
+					id: alerts.length++,
+					type: 'error',
+					message: 'Error adding personnel. Check if already exists',
+					time: new Date(),
+				},
+			]);
+
 			throw new Error('Error adding personnel to the database');
 		}
 	}
 
-	public async updatePersonnel(id: string, data: any): Promise<any> {
-		const formData = new FormData();
-		if (data.profile_image) {
-			formData.append('profile_image', data.profile_image[0]);
-		}
-		formData.append('name', data.name);
-		formData.append('email', data.email);
-
+	public async updatePerson(id: string, formData: FormData): Promise<UsersResponse> {
 		try {
-			await this.pocketbase.collection('personnel').update(id, formData);
+			const res = await this.pocketbase.collection('users').update(id, formData);
+
+			return res;
 		} catch (err) {
 			throw new Error('Error updating personnel in the database');
 		}
 	}
 
-	public async fetchUsersData(): Promise<any[]> {
+	public async deletePerson(id: string): Promise<void> {
 		try {
-			const res = await this.pocketbase.collection('users').getFullList();
-			console.log(res);
-			const users = res.map((user: any) => ({
-				id: user.id,
-				name: user.name,
-				email: user.email,
-				role: user.role,
-				password: user.password,
-			}));
-			return users;
+			await this.pocketbase.collection('users').delete(id);
+
+			users.update((users) => users.filter((user) => user.id !== id));
+		} catch (err) {
+			alerts.update((alerts: Alert[]) => [
+				...alerts,
+				{
+					id: alerts.length++,
+					type: 'error',
+					message: 'Error deleting personnel from the database',
+					time: new Date(),
+				},
+			]);
+			throw new Error('Error deleting personnel from the database');
+		}
+	}
+
+	public subscribeToPersons() {
+		try {
+			const res = this.pocketbase
+				.collection('users')
+				.subscribe('*', (e) => users.update((users) => [...users, e.record]));
+			return res;
 		} catch (err) {
 			throw new Error('Error fetching users data from the database');
 		}
