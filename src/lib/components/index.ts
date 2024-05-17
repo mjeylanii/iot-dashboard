@@ -15,7 +15,7 @@ import {
 import Navbar from './Navbar.svelte';
 import NetworkDevices from './NetworkDevices.svelte';
 import Person from './Person.svelte';
-import { MyTasks, Task } from './tasks';
+import { MyTasks, Project } from './tasks';
 import WeatherCard from './WeatherCard.svelte';
 
 export {
@@ -37,7 +37,7 @@ export {
 	TermsAndConditionsModal,
 	Content,
 	MyTasks,
-	Task,
+	Project,
 	MessageCard,
 	Fan,
 	Controls,

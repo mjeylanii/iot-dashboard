@@ -1,5 +1,5 @@
 import MyTasks from './MyTasks.svelte';
+import Project from './Project.svelte';
 import Tag from './Tag.svelte';
-import Task from './Task.svelte';
 
-export { Task, MyTasks, Tag };
+export { Project, MyTasks, Tag };

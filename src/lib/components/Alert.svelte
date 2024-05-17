@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {alerts }from '$stores';
+	import { alerts } from '$stores';
 
 	export let type = 'info';
 	export let id: number;
@@ -7,9 +7,6 @@
 	function handleClick() {
 		alerts.update((alerts: any) => {
 			if (alerts.length == 0) return;
-			alerts.forEach((alert: any) => {
-				console.log(alert);
-			});
 
 			let alert = document.getElementById(id.toString());
 			if (alert) {

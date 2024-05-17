@@ -4,26 +4,18 @@
 
 	const messages = [
 		{
-			imgAlt: 'Maurice',
-			imgSrc: '/images/2.jpg',
 			userName: 'Maurice',
 			messageText: 'Hey Enoch, did you read the Nextjs doc?',
 		},
 		{
-			imgAlt: 'Enoch Ndika',
-			imgSrc: '/images/1.jpg',
 			userName: 'Enoch',
 			messageText: "Yeah! that's one of the best docs",
 		},
 		{
-			imgAlt: 'CR7',
-			imgSrc: '/images/3.png',
 			userName: 'Cristiano',
 			messageText: 'Tailwind JIT is a game changer!',
 		},
 		{
-			imgAlt: 'Lionel Messi',
-			imgSrc: '/images/4.jpg',
 			userName: 'Messi',
 			messageText: 'Yeah can confirm that on Austin 3:16',
 		},

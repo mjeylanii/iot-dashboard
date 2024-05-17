@@ -11,23 +11,24 @@
 	import PasswordResetForm from '$lib/components/auth/PasswordResetForm.svelte';
 	import PocketBase from 'pocketbase';
 
-	import { invoke } from '@tauri-apps/api/tauri';
+	import { invoke } from '@tauri-apps/api/core';
 
 	let email = '';
 	let password = '';
 	let resettingPassword = false;
 	let resetSent = false;
 	let loggingIn = false;
-	let pocketbase: PocketBaseType = new PocketBase('http://localhost:3030');
+
 	let authAPI: AuthAPI;
 
 	onMount(async () => {
+		let pocketbase: PocketBaseType = new PocketBase('http://localhost:3030');
 		let storageHelper = new StorageHelper();
 		storageHelper.storeInit();
 		let db_config: PocketbaseSettings = await storageHelper.getPocketbase();
 		pocketbase = new PocketBase(`http://${db_config.host}:${db_config.port}`) as TypedPocketBase;
 		authAPI = new AuthAPI(pocketbase);
-		invoke('close_splashscreen');
+		await invoke('close_splashscreen');
 	});
 
 	let errors: any = {};

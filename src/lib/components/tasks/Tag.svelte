@@ -1,5 +1,5 @@
 <script lang="ts">
-	export const name = '';
+	export const tag: string = '';
 	let tags = [
 		{
 			id: 1,
@@ -69,10 +69,10 @@
 	];
 </script>
 
-{#each tags as tag}
-	<span
-		class="px-2 py-1 flex items-center text-xs rounded-md font-semibold text-{tag.color}-500 bg-{tag.color}-50"
-	>
-		{tag.name}
-	</span>
-{/each}
+<span
+	class="px-2 py-1 flex items-center text-xs rounded-md font-semibold text-{tags.find(
+		(t) => t.name === tag,
+	)?.color}-500 bg-{tags.find((t) => t.name === tag)?.color}-50"
+>
+	{tag}
+</span>

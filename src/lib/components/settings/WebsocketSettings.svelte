@@ -16,7 +16,8 @@
 	let addNewDevice: boolean = false;
 
 	onMount(async () => {
-		let data = await StorageHelper.getWebSocket();
+		const storageHelper = new StorageHelper();
+		let data = await storageHelper.getWebSocket();
 
 		if (!data) return;
 

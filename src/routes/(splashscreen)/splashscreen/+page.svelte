@@ -1,5 +1,9 @@
 <script>
+	import { onMount } from 'svelte';
+
 	import loading from '$lib/messages/loading.ts';
+
+	import { invoke } from '@tauri-apps/api/core';
 
 	let val = 0;
 	let interval = setInterval(() => {

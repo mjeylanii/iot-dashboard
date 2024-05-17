@@ -1,8 +1,11 @@
-import { invoke } from '@tauri-apps/api/tauri';
+import { invoke } from '@tauri-apps/api/core';
 
 export default async function FetchNetworkDevicesDataAPI() {
-	const response = await invoke('get_network_devices').then((res: any) => {
-		return res;
-	});
-	return response;
+	try {
+		const response = await invoke<string>('get_network_devices');
+
+		return response;
+	} catch (error) {
+		console.error('Caught error', error);
+	}
 }

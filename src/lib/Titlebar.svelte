@@ -7,23 +7,24 @@
 	import VscChromeMinimize from 'svelte-icons-pack/vsc/VscChromeMinimize';
 	import VscChromeRestore from 'svelte-icons-pack/vsc/VscChromeRestore';
 
-	import { invoke } from '@tauri-apps/api/tauri';
-	import { appWindow } from '@tauri-apps/api/window';
+	import { invoke } from '@tauri-apps/api/core';
+	import { getCurrent } from '@tauri-apps/api/window';
 
-	let isMaximized: boolean;
 	export let loc: string;
-	onMount(() => {
-		appWindow.isMaximized().then((max) => {});
-		document.getElementById('titlebar-minimize')?.addEventListener('click', () => {
-			appWindow.minimize();
+	//let maximized = getCurrent().isMaximized();
+
+	onMount(async () => {
+		document.getElementById('titlebar-minimize')?.addEventListener('click', async () => {
+			await getCurrent().isClosable();
 		});
-		document.getElementById('titlebar-maximize')?.addEventListener('click', () => {
-			appWindow.toggleMaximize();
-			isMaximized = !isMaximized;
+
+		document.getElementById('titlebar-maximize')?.addEventListener('click', async () => {
+			await getCurrent().toggleMaximize();
 		});
+
 		document.getElementById('titlebar-close')?.addEventListener('click', () => {
 			invoke('close_main');
-			appWindow.close();
+			getCurrent().close();
 		});
 	});
 </script>
@@ -49,7 +50,7 @@
 				class="transition border-black titlebar-button hover:bg-slate-300 hover:border hover:text-black text-white"
 				id="titlebar-maximize"
 			>
-				{#if isMaximized}
+				{#if true}
 					<Icon src={VscChromeRestore} />
 				{:else}
 					<Icon src={VscChromeMaximize} />

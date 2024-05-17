@@ -1,82 +1,51 @@
 {
 	"$schema": "../node_modules/@tauri-apps/cli/schema.json",
 	"build": {
-		"beforeBuildCommand": "npm run build",
-		"beforeDevCommand": "npm run dev",
-		"devPath": "http://localhost:5173",
-		"distDir": "../build"
+		"beforeBuildCommand": "pnpm run build",
+		"beforeDevCommand": "pnpm run dev",
+		"frontendDist": "./build",
+		"devUrl": "http://localhost:5173"
 	},
-	"package": {
-		"productName": "OfficeHub",
-		"version": "0.1.0"
-	},
-	"tauri": {
-		"allowlist": {
-			"fs": {
-				"createDir": true,
-				"readDir": true,
-				"readFile": true,
-				"writeFile": true,
-				"scope": ["$APPCONFIG", "$APPCONFIG/*"]
-			},
-			"window": {
-				"all": false,
-				"close": true,
-				"hide": true,
-				"show": true,
-				"maximize": true,
-				"minimize": true,
-				"unmaximize": true,
-				"unminimize": true,
-				"startDragging": true,
-				"setTitle": true,
-				"setMaxSize": false,
-				"setMinSize": false,
-				"center": true
-			},
-			"path": {
-				"all": true
-			}
+	"bundle": {
+		"active": true,
+		"category": "DeveloperTool",
+		"copyright": "",
+		"targets": "all",
+		"externalBin": [],
+		"icon": [
+			"icons/32x32.png",
+			"icons/128x128.png",
+			"icons/128x128@2x.png",
+			"icons/icon.icns",
+			"icons/icon.ico"
+		],
+		"windows": {
+			"certificateThumbprint": null,
+			"digestAlgorithm": "sha256",
+			"timestampUrl": ""
 		},
-		"bundle": {
-			"active": true,
-			"category": "DeveloperTool",
-			"copyright": "",
+		"longDescription": "",
+		"macOS": {
+			"entitlements": null,
+			"exceptionDomain": "",
+			"frameworks": [],
+			"providerShortName": null,
+			"signingIdentity": null
+		},
+		"resources": [],
+		"shortDescription": "",
+		"linux": {
 			"deb": {
 				"depends": []
-			},
-			"externalBin": [],
-			"icon": [
-				"icons/32x32.png",
-				"icons/128x128.png",
-				"icons/128x128@2x.png",
-				"icons/icon.icns",
-				"icons/icon.ico"
-			],
-			"identifier": "com.dashy.iot-dashboard",
-			"longDescription": "",
-			"macOS": {
-				"entitlements": null,
-				"exceptionDomain": "",
-				"frameworks": [],
-				"providerShortName": null,
-				"signingIdentity": null
-			},
-			"resources": [],
-			"shortDescription": "",
-			"targets": "all",
-			"windows": {
-				"certificateThumbprint": null,
-				"digestAlgorithm": "sha256",
-				"timestampUrl": ""
 			}
-		},
-		"security": {
-			"csp": null
-		},
-		"updater": {
-			"active": false
-		},
+		}
+	},
+	"productName": "OfficeHub",
+	"version": "0.1.0",
+	"identifier": "com.dashy.OfficeHub",
+	"plugins": {},
+	"app": {
+		"macOSPrivateApi": true,
 		"windows": [
 			{
 				"fullscreen": false,
@@ -88,7 +57,8 @@
 				"minHeight": 720,
 				"decorations": false,
 				"visible": false,
-				"transparent": true
+				"transparent": true,
+				"shadow": true
 			},
 			{
 				"width": 720,
@@ -98,7 +68,8 @@
 				"label": "splashscreen",
 				"center": true,
 				"resizable": false,
-				"transparent": true
+				"transparent": true,
+				"shadow": true
 			},
 			{
 				"width": 720,
@@ -109,8 +80,12 @@
 				"center": true,
 				"resizable": false,
 				"transparent": true,
-				"visible": false
+				"visible": false,
+				"shadow": true
 			}
-		]
+		],
+		"security": {
+			"csp": null
+		}
 	}
 }

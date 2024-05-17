@@ -2,8 +2,8 @@
 	import { onMount } from 'svelte';
 
 	import { StorageHelper } from '$helpers';
-	import { humidityOptions, psiOptions, temperatureOptions } from '$lib/chart_options/index';
 	import GraphCard from '$lib/components/graphs/GraphCard.svelte';
+	import { chartOptionsGenerator } from '$lib/utils';
 	import { alerts, humidity, pressure, temperature } from '$stores';
 
 	let ws: WebSocket;
@@ -88,8 +88,8 @@
 		<h1 class="text-2xl font-medium">Sensors</h1>
 	</div>
 	<div class="flex flex-col justify-start w-full gap-4 lg:flex-row md:flex-row">
-		<GraphCard data={data.humidity} chartId={'Humidity'} options={humidityOptions} />
-		<GraphCard data={data.pressure} chartId={'PSI'} options={psiOptions} />
-		<GraphCard data={data.temperature} chartId={'Temperature'} options={temperatureOptions} />
+		<GraphCard data={data.humidity} chartId={'Humidity'} options={chartOptionsGenerator()} />
+		<GraphCard data={data.pressure} chartId={'PSI'} options={chartOptionsGenerator()} />
+		<GraphCard data={data.temperature} chartId={'Temperature'} options={chartOptionsGenerator()} />
 	</div>
 </div>

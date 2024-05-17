@@ -10,17 +10,21 @@ edition = "2021"
 rust-version = "1.59"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+name = "tauri_app_lib"
+crate-type = ["lib", "cdylib", "staticlib"]
 
 [build-dependencies]
-tauri-build = { version = "1.2.1", features = [] }
+tauri-build = { version = "2.0.0-beta", features = [] }
 
 [dependencies]
-serde_json = "1.0"
-serde = { version = "1.0", features = ["derive"] }
-tauri = { version = "1.2.4", features = [ "path-all", "fs-create-dir", "fs-read-dir", "fs-read-file", "fs-write-file", "window-center", "window-close", "window-hide", "window-maximize", "window-minimize", "window-set-title", "window-show", "window-start-dragging", "window-unmaximize", "window-unminimize"] }
+gtk = "0.18"
+tauri = { version = "2.0.0-beta", features = ["macos-private-api"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
 async-std = { version = "1.12", features = ["attributes"] }
 async-trait = "0.1"
-env_logger = "0.10.0"   
+env_logger = "0.10.0"
 cidr-utils = "0.5.10"
 gcd = "2.3.0"
 itertools = "0.9.0"
@@ -33,15 +37,15 @@ structopt = "0.3.26"
 subprocess = "0.2.9"
 toml = "0.5.11"
 trust-dns-resolver = "0.19.7"
-tauri-plugin-websocket = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "dev" }
-tauri-plugin-store = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
+tauri-plugin-store = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v2" }
 which = "4.4.0"
-default-net = "0.14.1"
 libc = "0.2.141"
 windows = "0.29.0"
 systemstat = "0.2.3"
-window-shadows = "0.2.1"
-
+netdev = "0.25.0"
+tauri-plugin-dialog = "2.0.0-beta.7"
+tauri-plugin-shell = "2.0.0-beta"
+tauri-plugin-cli = { version = "2.0.0-beta.4" }
 
 [dev-dependencies]
 wait-timeout = "0.2.0"

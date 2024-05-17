@@ -2,14 +2,15 @@
 	import { onMount } from 'svelte';
 
 	import { Lights } from '$components';
-	import { getMQTT, getWebSocket } from '$helpers';
-	import WebSocketService from '$services';
+	import { StorageHelper } from '$helpers';
+	import { WebSocketService } from '$services';
 	import { alerts, devices } from '$stores';
 
 	let devicesArr = [];
 
 	onMount(async () => {
-		await getWebSocket().then((val) => {
+		let storageHelper = new StorageHelper();
+		await storageHelper.getWebSocket().then((val) => {
 			devicesArr = val.topics.devices;
 			devicesArr.forEach((device) => {
 				let ws = new WebSocketService(`ws://${val.host}:${val.port}/ws${device.topic}`);

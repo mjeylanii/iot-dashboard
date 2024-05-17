@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { subscribe } from 'svelte/internal';
 
-	import type { PocketbaseSettings, TypedPocketBase } from '$types/';
+	import type { TypedPocketBase } from '$lib/types/pocketbase.type';
+	import type { PocketbaseSettings } from '$types';
 
 	import { AuthAPI, PersonsAPI } from '$api';
 	import {
@@ -14,14 +16,14 @@
 		MyTasks,
 		NetworkDevices,
 		Person,
+		Project,
 		SettingsModal,
-		Task,
 		WeatherCard,
 	} from '$components';
 	import { StorageHelper } from '$helpers';
-	import { netOptions } from '$lib/chart_options/networkTraffic';
 	import GraphCard from '$lib/components/graphs/GraphCard.svelte';
-	import { alerts, users } from '$stores';
+	import { chartOptionsGenerator } from '$lib/utils';
+	import { alerts, showUserPage, users } from '$stores';
 	import PocketBase from 'pocketbase';
 
 	onMount(async () => {
@@ -55,56 +57,60 @@
 			]);
 		}
 	});
+	console.log('value', $showUserPage.valueOf());
 </script>
 
 <SettingsModal />
 <InfoModal />
 <div class="flex flex-col gap-12">
-	<Content>
-		<MessageCard />
-		<MyTasks />
-		<Task />
-	</Content>
 	<div class="flex flex-col justify-center gap-4">
 		<WeatherCard />
 	</div>
-	<div class="text-xl font-medium divider">Controls</div>
-	<div class="relative flex flex-col justify-center gap-4">
-		<Controls />
-	</div>
-
-	<ChartsWrapper />
-
-	<div class="flex flex-col justify-center gap-8 mx-auto lg:w-full">
-		<div class="divider">
-			<h2 class="text-2xl font-medium">People</h2>
+	{#if $showUserPage.valueOf()}
+		<Content>
+			<MessageCard />
+			<MyTasks />
+			<Project />
+		</Content>
+	{:else}
+		<div class="text-xl font-medium divider">Controls</div>
+		<div class="relative flex flex-col justify-center gap-4">
+			<Controls />
 		</div>
-		<div class="flex flex-row justify-center gap-8 mx-auto lg:w-full">
-			{#if $users == undefined || $users.length == 0}
-				<div class="flex flex-col justify-center gap-4">
+
+		<ChartsWrapper />
+
+		<div class="flex flex-col justify-center gap-8 mx-auto lg:w-full">
+			<div class="divider">
+				<h2 class="text-2xl font-medium">People</h2>
+			</div>
+			<div class="flex flex-row justify-center gap-8 mx-auto lg:w-full">
+				{#if $users == undefined || $users.length == 0}
 					<div class="flex flex-col justify-center gap-4">
-						<div class="grid grid-cols-3 gap-4">
-							<AddPerson />
+						<div class="flex flex-col justify-center gap-4">
+							<div class="grid grid-cols-3 gap-4">
+								<AddPerson />
+							</div>
 						</div>
 					</div>
-				</div>
-			{:else}
-				<div class="flex flex-col justify-center gap-4">
+				{:else}
 					<div class="flex flex-col justify-center gap-4">
-						<div class="grid grid-cols-5 gap-4">
-							{#each $users as user}
-								<Person {user} />
-							{/each}
-							<AddPerson />
+						<div class="flex flex-col justify-center gap-4">
+							<div class="grid grid-cols-5 gap-4">
+								{#each $users as user}
+									<Person {user} />
+								{/each}
+								<AddPerson />
+							</div>
 						</div>
 					</div>
-				</div>
-			{/if}
+				{/if}
+			</div>
 		</div>
-	</div>
-	<h2 class="px-4 text-3xl font-bold">Network</h2>
-	<div class="flex flex-col w-full gap-4">
-		<NetworkDevices />
-		<GraphCard data={'0'} chartId={'Network Traffic'} options={netOptions} />
-	</div>
+		<h2 class="px-4 text-3xl font-bold">Network</h2>
+		<div class="flex flex-col w-full gap-4">
+			<NetworkDevices />
+			<GraphCard data={'0'} chartId={'Network Traffic'} options={chartOptionsGenerator('net')} />
+		</div>
+	{/if}
 </div>

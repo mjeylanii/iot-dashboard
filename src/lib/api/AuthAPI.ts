@@ -1,6 +1,7 @@
 import type { TypedPocketBase, UsersResponse } from '$lib/types/pocketbase.type';
 import type { AuthAPIType } from '$types';
 import type PocketBase from 'pocketbase';
+import type { AdminAuthResponse } from 'pocketbase';
 
 export default class AuthAPI implements AuthAPIType {
 	private pocketbase: TypedPocketBase;

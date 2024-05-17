@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	import { fetchNetworkDevicesData } from '$api';
+	import { FetchNetworkDevicesData } from '$api';
 	import { alerts } from '$stores';
 
 	let loading = true;
@@ -9,7 +9,8 @@
 	let error = false;
 	onMount(async () => {
 		try {
-			devices = await fetchNetworkDevicesData().then((res) => {
+			devices = await FetchNetworkDevicesData().then((res) => {
+				console.log(res);
 				const devices = JSON.parse(res);
 				return devices;
 			});
@@ -85,7 +86,7 @@
 						on:click={async () => {
 							loading = true;
 							try {
-								devices = await fetchNetworkDevicesData().then((res) => {
+								devices = await FetchNetworkDevicesData().then((res) => {
 									const devices = JSON.parse(res);
 									console.log(devices);
 									return devices;

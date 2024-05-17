@@ -3,8 +3,8 @@
 	import MessageItem from './MessageItem.svelte';
 
 	interface Message {
-		imgAlt: string;
-		imgSrc: string;
+		imgAlt?: string;
+		imgSrc?: string;
 		userName: string;
 		messageText: string;
 	}
@@ -15,8 +15,8 @@
 <ul>
 	{#each messages as message}
 		<MessageItem
-			imgAlt={message.imgAlt}
-			imgSrc={message.imgSrc}
+			imgAlt={message.imgAlt ? message.imgAlt : ''}
+			imgSrc={message.imgSrc ? message.imgSrc : ''}
 			userName={message.userName}
 			messageText={message.messageText}
 		/>

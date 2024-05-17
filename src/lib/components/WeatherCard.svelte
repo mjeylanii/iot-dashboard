@@ -33,6 +33,7 @@
 				coords.latitude = res.latitude;
 				coords.longitude = res.longitude;
 			});
+
 		await WeatherAPI(
 			PUBLIC_OPENWEATHERMAP_API_KEY,
 			coords.latitude.toString(),
@@ -54,6 +55,7 @@
 						time: new Date(),
 					},
 				]);
+				isLoading = false;
 			});
 	});
 </script>

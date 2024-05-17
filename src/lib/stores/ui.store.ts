@@ -7,3 +7,5 @@ export const alerts = writable<Alert[]>([{ id: 0, type: '', message: '', time: n
 export const devices = writable<any>([]);
 
 export const people = writable([{ name: '', status: '', time: new Date() }]);
+
+export const showUserPage = writable<boolean>(false);
