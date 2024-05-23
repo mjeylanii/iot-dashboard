@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { subscribe } from 'svelte/internal';
 
 	import type { TypedPocketBase } from '$lib/types/pocketbase.type';
 	import type { PocketbaseSettings } from '$types';
