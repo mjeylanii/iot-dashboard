@@ -6,7 +6,7 @@
 	import AiOutlineUser from 'svelte-icons-pack/ai/AiOutlineUser';
 	import Icon from 'svelte-icons-pack/Icon.svelte';
 
-	import { showUserPage, users } from '$stores';
+	import { showUserPage } from '$stores';
 	import { themeChange } from 'theme-change';
 
 	import { invoke } from '@tauri-apps/api/core';
