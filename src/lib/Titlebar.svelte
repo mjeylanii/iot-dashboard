@@ -11,21 +11,9 @@
 	import { getCurrent } from '@tauri-apps/api/window';
 
 	export let loc: string;
-	//let maximized = getCurrent().isMaximized();
-
+	let maximized = false;
 	onMount(async () => {
-		document.getElementById('titlebar-minimize')?.addEventListener('click', async () => {
-			await getCurrent().isClosable();
-		});
-
-		document.getElementById('titlebar-maximize')?.addEventListener('click', async () => {
-			await getCurrent().toggleMaximize();
-		});
-
-		document.getElementById('titlebar-close')?.addEventListener('click', () => {
-			invoke('close_main');
-			getCurrent().close();
-		});
+		maximized = await getCurrent().isMaximized();
 	});
 </script>
 
@@ -39,31 +27,41 @@
 		<p class="text-sm font-medium normal-case navbar-start text-neutral-content">Dashboard</p>
 	</div>
 	<div class="flex items-center">
-		<div
+		<button
+			on:click={async () => {
+				await getCurrent().minimize();
+			}}
 			class="flex transition border-black titlebar-button hover:border hover:bg-slate-300 hover:text-black text-white"
 			id="titlebar-minimize"
 		>
 			<Icon src={VscChromeMinimize} />
-		</div>
+		</button>
 		{#if loc != 'login'}
-			<div
+			<button
+				on:click={async () => {
+					await getCurrent().toggleMaximize();
+					maximized = !maximized;
+				}}
 				class="transition border-black titlebar-button hover:bg-slate-300 hover:border hover:text-black text-white"
 				id="titlebar-maximize"
 			>
-				{#if true}
+				{#if maximized}
 					<Icon src={VscChromeRestore} />
 				{:else}
 					<Icon src={VscChromeMaximize} />
 				{/if}
-			</div>
+			</button>
 		{/if}
 
-		<div
+		<button
+			on:click={async () => {
+				getCurrent().close();
+			}}
 			class="transition border-black titlebar-button hover:bg-error hover:border hover:text-black text-white"
 			id="titlebar-close"
 		>
 			<Icon src={VscChromeClose} />
-		</div>
+		</button>
 	</div>
 </div>
 

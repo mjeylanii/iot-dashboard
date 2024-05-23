@@ -65,7 +65,7 @@
 	<div class="flex flex-col justify-center gap-4">
 		<WeatherCard />
 	</div>
-	{#if $showUserPage.valueOf()}
+	{#if $showUserPage}
 		<Content>
 			<MessageCard />
 			<MyTasks />

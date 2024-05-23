@@ -9,6 +9,7 @@
 		"window:default",
 		"window:allow-start-dragging",
 		"window:allow-minimize",
+		"window:allow-toggle-maximize",
 		"window:allow-internal-toggle-maximize",
 		"app:default",
 		"resources:default",
