@@ -52,6 +52,7 @@
 
 		function addData(label, data) {
 			if (typeof data == undefined && chart) return;
+
 			if (chart.data.labels.length >= 60) {
 				chart.data.labels.shift();
 				chart.data.datasets.forEach((dataset) => {
