@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Titlebar from '$lib/Titlebar.svelte';
-	import { Svrollbar } from 'svrollbar';
 
 	import '../../app.css';
 
@@ -12,7 +11,7 @@
 
 <Titlebar {loc} />
 <Navbar />
-<Svrollbar />
+
 <div class="z-50 toast toast-end">
 	{#each $alerts as alert}
 		<Alert id={alert.id} type={alert.type}>{alert.message}</Alert>

@@ -56,7 +56,15 @@
 			]);
 		}
 	});
-	console.log('value', $showUserPage.valueOf());
+	showUserPage.subscribe((value) => {
+		if (value) {
+			console.log('User Page');
+			document.title = 'User Page';
+		} else {
+			console.log('Dashboard');
+			document.title = 'Dashboard';
+		}
+	});
 </script>
 
 <SettingsModal />
