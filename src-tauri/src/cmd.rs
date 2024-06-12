@@ -18,9 +18,6 @@ pub fn get_interfaces() -> Result<Vec<SelectInterface>> {
 
 #[tauri::command]
 pub async fn scan_network(interface: SelectInterface) -> Result<Vec<Host>> {
-    //Print selected interface
-    println!("{:?}", interface);
-
     let interfaces = network::get_interfaces();
 
     let selected = interfaces
@@ -28,12 +25,8 @@ pub async fn scan_network(interface: SelectInterface) -> Result<Vec<Host>> {
         .find(|i| i.index == interface.index)
         .context("not found")?;
 
-    println!("{:?}", selected);
     let found = network::scan(selected);
-    //Print the found hosts
-    for host in &found {
-        println!("{:?}", host);
-    }
+
     found
 }
 

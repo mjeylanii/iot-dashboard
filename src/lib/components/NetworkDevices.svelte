@@ -1,19 +1,20 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
+	import type { Host } from '$types';
+
 	import { FetchNetworkDevicesData } from '$api';
 	import { alerts } from '$stores';
 
 	let loading = true;
-	let devices: any;
+	let devices: Host[];
 	let error = false;
 	onMount(async () => {
 		try {
 			devices = await FetchNetworkDevicesData().then((res) => {
-				console.log('response', res);
-				//const devices = JSON.parse(res);
-				return devices;
+				return res as Host[];
 			});
+			loading = false;
 		} catch (err) {
 			console.error(err);
 			error = true;
@@ -50,7 +51,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			{#if devices == null || loading == true}
+			{#if loading}
 				<tr>
 					<td colspan="5" class="text-center">Loading... </td>
 				</tr>
@@ -64,13 +65,13 @@
 								class="w-8 h-8"
 							/>
 						</td>
+						<td>{device.host}</td>
 						<td>{device.hostname}</td>
-						<td>{device.ip}</td>
 						<td>
 							{device.mac}
 						</td>
 						<td>
-							{device.manufacturer}
+							{device.vendor}
 						</td>
 						<th>
 							<button class="btn btn-ghost btn-xs">details</button>
