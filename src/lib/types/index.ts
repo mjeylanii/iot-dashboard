@@ -1,4 +1,5 @@
 import type { AuthAPIType, PersonsAPIType } from './api.type';
+import type { Host, Interface, ScanReportProps, SelectInterfaceProps } from './network.type';
 import type {
 	MQTTSettings,
 	PocketbaseSettings,
@@ -15,4 +16,8 @@ export type {
 	WebSocketSettings,
 	Alert,
 	AuthAPIType,
+	Host,
+	Interface,
+	ScanReportProps,
+	SelectInterfaceProps,
 };

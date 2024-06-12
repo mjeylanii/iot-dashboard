@@ -1,8 +1,12 @@
+import type { Host, Interface } from '$types';
+
 import { invoke } from '@tauri-apps/api/core';
 
 export default async function FetchNetworkDevicesDataAPI() {
 	try {
-		const response = await invoke<string>('get_network_devices');
+		const found = (await invoke('get_interfaces')) as Interface[];
+
+		const response = (await invoke('scan_network', { interface: found[0] })) as Host[];
 
 		return response;
 	} catch (error) {

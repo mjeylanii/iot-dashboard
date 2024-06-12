@@ -3,18 +3,32 @@ module.exports = {
 	parser: '@typescript-eslint/parser',
 	extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'prettier'],
 	plugins: ['svelte3', '@typescript-eslint'],
-	ignorePatterns: ['*.cjs'],
+	ignorePatterns: [
+		'*.cjs',
+		'*.config.js',
+		'*.d.ts',
+		'node_modules/',
+		'public/',
+		'dist/',
+		'src-tauri/',
+		'**/debug/',
+		'**/dist/',
+		'**/target/',
+		'network/',
+		'pocketbase/',
+		'microcontrollers/',
+	],
 	overrides: [{ files: ['*.svelte'], processor: 'svelte3/svelte3' }],
 	settings: {
-		'svelte3/typescript': () => require('typescript')
+		'svelte3/typescript': () => require('typescript'),
 	},
 	parserOptions: {
 		sourceType: 'module',
-		ecmaVersion: 2020
+		ecmaVersion: 2020,
 	},
 	env: {
 		browser: true,
 		es2017: true,
-		node: true
-	}
+		node: true,
+	},
 };

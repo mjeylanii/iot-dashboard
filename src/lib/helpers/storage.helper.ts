@@ -1,7 +1,8 @@
 import type { MQTTSettings, PocketbaseSettings, Settings, WebSocketSettings } from '$types';
 
 import initialSettings from '$lib/constants/initialSettings';
-import { Store } from 'tauri-plugin-store-api';
+
+import { Store } from '@tauri-apps/plugin-store';
 
 export default class StorageHelper {
 	private store = new Store('.settings.dat');

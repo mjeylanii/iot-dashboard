@@ -10,8 +10,8 @@
 	onMount(async () => {
 		try {
 			devices = await FetchNetworkDevicesData().then((res) => {
-				console.log(res);
-				const devices = JSON.parse(res);
+				console.log('response', res);
+				//const devices = JSON.parse(res);
 				return devices;
 			});
 		} catch (err) {
@@ -87,9 +87,9 @@
 							loading = true;
 							try {
 								devices = await FetchNetworkDevicesData().then((res) => {
-									const devices = JSON.parse(res);
-									console.log(devices);
-									return devices;
+									// const devices = JSON.parse(res);
+									// console.log(devices);
+									// return devices;
 								});
 							} catch (err) {
 								console.error(err);

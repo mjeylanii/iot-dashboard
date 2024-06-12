@@ -24,10 +24,14 @@ serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 async-std = { version = "1.12", features = ["attributes"] }
 async-trait = "0.1"
-env_logger = "0.10.0"
 cidr-utils = "0.5.10"
+env_logger = "0.10.0"
+eyre = { git = "https://github.com/thewh1teagle/eyre", branch = "feat/report-serialize-backtrace", features = [
+    "serialize",
+] }
 gcd = "2.3.0"
 itertools = "0.9.0"
+libc = "0.2.141"
 log = "0.4.17"
 rand = "0.7.3"
 rlimit = "0.8.3"
@@ -38,14 +42,14 @@ subprocess = "0.2.9"
 toml = "0.5.11"
 trust-dns-resolver = "0.19.7"
 tauri-plugin-store = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v2" }
-which = "4.4.0"
-libc = "0.2.141"
-windows = "0.29.0"
 systemstat = "0.2.3"
 netdev = "0.25.0"
+network = { path = "network" }
 tauri-plugin-dialog = "2.0.0-beta.7"
 tauri-plugin-shell = "2.0.0-beta"
 tauri-plugin-cli = { version = "2.0.0-beta.4" }
+which = "4.4.0"
+windows = "0.29.0"
 
 [dev-dependencies]
 wait-timeout = "0.2.0"
